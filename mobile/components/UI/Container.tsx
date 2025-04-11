@@ -11,7 +11,7 @@ type ContainerProps = {
 function Container({children, style}: ContainerProps) {
   const {colors} = useTheme()
   return (
-    <SafeAreaView style={[{flex: 1, backgroundColor: /*theme.colors.tertiaryContainer*/ '#fff'}, style]}>
+    <SafeAreaView style={[{flex: 1, backgroundColor: colors.background}, style]}>
       {children}
     </SafeAreaView>
   )

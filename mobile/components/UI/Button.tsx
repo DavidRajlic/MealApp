@@ -1,20 +1,38 @@
-import { PressableProps, Pressable, type StyleProp, StyleSheet, View, type ViewStyle } from "react-native"
+import { PressableProps, Pressable, type StyleProp, StyleSheet, View, type ViewStyle, ActivityIndicator } from "react-native"
 import Text from "./Text"
 import { type ReactNode } from "react"
+import { useTheme } from "../../store/ThemeContext"
 
 interface MyButtonProps extends PressableProps {
   mode?: "PRIMARY" | "SECONDARY" | "WARNING" | "TRANSPARENT",
   children?: ReactNode,
   style?: StyleProp<ViewStyle>,
   containerStyle?: StyleProp<ViewStyle>,
+  loading?: boolean
 }
 
-function Button({style, mode = "PRIMARY", children, containerStyle, ...props}: MyButtonProps) {
+function Button({style, mode = "PRIMARY", children, containerStyle, loading = false, ...props}: MyButtonProps) {
+  const {colors} = useTheme()
+  let bgColor: string
+  let fgColor: string
 
+  if(mode === "PRIMARY") {
+    bgColor = colors.primary
+    fgColor = colors.onPrimary
+  } else if (mode === "SECONDARY") {
+    bgColor = colors.secondary
+    fgColor = colors.onSecondary
+  } else {
+    bgColor = colors.error
+    fgColor = colors.onError
+  }
   return (
-    <View style={[styles.containerStyle, containerStyle]}>
-      <Pressable style={[styles.buttonStyle, style]} {...props} android_ripple={{color:'grey'}}>
-        <Text>{children}</Text>
+    <View style={[{ backgroundColor: bgColor }, styles.containerStyle, containerStyle]}>
+      <Pressable style={[styles.buttonStyle, style]} {...props} android_ripple={{color: colors.onSurfaceDisabled}}>
+        {
+          loading && <ActivityIndicator color={fgColor} />
+        }
+        <Text style={{color: fgColor}}>{children}</Text>
       </Pressable>
     </View>
   )
@@ -30,6 +48,8 @@ const styles = StyleSheet.create({
   buttonStyle: {
     justifyContent: 'center', 
     alignItems: 'center',
-    padding: 16
+    padding: 16,
+    flexDirection: 'row',
+    gap: 8
   }
 })
