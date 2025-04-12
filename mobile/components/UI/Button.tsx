@@ -22,10 +22,14 @@ function Button({style, mode = "PRIMARY", children, containerStyle, loading = fa
   } else if (mode === "SECONDARY") {
     bgColor = colors.secondary
     fgColor = colors.onSecondary
-  } else {
+  } else if (mode === "WARNING") {
     bgColor = colors.error
     fgColor = colors.onError
+  } else {
+    bgColor = "transparent"
+    fgColor = colors.onBackground
   }
+  
   return (
     <View style={[{ backgroundColor: bgColor }, styles.containerStyle, containerStyle]}>
       <Pressable style={[styles.buttonStyle, style]} {...props} android_ripple={{color: colors.onSurfaceDisabled}}>

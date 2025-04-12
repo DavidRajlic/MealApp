@@ -1,4 +1,4 @@
-import { Text as TextRN, TextProps } from "react-native"
+import { Text as TextRN, type TextProps } from "react-native"
 import { useTheme } from "../../store/ThemeContext"
 
 interface MyTextProps extends TextProps {

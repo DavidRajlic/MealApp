@@ -11,7 +11,7 @@ function TextInput({style, containerStyle, ...props}: MyTextInputProps) {
 
   return (
     <View style={[{backgroundColor: colors.surface}, styles.containerStyle, containerStyle]}>
-      <TextInputRN style={[{ color: colors.onBackground },styles.textInput, style]} placeholderTextColor={colors.onSurface} {...props} />
+      <TextInputRN style={[{ color: colors.onBackground }, styles.textInput, style]} placeholderTextColor={colors.onSurface} {...props} />
     </View>
   )
 }
