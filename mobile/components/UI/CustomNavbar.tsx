@@ -1,17 +1,38 @@
-import { Pressable, StyleSheet, View, type PressableAndroidRippleConfig } from "react-native";
+import { Keyboard, Pressable, StyleSheet, View, type PressableAndroidRippleConfig } from "react-native";
 import { useTheme } from "../../store/ThemeContext";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
+import { useEffect, useState } from "react";
 
 function CustomNavbar({descriptors, insets, navigation, state}: BottomTabBarProps) {
   const {colors} = useTheme()
 
+  const [keyboardVisible, setKeyboardVisible] = useState<boolean>();
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+
   const iconSize = 42
   const iconColor = colors.onBackground
+  const iconSelectedColor = colors
 
   const rippleConfig: PressableAndroidRippleConfig = {
     color: colors.touchColor
   }
+
+  if(keyboardVisible)
+    return <></>
 
   return (
     <View style={[{backgroundColor: colors.surfaceVariant}, styles.container]}>
