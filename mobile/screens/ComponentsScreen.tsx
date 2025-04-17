@@ -17,7 +17,6 @@ function ComponentsScreen() {
       <TextInput value="Test value" />
       <TextInput placeholder="Placeholder text" />
       <Avatar />
-      <CustomNavbar />
     </Container>
   )
 }
