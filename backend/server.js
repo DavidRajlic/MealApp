@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 require('dotenv').config(); // Za nalaganje .env datoteke
 
 const app = express();
-const port = 3001;
+const port = 4001;
 
 app.use(express.json());
 
