@@ -1,25 +1,27 @@
 import { Image } from 'expo-image';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import Text from './Text';
 import { useTheme } from '../../store/ThemeContext';
 
 type AvatarProps = {
   size?: number,
-  onPress?: () => void
+  onPress?: () => void,
+  url?: string;
 }
 
-function Avatar({size = 64, onPress}: AvatarProps) {
-  const {colors} = useTheme()
+function Avatar({ size = 64, onPress, url }: AvatarProps) {
+  const { colors } = useTheme()
 
-  const url = 'https://i.redd.it/g9q10ff0nwq81.jpg'
+
+  const imageUrl = url || 'https://i.redd.it/g9q10ff0nwq81.jpg';
   return (
-    <View style={[{width: size, height: size, backgroundColor: colors.secondary}, styles.container]}>
-      <Pressable style={styles.pressable} onPress={onPress} android_ripple={{color: colors.onSurfaceDisabled}}>
+    <View style={[{ width: size, height: size, backgroundColor: colors.secondary }, styles.container]}>
+      <Pressable style={styles.pressable} onPress={onPress} android_ripple={{ color: colors.onSurfaceDisabled }}>
         {
           true ?
-          <Image source={url} style={styles.image} />
-          :
-          <Text style={{fontWeight: 'bold', fontSize: size/3, color: colors.onSecondary}}>MM</Text>
+            <Image source={imageUrl} style={styles.image} />
+            :
+            <Text style={{ fontWeight: 'bold', fontSize: size / 3, color: colors.onSecondary }}>MM</Text>
         }
       </Pressable>
     </View>
@@ -38,8 +40,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   pressable: {
-    flex: 1, 
-    justifyContent: 'center', 
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center'
   }
 })
