@@ -26,7 +26,7 @@ export function Welcome() {
             Article
           </a>
         </nav>
-        <button className="bg-black text-white px-4 py-1 rounded hover:bg-gray-800">Login</button>
+        <Link to="/login"className="bg-black text-white px-4 py-1 rounded hover:bg-gray-800 inline-block text-center">Login</Link>
       </header>
 
       {/* Hero Section */}
