@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export function Welcome() {
   return (
     <div className="bg-gray-50 text-gray-800 font-sans">
@@ -6,7 +8,7 @@ export function Welcome() {
         <h1 className="text-3xl font-bold" style={{ color: "#B08968" }}>RatePlate</h1>
         <nav className="flex space-x-6 text-sm">
           <a href="#" className="hover:text-red-600">Landing page</a>
-          <a href="#" className="hover:text-red-600">About</a>
+          <Link to="/about" className="hover:text-red-600">O nas</Link>
           <a href="#" className="hover:text-red-600">Articles</a>
         </nav>
         <button className="bg-black text-white px-4 py-1 rounded hover:bg-gray-800">Login</button>
