@@ -6,16 +6,17 @@ import { useTheme } from '../../store/ThemeContext';
 type AvatarProps = {
   size?: number,
   onPress?: () => void,
-  url?: string;
+  url?: string,
+  containerStyle?: StyleProp<ViewStyle>
 }
 
-function Avatar({ size = 64, onPress, url }: AvatarProps) {
+function Avatar({ size = 64, onPress, url, containerStyle }: AvatarProps) {
   const { colors } = useTheme()
 
 
   const imageUrl = url || 'https://i.redd.it/g9q10ff0nwq81.jpg';
   return (
-    <View style={[{ width: size, height: size, backgroundColor: colors.secondary }, styles.container]}>
+    <View style={[{ width: size, height: size, backgroundColor: colors.secondary }, styles.container, containerStyle]}>
       <Pressable style={styles.pressable} onPress={onPress} android_ripple={{ color: colors.onSurfaceDisabled }}>
         {
           true ?

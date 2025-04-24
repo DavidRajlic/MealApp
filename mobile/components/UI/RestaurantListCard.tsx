@@ -15,7 +15,7 @@ function RestaurantListCard({ children, style }: RestaurantListCardProps) {
 
     return (
         <View style={[styles.cardContainer, { backgroundColor: colors.surface }]}>
-            <Avatar size={128} />
+            <Avatar containerStyle={{borderRadius: 18 }} size={128} />
             <View style={styles.textContainer}>
                 <View style={styles.header}>
                     <Text style={styles.restaurantName}>Gostilna Ozmec</Text>
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     },
     stars: {
         flexDirection: "row",
+        alignItems: 'center'
     },
     reviewCount: {
         fontSize: 18,
