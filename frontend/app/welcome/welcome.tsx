@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export function Welcome() {
   return (
     <div className="bg-gray-50 text-gray-800 font-sans">
@@ -11,12 +13,12 @@ export function Welcome() {
           >
             Landing page
           </a>
-          <a
-            href="#"
+          <Link
+            to="/about"
             className="bg-[#f5ebe0] text-gray-800 px-4 py-2 rounded border border-[#d6ccc2] hover:bg-[#e3d5ca] transition mx-1"
-          >
-            About
-          </a>
+           >
+           O nas
+          </Link>
           <a
             href="#"
             className="bg-[#f5ebe0] text-gray-800 px-4 py-2 rounded border border-[#d6ccc2] hover:bg-[#e3d5ca] transition mx-1"
