@@ -7,7 +7,7 @@ import Text from "../components/UI/Text";
 import TextInput from "../components/UI/TextInput";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import RestaurantListCard from "../components/UI/RestaurantListCard";
-import { useTheme } from "../store/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import { LinearGradient } from 'expo-linear-gradient';
 
 function ProfileScreen() {

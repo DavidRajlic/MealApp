@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { View, type StyleProp, type ViewStyle, StyleSheet } from "react-native";
-import { useTheme } from "../../store/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 import Avatar from "./Avatar";
 import Text from "./Text";
 import Ionicons from "@expo/vector-icons/Ionicons";

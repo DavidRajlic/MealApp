@@ -1,5 +1,5 @@
 import { Text as TextRN, type TextProps } from "react-native"
-import { useTheme } from "../../store/ThemeContext"
+import { useTheme } from "../../context/ThemeContext"
 
 interface MyTextProps extends TextProps {
 

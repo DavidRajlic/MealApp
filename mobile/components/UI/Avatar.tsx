@@ -1,7 +1,7 @@
 import { Image } from 'expo-image';
 import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import Text from './Text';
-import { useTheme } from '../../store/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 
 type AvatarProps = {
   size?: number,
