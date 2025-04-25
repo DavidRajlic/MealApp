@@ -1,5 +1,5 @@
 import { View, TextInput as TextInputRN, ViewStyle, StyleProp, TextInputProps, StyleSheet } from "react-native"
-import { useTheme } from "../../store/ThemeContext"
+import { useTheme } from "../../context/ThemeContext"
 
 interface MyTextInputProps extends Omit<TextInputProps, "style"> {
   style?: StyleProp<ViewStyle>,

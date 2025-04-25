@@ -1,5 +1,5 @@
 import { Keyboard, Pressable, StyleSheet, View, type PressableAndroidRippleConfig } from "react-native";
-import { useTheme } from "../../store/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { useEffect, useState } from "react";

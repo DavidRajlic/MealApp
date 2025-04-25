@@ -6,7 +6,7 @@ import MyProfileWrapper from "./screens/ProfileWrapper";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import MyProfileStack from "./screens/ProfileStack";
+import MyProfileScreen from "./screens/MyProfileScreen";
 
 export type BottomTabParamList = {
   Home: undefined,
@@ -24,7 +24,7 @@ function BottomTabNavigation() {
     }} tabBar={props => <CustomNavbar {...props} />}>
       <Tab.Screen name="Home" component={ComponentsScreen} />
       <Tab.Screen name="Map" component={ComponentsScreen} />
-      <Tab.Screen name="MyProfile" component={MyProfileStack} />
+      <Tab.Screen name="MyProfile" component={MyProfileScreen} />
     </Tab.Navigator>
   )
 }

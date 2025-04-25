@@ -7,12 +7,13 @@ import Text from "../components/UI/Text";
 import TextInput from "../components/UI/TextInput";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import RestaurantListCard from "../components/UI/RestaurantListCard";
-import { useTheme } from "../store/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import { LinearGradient } from 'expo-linear-gradient';
+import { useUser } from "../context/UserContext";
 
 function ProfileScreen() {
     const { colors } = useTheme();
-
+    const userCtx = useUser()
     const restaurantData = [
         { id: '1', name: 'Restaurant 1' },
         { id: '2', name: 'Restaurant 2' },
@@ -30,7 +31,7 @@ function ProfileScreen() {
         >
             <Container style={styles.container}>
                 <View style={styles.logoutContainer}>
-                    <Text style={styles.logoutText}>Logout</Text>
+                    <Button mode="TRANSPARENT" onPress={() => userCtx.logout()} style={styles.logoutText}>Logout</Button>
                 </View>
                 <View style={styles.avatarContainer}>
                     <Avatar size={128} />

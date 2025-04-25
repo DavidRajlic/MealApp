@@ -1,6 +1,6 @@
 import { type ReactNode } from "react"
 import {type StyleProp, type ViewStyle } from "react-native"
-import { useTheme } from "../../store/ThemeContext"
+import { useTheme } from "../../context/ThemeContext"
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 type ContainerProps = {
