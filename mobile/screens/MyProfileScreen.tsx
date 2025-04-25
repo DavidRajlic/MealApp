@@ -1,7 +1,6 @@
 import React from 'react';
-import LoginScreen from '../screens/LoginScreen';
-import RegisterScreen from '../screens/RegisterScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import LoginScreen from './LoginScreen';
+import ProfileScreen from './ProfileScreen';
 import { useUser } from '../context/UserContext';
 
 export default function MyProfileScreen() {

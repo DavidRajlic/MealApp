@@ -16,7 +16,7 @@ function Avatar({ size = 64, onPress, url, containerStyle }: AvatarProps) {
 
   const imageUrl = url || 'https://i.redd.it/g9q10ff0nwq81.jpg';
   return (
-    <View style={[{ width: size, height: size, backgroundColor: colors.secondary }, styles.container, containerStyle]}>
+    <View style={[{ width: size, height: size, backgroundColor: colors.secondary, borderRadius: size/2 }, styles.container, containerStyle]}>
       <Pressable style={styles.pressable} onPress={onPress} android_ripple={{ color: colors.onSurfaceDisabled }}>
         {
           true ?
@@ -33,7 +33,6 @@ export default Avatar
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 32,
     overflow: 'hidden'
   },
   image: {

@@ -6,7 +6,7 @@ import MyProfileWrapper from "./screens/ProfileWrapper";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import MyProfileScreen from "./screens/ProfileStack";
+import MyProfileScreen from "./screens/MyProfileScreen";
 
 export type BottomTabParamList = {
   Home: undefined,
