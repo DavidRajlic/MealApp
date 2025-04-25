@@ -1,0 +1,262 @@
+[
+  {
+    "ime": "BAŠČARŠIJA MARIBOR GOSPOSVETSKA",
+    "cena": "8,60",
+    "doplacilo": "4,50"
+  },
+  {
+    "ime": "CANTANTE CAFE TABOR",
+    "cena": "8,50",
+    "doplacilo": "4,40"
+  },
+  {
+    "ime": "CANTANTE CAFE TABOR - DOSTAVA",
+    "cena": "9,00",
+    "doplacilo": "4,90"
+  },
+  {
+    "ime": "CHUTYS EUROPARK MARIBOR",
+    "cena": "9,00",
+    "doplacilo": "4,90"
+  },
+  {
+    "ime": "CITY GRILL",
+    "cena": "8,10",
+    "doplacilo": "4,00"
+  },
+  {
+    "ime": "DIJAŠKI DOM LIZIKE JANČAR",
+    "cena": "7,00",
+    "doplacilo": "2,90"
+  },
+  {
+    "ime": "DOM POD GORCO",
+    "cena": "7,00",
+    "doplacilo": "2,90"
+  },
+  {
+    "ime": "GOSTILNA ZLATI LEV",
+    "cena": "8,00",
+    "doplacilo": "3,90"
+  },
+  {
+    "ime": "GOSTILNA ZLATI LEV - DOSTAVA",
+    "cena": "8,60",
+    "doplacilo": "4,50"
+  },
+  {
+    "ime": "GURMANSKI HRAM",
+    "cena": "8,59",
+    "doplacilo": "4,49"
+  },
+  {
+    "ime": "GURMANSKI HRAM - DOSTAVA",
+    "cena": "8,79",
+    "doplacilo": "4,69"
+  },
+  {
+    "ime": "KITAJSKA RESTAVRACIJA ZLATA SRNA",
+    "cena": "8,20",
+    "doplacilo": "4,10"
+  },
+  {
+    "ime": "KITAJSKA RESTAVRACIJA ZLATA SRNA - DOSTAVA",
+    "cena": "9,00",
+    "doplacilo": "4,90"
+  },
+  {
+    "ime": "KITAJSKA RESTAVRACIJA ZLATA SRNA 2",
+    "cena": "8,20",
+    "doplacilo": "4,10"
+  },
+  {
+    "ime": "KOZLOVNA POŠTNA",
+    "cena": "9,00",
+    "doplacilo": "4,90"
+  },
+  {
+    "ime": "LOVING HUT ",
+    "cena": "8,02",
+    "doplacilo": "3,92"
+  },
+  {
+    "ime": "LUNCH BOX",
+    "cena": "5,10",
+    "doplacilo": "1,00"
+  },
+  {
+    "ime": "MANGO SNACKS",
+    "cena": "4,10",
+    "doplacilo": "0,00"
+  },
+  {
+    "ime": "MC PANDA",
+    "cena": "5,10",
+    "doplacilo": "1,00"
+  },
+  {
+    "ime": "MCDONALD´S RESTAVRACIJA - SWATY",
+    "cena": "7,80",
+    "doplacilo": "3,70"
+  },
+  {
+    "ime": "MCDONALD´S RESTAVRACIJA EUROPARK",
+    "cena": "7,80",
+    "doplacilo": "3,70"
+  },
+  {
+    "ime": "MCDONALD´S RESTAVRACIJA PTUJSKA",
+    "cena": "7,80",
+    "doplacilo": "3,70"
+  },
+  {
+    "ime": "MCDONALD´S RESTAVRACIJA STUDENCI",
+    "cena": "7,80",
+    "doplacilo": "3,70"
+  },
+  {
+    "ime": "MCDONALD'S PETROL MARIBOR",
+    "cena": "7,80",
+    "doplacilo": "3,70"
+  },
+  {
+    "ime": "ME GUSTA",
+    "cena": "7,00",
+    "doplacilo": "2,90"
+  },
+  {
+    "ime": "MM PANDA",
+    "cena": "7,10",
+    "doplacilo": "3,00"
+  },
+  {
+    "ime": "OKREPČEVALNICA FERI",
+    "cena": "4,10",
+    "doplacilo": "0,00"
+  },
+  {
+    "ime": "OKREPČEVALNICA IZUM",
+    "cena": "8,00",
+    "doplacilo": "3,90"
+  },
+  {
+    "ime": "PAPAGAYO",
+    "cena": "9,00",
+    "doplacilo": "4,90"
+  },
+  {
+    "ime": "PIZZERIA IN ŠPAGETERIA AL CAPONE",
+    "cena": "9,00",
+    "doplacilo": "4,90"
+  },
+  {
+    "ime": "PIZZERIA VIVALDI",
+    "cena": "9,00",
+    "doplacilo": "4,90"
+  },
+  {
+    "ime": "PROMETNA ŠOLA MARIBOR",
+    "cena": "7,00",
+    "doplacilo": "2,90"
+  },
+  {
+    "ime": "Q SLOVENSKA",
+    "cena": "9,00",
+    "doplacilo": "4,90"
+  },
+  {
+    "ime": "Q TABOR",
+    "cena": "9,00",
+    "doplacilo": "4,90"
+  },
+  {
+    "ime": "RESTAVRACIJA ANCORA",
+    "cena": "8,72",
+    "doplacilo": "4,62"
+  },
+  {
+    "ime": "RESTAVRACIJA EAT SMART 1",
+    "cena": "8,10",
+    "doplacilo": "4,00"
+  },
+  {
+    "ime": "RESTAVRACIJA EAT SMART 2",
+    "cena": "8,10",
+    "doplacilo": "4,00"
+  },
+  {
+    "ime": "RESTAVRACIJA INTERSPAR MARIBOR EUROPARK",
+    "cena": "8,62",
+    "doplacilo": "4,52"
+  },
+  {
+    "ime": "RESTAVRACIJA INTERSPAR MARIBOR2 SUPERNOVA QLANDIA",
+    "cena": "8,62",
+    "doplacilo": "4,52"
+  },
+  {
+    "ime": "RESTAVRACIJA MANGO",
+    "cena": "8,30",
+    "doplacilo": "4,20"
+  },
+  {
+    "ime": "RESTAVRACIJA MR.FALAFEL",
+    "cena": "9,00",
+    "doplacilo": "4,90"
+  },
+  {
+    "ime": "RESTAVRACIJA PIANO",
+    "cena": "8,10",
+    "doplacilo": "4,00"
+  },
+  {
+    "ime": "RESTAVRACIJA ŠTUDENTSKI DOM 16",
+    "cena": "8,40",
+    "doplacilo": "4,30"
+  },
+  {
+    "ime": "RESTAVRACIJA ZLATA SREČA",
+    "cena": "8,02",
+    "doplacilo": "3,92"
+  },
+  {
+    "ime": "STARI GRILL",
+    "cena": "8,20",
+    "doplacilo": "4,10"
+  },
+  {
+    "ime": "ŠIŠ OKREPČEVALNICA",
+    "cena": "8,52",
+    "doplacilo": "4,42"
+  },
+  {
+    "ime": "TAVERNA PALERMO",
+    "cena": "8,62",
+    "doplacilo": "4,52"
+  },
+  {
+    "ime": "TAVERNA PALERMO - DOSTAVA",
+    "cena": "8,62",
+    "doplacilo": "4,52"
+  },
+  {
+    "ime": "URNEBES URBAN GRILL",
+    "cena": "7,10",
+    "doplacilo": "3,00"
+  },
+  {
+    "ime": "WOK MIX CENTER",
+    "cena": "7,00",
+    "doplacilo": "2,90"
+  },
+  {
+    "ime": "ŽITO LEON ŠTUKELJ MARIBOR",
+    "cena": "4,10",
+    "doplacilo": "0,00"
+  },
+  {
+    "ime": "ŽITO MARIBOR TRG REVOLUCIJE",
+    "cena": "4,10",
+    "doplacilo": "0,00"
+  }
+]
