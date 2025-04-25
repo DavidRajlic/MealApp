@@ -1,26 +1,20 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import MyProfileWrapper from '../screens/ProfileWrapper';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import { useUser } from '../context/UserContext';
 
-export type MyProfileStackParamList = {
-    MyProfileWrapper: undefined;
-    Login: undefined;
-    Register: undefined;
-    Profile: undefined;
-};
+export default function MyProfileScreen() {
+    const {isLoggedIn} = useUser()
 
-const Stack = createNativeStackNavigator<MyProfileStackParamList>();
-
-export default function MyProfileStack() {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="MyProfileWrapper" component={MyProfileWrapper} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Register" component={RegisterScreen} />
-            <Stack.Screen name="Profile" component={ProfileScreen} />
-        </Stack.Navigator>
+        <>
+            {
+                isLoggedIn ?
+                <ProfileScreen />
+                :
+                <LoginScreen />
+            }
+        </>
     );
 }

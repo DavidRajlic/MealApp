@@ -1,19 +1,17 @@
 import Avatar from "../components/UI/Avatar"
 import Button from "../components/UI/Button"
 import Container from "../components/UI/Container"
-import CustomNavbar from "../components/UI/CustomNavbar"
 import Text from "../components/UI/Text"
 import TextInput from "../components/UI/TextInput"
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { MyProfileStackParamList } from '../screens/ProfileStack';
 import { View } from "react-native"
+import { useUser } from "../context/UserContext"
 
+type RegisterScreenProps = {
+    onCancel: () => void
+}
 
-type NavigationProp = NativeStackNavigationProp<MyProfileStackParamList, 'Login'>;
-
-function RegisterScreen() {
-    const navigation = useNavigation<NavigationProp>();
+function RegisterScreen({onCancel}: RegisterScreenProps) {
+    const userCtx = useUser()
 
     return (
         <Container style={{ rowGap: 8, padding: 16, flex: 1, justifyContent: 'center' }}>
@@ -25,8 +23,8 @@ function RegisterScreen() {
             <TextInput placeholder="Name" style={{ width: '100%' }} />
             <TextInput placeholder="Password" secureTextEntry style={{ width: '100%' }} />
             <TextInput placeholder="Confirm Password" secureTextEntry style={{ width: '100%' }} />
-            <Button onPress={() => navigation.navigate('Profile')}>Sign Up</Button>
-            <Button mode="SECONDARY" onPress={() => navigation.navigate('Login')}>Cancel</Button>
+            <Button onPress={() => userCtx.login()}>Sign Up</Button>
+            <Button mode="SECONDARY" onPress={() => onCancel()}>Cancel</Button>
         </Container>
     )
 }
