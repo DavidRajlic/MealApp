@@ -1,4 +1,4 @@
-const fetch = require('node-fetch'); // verzija 2
+const fetch = require('node-fetch'); 
 const { JSDOM } = require('jsdom');
 const fs = require('fs');
 
