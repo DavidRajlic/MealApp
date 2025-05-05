@@ -36,7 +36,7 @@ function CustomNavbar({descriptors, insets, navigation, state}: BottomTabBarProp
 
   return (
     <View style={[{backgroundColor: colors.surfaceVariant}, styles.container]}>
-      <Pressable android_ripple={rippleConfig} style={styles.pressable} onPress={() => navigation.navigate('Map')}>
+      <Pressable android_ripple={rippleConfig} style={styles.pressable} onPress={() => navigation.navigate('Search')}>
         <Ionicons name="search" size={iconSize} color={iconColor} />
       </Pressable>
       <Pressable android_ripple={rippleConfig} style={styles.pressable} onPress={() => navigation.navigate('Home')}>
