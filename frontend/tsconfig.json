@@ -3,6 +3,7 @@
     "**/*",
     "**/.server/**/*",
     "**/.client/**/*",
+    "globals.d.ts",
     ".react-router/types/**/*"
   ],
   "compilerOptions": {

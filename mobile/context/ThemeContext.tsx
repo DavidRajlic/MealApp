@@ -13,6 +13,7 @@ export function useTheme() {
 }
 
 export type ThemeContextType = {
+  theme: "dark" | "light"
   colors: ThemeColorsType
 }
 
@@ -75,14 +76,17 @@ const darkMode: ThemeColorsType = {
 
 function ThemeContextProvider({children}: {children: ReactNode}) {
   const [colors, setColors] = useState<ThemeColorsType>(lightMode)
+  const [theme, setTheme] = useState<"dark" | "light">("dark")
   let colorScheme = useColorScheme();
 
   useEffect(() => {
     setColors(colorScheme === 'dark' ? darkMode : lightMode)
+    setTheme(colorScheme ? colorScheme : 'light')
   }, [colorScheme])
 
   const ctx: ThemeContextType = {
-    colors
+    colors,
+    theme
   }
 
   return <ThemeContext.Provider value={ctx}>{children}</ThemeContext.Provider>

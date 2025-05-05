@@ -2,15 +2,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ComponentsScreen from "./screens/ComponentsScreen";
 import CustomNavbar from "./components/UI/CustomNavbar";
-import MyProfileWrapper from "./screens/ProfileWrapper";
-import LoginScreen from "./screens/LoginScreen";
-import RegisterScreen from "./screens/RegisterScreen";
-import ProfileScreen from "./screens/ProfileScreen";
-import MyProfileStack from "./screens/ProfileStack";
+import MyProfileScreen from "./screens/MyProfileScreen";
+import SearchScreen from "./screens/SearchScreen";
 
 export type BottomTabParamList = {
   Home: undefined,
-  Map: undefined,
+  Search: undefined,
   MyProfile: undefined
 }
 
@@ -23,8 +20,8 @@ function BottomTabNavigation() {
       headerShown: false
     }} tabBar={props => <CustomNavbar {...props} />}>
       <Tab.Screen name="Home" component={ComponentsScreen} />
-      <Tab.Screen name="Map" component={ComponentsScreen} />
-      <Tab.Screen name="MyProfile" component={MyProfileStack} />
+      <Tab.Screen name="Search" component={SearchScreen} />
+      <Tab.Screen name="MyProfile" component={MyProfileScreen} />
     </Tab.Navigator>
   )
 }

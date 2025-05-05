@@ -1,7 +1,14 @@
 // context/AuthContext.tsx
 import React, { createContext, useContext, useState } from 'react';
 
-const UserContext = createContext({
+type UserContextType = {
+    isLoggedIn: boolean,
+    login: () => void,
+    logout: () => void
+}
+
+
+const UserContext = createContext<UserContextType>({
     isLoggedIn: false,
     login: () => { },
     logout: () => { },

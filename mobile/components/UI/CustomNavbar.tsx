@@ -1,5 +1,5 @@
 import { Keyboard, Pressable, StyleSheet, View, type PressableAndroidRippleConfig } from "react-native";
-import { useTheme } from "../../store/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { useEffect, useState } from "react";
@@ -36,7 +36,7 @@ function CustomNavbar({descriptors, insets, navigation, state}: BottomTabBarProp
 
   return (
     <View style={[{backgroundColor: colors.surfaceVariant}, styles.container]}>
-      <Pressable android_ripple={rippleConfig} style={styles.pressable} onPress={() => navigation.navigate('Map')}>
+      <Pressable android_ripple={rippleConfig} style={styles.pressable} onPress={() => navigation.navigate('Search')}>
         <Ionicons name="search" size={iconSize} color={iconColor} />
       </Pressable>
       <Pressable android_ripple={rippleConfig} style={styles.pressable} onPress={() => navigation.navigate('Home')}>

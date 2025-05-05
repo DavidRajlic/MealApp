@@ -1,7 +1,7 @@
 import { PressableProps, Pressable, type StyleProp, StyleSheet, View, type ViewStyle, ActivityIndicator } from "react-native"
 import Text from "./Text"
 import { type ReactNode } from "react"
-import { useTheme } from "../../store/ThemeContext"
+import { useTheme } from "../../context/ThemeContext"
 
 interface MyButtonProps extends PressableProps {
   mode?: "PRIMARY" | "SECONDARY" | "WARNING" | "TRANSPARENT",
