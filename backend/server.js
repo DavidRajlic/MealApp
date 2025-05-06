@@ -10,7 +10,7 @@ const port = 4001;
 
 app.use(express.json());
 
-app.use('/users', userRoutes);
+app.use('/api/auth', userRoutes);
 app.use('/restaurants', restaurantRoutes);
 app.use('/reviews', reviewRoutes);
 

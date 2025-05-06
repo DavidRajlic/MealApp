@@ -1,4 +1,4 @@
-var RestaurantModel = require('../models/RestaurantModel.js');
+const RestaurantModel = require('../models/RestaurantModel.js');
 
 /**
  * RestaurantController.js
@@ -10,119 +10,102 @@ module.exports = {
     /**
      * RestaurantController.list()
      */
-    list: function (req, res) {
-        RestaurantModel.find(function (err, restaurants) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting restaurants.',
-                    error: err
-                });
-            }
-
+    list: async function (req, res) {
+        try {
+            const restaurants = await RestaurantModel.find();
             return res.json(restaurants);
-        });
+        } catch (err) {
+            return res.status(500).json({
+                message: 'Error when getting restaurants.',
+                error: err
+            });
+        }
     },
 
     /**
      * RestaurantController.show()
      */
-    show: function (req, res) {
-        var id = req.params.id;
-
-        RestaurantModel.findOne({_id: id}, function (err, restaurant) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting restaurant.',
-                    error: err
-                });
-            }
-
+    show: async function (req, res) {
+        try {
+            const id = req.params.id;
+            const restaurant = await RestaurantModel.findById(id);
             if (!restaurant) {
                 return res.status(404).json({
                     message: 'No such restaurant'
                 });
             }
-
             return res.json(restaurant);
-        });
+        } catch (err) {
+            return res.status(500).json({
+                message: 'Error when getting restaurant.',
+                error: err
+            });
+        }
     },
 
     /**
      * RestaurantController.create()
      */
-    create: function (req, res) {
-        var restaurant = new RestaurantModel({
-            name: req.body.name,
-            location: req.body.location,
-            reviews: req.body.reviews || [],
-            averageRating: req.body.averageRating || 0
-        });
+    create: async function (req, res) {
+        try {
+            const restaurant = new RestaurantModel({
+                name: req.body.name,
+                location: req.body.location,
+                reviews: req.body.reviews || [],
+                averageRating: req.body.averageRating || 0
+            });
 
-        restaurant.save(function (err, restaurant) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when creating restaurant',
-                    error: err
-                });
-            }
-
-            return res.status(201).json(restaurant);
-        });
+            const savedRestaurant = await restaurant.save();
+            return res.status(201).json(savedRestaurant);
+        } catch (err) {
+            return res.status(500).json({
+                message: 'Error when creating restaurant',
+                error: err
+            });
+        }
     },
 
     /**
      * RestaurantController.update()
      */
-    update: function (req, res) {
-        var id = req.params.id;
-
-        RestaurantModel.findOne({_id: id}, function (err, restaurant) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting restaurant',
-                    error: err
-                });
-            }
-
+    update: async function (req, res) {
+        try {
+            const id = req.params.id;
+            const restaurant = await RestaurantModel.findById(id);
             if (!restaurant) {
                 return res.status(404).json({
                     message: 'No such restaurant'
                 });
             }
 
-            restaurant.name = req.body.name ? req.body.name : restaurant.name;
-            restaurant.location = req.body.location ? req.body.location : restaurant.location;
-            restaurant.reviews = req.body.reviews ? req.body.reviews : restaurant.reviews;
-            restaurant.averageRating = req.body.averageRating ? req.body.averageRating : restaurant.averageRating;
+            restaurant.name = req.body.name || restaurant.name;
+            restaurant.location = req.body.location || restaurant.location;
+            restaurant.reviews = req.body.reviews || restaurant.reviews;
+            restaurant.averageRating = req.body.averageRating || restaurant.averageRating;
 
-            restaurant.save(function (err, restaurant) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when updating restaurant.',
-                        error: err
-                    });
-                }
-
-                return res.json(restaurant);
+            const updatedRestaurant = await restaurant.save();
+            return res.json(updatedRestaurant);
+        } catch (err) {
+            return res.status(500).json({
+                message: 'Error when updating restaurant.',
+                error: err
             });
-        });
+        }
     },
 
     /**
      * RestaurantController.remove()
      */
-    remove: function (req, res) {
-        var id = req.params.id;
-
-        RestaurantModel.findByIdAndRemove(id, function (err, restaurant) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when deleting the restaurant.',
-                    error: err
-                });
-            }
-
+    remove: async function (req, res) {
+        try {
+            const id = req.params.id;
+            await RestaurantModel.findByIdAndDelete(id);
             return res.status(204).json();
-        });
+        } catch (err) {
+            return res.status(500).json({
+                message: 'Error when deleting the restaurant.',
+                error: err
+            });
+        }
     }
 };
