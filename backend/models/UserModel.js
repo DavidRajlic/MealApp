@@ -4,7 +4,7 @@ var Schema   = mongoose.Schema;
 var UserSchema = new Schema({
 	'name' : String,
 	'email' : String,
-	'reviews' : Array,
+	'reviews' : [{ type: Schema.Types.ObjectId, ref: 'Review' }],
 	'trusted_status' : Boolean
 });
 
