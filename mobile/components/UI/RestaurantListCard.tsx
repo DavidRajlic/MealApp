@@ -33,7 +33,7 @@ function RestaurantListCard({ children, style }: RestaurantListCardProps) {
                             <Ionicons name="star" size={18} color="#B0803D" style={styles.starIcon} />
                             <Ionicons name="star" size={18} color="#B0803D" style={styles.starIcon} />
                             <Ionicons name="star" size={18} color="#B0803D" style={styles.starIcon} />
-                            <Ionicons name="star" size={18} color="gray" style={styles.starIcon} />
+                            <Ionicons name="star" size={18} color={colors.surface} style={styles.starIcon} />
                             <Text style={[styles.reviewCount, { color: colors.shadow }]}>4</Text>
                         </View>
                         <Text style={[styles.reviewText, { color: colors.shadow }]}>Super Pica!</Text>
