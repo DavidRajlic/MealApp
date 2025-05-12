@@ -1,0 +1,187 @@
+[
+    {
+      "name": "BAŠČARŠIJA MARIBOR GOSPOSVETSKA",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.2,
+      "reviews": []
+    },
+    {
+      "name": "CANTANTE CAFE TABOR",
+      "price": "8,50",
+      "additional_payment": "4,40",
+      "location": "Maribor",
+      "averageRating": 4.0,
+      "reviews": []
+    },
+    {
+      "name": "CANTANTE CAFE LENT",
+      "price": "8,50",
+      "additional_payment": "4,40",
+      "location": "Maribor",
+      "averageRating": 3.8,
+      "reviews": []
+    },
+    {
+      "name": "GOSTILNA PRI TILČKU",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.4,
+      "reviews": []
+    },
+    {
+      "name": "GOSTILNA ROŽIČ",
+      "price": "8,50",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.1,
+      "reviews": []
+    },
+    {
+      "name": "GOSTILNA TILEN",
+      "price": "8,50",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 3.9,
+      "reviews": []
+    },
+    {
+      "name": "GOSTIŠČE PRI POKU",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.6,
+      "reviews": []
+    },
+    {
+      "name": "KAVARNA LOKAL",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.3,
+      "reviews": []
+    },
+    {
+      "name": "LOVSKI DOM HOČE",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.5,
+      "reviews": []
+    },
+    {
+      "name": "OKREPČEVALNICA MEDENA",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.0,
+      "reviews": []
+    },
+    {
+      "name": "OKREPČEVALNICA PAV",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 3.7,
+      "reviews": []
+    },
+    {
+      "name": "OKREPČEVALNICA PETKA",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.2,
+      "reviews": []
+    },
+    {
+      "name": "OKREPČEVALNICA ZLATOLIČKA",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.3,
+      "reviews": []
+    },
+    {
+      "name": "PIVNICA ZLATOROG",
+      "price": "8,50",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.1,
+      "reviews": []
+    },
+    {
+      "name": "POŠTNA ULICA",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.0,
+      "reviews": []
+    },
+    {
+      "name": "PRI MAKSU",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 3.8,
+      "reviews": []
+    },
+    {
+      "name": "RESTAVRACIJA DRAŠ",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.5,
+      "reviews": []
+    },
+    {
+      "name": "RESTAVRACIJA KOPER",
+      "price": "8,50",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.2,
+      "reviews": []
+    },
+    {
+      "name": "RESTAVRACIJA LAGUNA",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.3,
+      "reviews": []
+    },
+    {
+      "name": "ROŽMARIN",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.6,
+      "reviews": []
+    },
+    {
+      "name": "ŠTUK",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.0,
+      "reviews": []
+    },
+    {
+      "name": "TETA FRIDA",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.4,
+      "reviews": []
+    },
+    {
+      "name": "UNIVERZITETNI REKREACIJSKI CENTER LEONA ŠTUKLJA",
+      "price": "8,60",
+      "additional_payment": "4,50",
+      "location": "Maribor",
+      "averageRating": 4.5,
+      "reviews": []
+    }
+]
+  

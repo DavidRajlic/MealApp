@@ -1,262 +1,262 @@
 [
   {
-    "ime": "BAŠČARŠIJA MARIBOR GOSPOSVETSKA",
-    "cena": "8,60",
-    "doplacilo": "4,50"
+    "name": "BAŠČARŠIJA MARIBOR GOSPOSVETSKA",
+    "price": "8,60",
+    "additional_payment": "4,50"
   },
   {
-    "ime": "CANTANTE CAFE TABOR",
-    "cena": "8,50",
-    "doplacilo": "4,40"
+    "name": "CANTANTE CAFE TABOR",
+    "price": "8,50",
+    "additional_payment": "4,40"
   },
   {
-    "ime": "CANTANTE CAFE TABOR - DOSTAVA",
-    "cena": "9,00",
-    "doplacilo": "4,90"
+    "name": "CANTANTE CAFE TABOR - DOSTAVA",
+    "price": "9,00",
+    "additional_payment": "4,90"
   },
   {
-    "ime": "CHUTYS EUROPARK MARIBOR",
-    "cena": "9,00",
-    "doplacilo": "4,90"
+    "name": "CHUTYS EUROPARK MARIBOR",
+    "price": "9,00",
+    "additional_payment": "4,90"
   },
   {
-    "ime": "CITY GRILL",
-    "cena": "8,10",
-    "doplacilo": "4,00"
+    "name": "CITY GRILL",
+    "price": "8,10",
+    "additional_payment": "4,00"
   },
   {
-    "ime": "DIJAŠKI DOM LIZIKE JANČAR",
-    "cena": "7,00",
-    "doplacilo": "2,90"
+    "name": "DIJAŠKI DOM LIZIKE JANČAR",
+    "price": "7,00",
+    "additional_payment": "2,90"
   },
   {
-    "ime": "DOM POD GORCO",
-    "cena": "7,00",
-    "doplacilo": "2,90"
+    "name": "DOM POD GORCO",
+    "price": "7,00",
+    "additional_payment": "2,90"
   },
   {
-    "ime": "GOSTILNA ZLATI LEV",
-    "cena": "8,00",
-    "doplacilo": "3,90"
+    "name": "GOSTILNA ZLATI LEV",
+    "price": "8,00",
+    "additional_payment": "3,90"
   },
   {
-    "ime": "GOSTILNA ZLATI LEV - DOSTAVA",
-    "cena": "8,60",
-    "doplacilo": "4,50"
+    "name": "GOSTILNA ZLATI LEV - DOSTAVA",
+    "price": "8,60",
+    "additional_payment": "4,50"
   },
   {
-    "ime": "GURMANSKI HRAM",
-    "cena": "8,59",
-    "doplacilo": "4,49"
+    "name": "GURMANSKI HRAM",
+    "price": "8,59",
+    "additional_payment": "4,49"
   },
   {
-    "ime": "GURMANSKI HRAM - DOSTAVA",
-    "cena": "8,79",
-    "doplacilo": "4,69"
+    "name": "GURMANSKI HRAM - DOSTAVA",
+    "price": "8,79",
+    "additional_payment": "4,69"
   },
   {
-    "ime": "KITAJSKA RESTAVRACIJA ZLATA SRNA",
-    "cena": "8,20",
-    "doplacilo": "4,10"
+    "name": "KITAJSKA RESTAVRACIJA ZLATA SRNA",
+    "price": "8,20",
+    "additional_payment": "4,10"
   },
   {
-    "ime": "KITAJSKA RESTAVRACIJA ZLATA SRNA - DOSTAVA",
-    "cena": "9,00",
-    "doplacilo": "4,90"
+    "name": "KITAJSKA RESTAVRACIJA ZLATA SRNA - DOSTAVA",
+    "price": "9,00",
+    "additional_payment": "4,90"
   },
   {
-    "ime": "KITAJSKA RESTAVRACIJA ZLATA SRNA 2",
-    "cena": "8,20",
-    "doplacilo": "4,10"
+    "name": "KITAJSKA RESTAVRACIJA ZLATA SRNA 2",
+    "price": "8,20",
+    "additional_payment": "4,10"
   },
   {
-    "ime": "KOZLOVNA POŠTNA",
-    "cena": "9,00",
-    "doplacilo": "4,90"
+    "name": "KOZLOVNA POŠTNA",
+    "price": "9,00",
+    "additional_payment": "4,90"
   },
   {
-    "ime": "LOVING HUT ",
-    "cena": "8,02",
-    "doplacilo": "3,92"
+    "name": "LOVING HUT ",
+    "price": "8,02",
+    "additional_payment": "3,92"
   },
   {
-    "ime": "LUNCH BOX",
-    "cena": "5,10",
-    "doplacilo": "1,00"
+    "name": "LUNCH BOX",
+    "price": "5,10",
+    "additional_payment": "1,00"
   },
   {
-    "ime": "MANGO SNACKS",
-    "cena": "4,10",
-    "doplacilo": "0,00"
+    "name": "MANGO SNACKS",
+    "price": "4,10",
+    "additional_payment": "0,00"
   },
   {
-    "ime": "MC PANDA",
-    "cena": "5,10",
-    "doplacilo": "1,00"
+    "name": "MC PANDA",
+    "price": "5,10",
+    "additional_payment": "1,00"
   },
   {
-    "ime": "MCDONALD´S RESTAVRACIJA - SWATY",
-    "cena": "7,80",
-    "doplacilo": "3,70"
+    "name": "MCDONALD´S RESTAVRACIJA - SWATY",
+    "price": "7,80",
+    "additional_payment": "3,70"
   },
   {
-    "ime": "MCDONALD´S RESTAVRACIJA EUROPARK",
-    "cena": "7,80",
-    "doplacilo": "3,70"
+    "name": "MCDONALD´S RESTAVRACIJA EUROPARK",
+    "price": "7,80",
+    "additional_payment": "3,70"
   },
   {
-    "ime": "MCDONALD´S RESTAVRACIJA PTUJSKA",
-    "cena": "7,80",
-    "doplacilo": "3,70"
+    "name": "MCDONALD´S RESTAVRACIJA PTUJSKA",
+    "price": "7,80",
+    "additional_payment": "3,70"
   },
   {
-    "ime": "MCDONALD´S RESTAVRACIJA STUDENCI",
-    "cena": "7,80",
-    "doplacilo": "3,70"
+    "name": "MCDONALD´S RESTAVRACIJA STUDENCI",
+    "price": "7,80",
+    "additional_payment": "3,70"
   },
   {
-    "ime": "MCDONALD'S PETROL MARIBOR",
-    "cena": "7,80",
-    "doplacilo": "3,70"
+    "name": "MCDONALD'S PETROL MARIBOR",
+    "price": "7,80",
+    "additional_payment": "3,70"
   },
   {
-    "ime": "ME GUSTA",
-    "cena": "7,00",
-    "doplacilo": "2,90"
+    "name": "ME GUSTA",
+    "price": "7,00",
+    "additional_payment": "2,90"
   },
   {
-    "ime": "MM PANDA",
-    "cena": "7,10",
-    "doplacilo": "3,00"
+    "name": "MM PANDA",
+    "price": "7,10",
+    "additional_payment": "3,00"
   },
   {
-    "ime": "OKREPČEVALNICA FERI",
-    "cena": "4,10",
-    "doplacilo": "0,00"
+    "name": "OKREPČEVALNICA FERI",
+    "price": "4,10",
+    "additional_payment": "0,00"
   },
   {
-    "ime": "OKREPČEVALNICA IZUM",
-    "cena": "8,00",
-    "doplacilo": "3,90"
+    "name": "OKREPČEVALNICA IZUM",
+    "price": "8,00",
+    "additional_payment": "3,90"
   },
   {
-    "ime": "PAPAGAYO",
-    "cena": "9,00",
-    "doplacilo": "4,90"
+    "name": "PAPAGAYO",
+    "price": "9,00",
+    "additional_payment": "4,90"
   },
   {
-    "ime": "PIZZERIA IN ŠPAGETERIA AL CAPONE",
-    "cena": "9,00",
-    "doplacilo": "4,90"
+    "name": "PIZZERIA IN ŠPAGETERIA AL CAPONE",
+    "price": "9,00",
+    "additional_payment": "4,90"
   },
   {
-    "ime": "PIZZERIA VIVALDI",
-    "cena": "9,00",
-    "doplacilo": "4,90"
+    "name": "PIZZERIA VIVALDI",
+    "price": "9,00",
+    "additional_payment": "4,90"
   },
   {
-    "ime": "PROMETNA ŠOLA MARIBOR",
-    "cena": "7,00",
-    "doplacilo": "2,90"
+    "name": "PROMETNA ŠOLA MARIBOR",
+    "price": "7,00",
+    "additional_payment": "2,90"
   },
   {
-    "ime": "Q SLOVENSKA",
-    "cena": "9,00",
-    "doplacilo": "4,90"
+    "name": "Q SLOVENSKA",
+    "price": "9,00",
+    "additional_payment": "4,90"
   },
   {
-    "ime": "Q TABOR",
-    "cena": "9,00",
-    "doplacilo": "4,90"
+    "name": "Q TABOR",
+    "price": "9,00",
+    "additional_payment": "4,90"
   },
   {
-    "ime": "RESTAVRACIJA ANCORA",
-    "cena": "8,72",
-    "doplacilo": "4,62"
+    "name": "RESTAVRACIJA ANCORA",
+    "price": "8,72",
+    "additional_payment": "4,62"
   },
   {
-    "ime": "RESTAVRACIJA EAT SMART 1",
-    "cena": "8,10",
-    "doplacilo": "4,00"
+    "name": "RESTAVRACIJA EAT SMART 1",
+    "price": "8,10",
+    "additional_payment": "4,00"
   },
   {
-    "ime": "RESTAVRACIJA EAT SMART 2",
-    "cena": "8,10",
-    "doplacilo": "4,00"
+    "name": "RESTAVRACIJA EAT SMART 2",
+    "price": "8,10",
+    "additional_payment": "4,00"
   },
   {
-    "ime": "RESTAVRACIJA INTERSPAR MARIBOR EUROPARK",
-    "cena": "8,62",
-    "doplacilo": "4,52"
+    "name": "RESTAVRACIJA INTERSPAR MARIBOR EUROPARK",
+    "price": "8,62",
+    "additional_payment": "4,52"
   },
   {
-    "ime": "RESTAVRACIJA INTERSPAR MARIBOR2 SUPERNOVA QLANDIA",
-    "cena": "8,62",
-    "doplacilo": "4,52"
+    "name": "RESTAVRACIJA INTERSPAR MARIBOR2 SUPERNOVA QLANDIA",
+    "price": "8,62",
+    "additional_payment": "4,52"
   },
   {
-    "ime": "RESTAVRACIJA MANGO",
-    "cena": "8,30",
-    "doplacilo": "4,20"
+    "name": "RESTAVRACIJA MANGO",
+    "price": "8,30",
+    "additional_payment": "4,20"
   },
   {
-    "ime": "RESTAVRACIJA MR.FALAFEL",
-    "cena": "9,00",
-    "doplacilo": "4,90"
+    "name": "RESTAVRACIJA MR.FALAFEL",
+    "price": "9,00",
+    "additional_payment": "4,90"
   },
   {
-    "ime": "RESTAVRACIJA PIANO",
-    "cena": "8,10",
-    "doplacilo": "4,00"
+    "name": "RESTAVRACIJA PIANO",
+    "price": "8,10",
+    "additional_payment": "4,00"
   },
   {
-    "ime": "RESTAVRACIJA ŠTUDENTSKI DOM 16",
-    "cena": "8,40",
-    "doplacilo": "4,30"
+    "name": "RESTAVRACIJA ŠTUDENTSKI DOM 16",
+    "price": "8,40",
+    "additional_payment": "4,30"
   },
   {
-    "ime": "RESTAVRACIJA ZLATA SREČA",
-    "cena": "8,02",
-    "doplacilo": "3,92"
+    "name": "RESTAVRACIJA ZLATA SREČA",
+    "price": "8,02",
+    "additional_payment": "3,92"
   },
   {
-    "ime": "STARI GRILL",
-    "cena": "8,20",
-    "doplacilo": "4,10"
+    "name": "STARI GRILL",
+    "price": "8,20",
+    "additional_payment": "4,10"
   },
   {
-    "ime": "ŠIŠ OKREPČEVALNICA",
-    "cena": "8,52",
-    "doplacilo": "4,42"
+    "name": "ŠIŠ OKREPČEVALNICA",
+    "price": "8,52",
+    "additional_payment": "4,42"
   },
   {
-    "ime": "TAVERNA PALERMO",
-    "cena": "8,62",
-    "doplacilo": "4,52"
+    "name": "TAVERNA PALERMO",
+    "price": "8,62",
+    "additional_payment": "4,52"
   },
   {
-    "ime": "TAVERNA PALERMO - DOSTAVA",
-    "cena": "8,62",
-    "doplacilo": "4,52"
+    "name": "TAVERNA PALERMO - DOSTAVA",
+    "price": "8,62",
+    "additional_payment": "4,52"
   },
   {
-    "ime": "URNEBES URBAN GRILL",
-    "cena": "7,10",
-    "doplacilo": "3,00"
+    "name": "URNEBES URBAN GRILL",
+    "price": "7,10",
+    "additional_payment": "3,00"
   },
   {
-    "ime": "WOK MIX CENTER",
-    "cena": "7,00",
-    "doplacilo": "2,90"
+    "name": "WOK MIX CENTER",
+    "price": "7,00",
+    "additional_payment": "2,90"
   },
   {
-    "ime": "ŽITO LEON ŠTUKELJ MARIBOR",
-    "cena": "4,10",
-    "doplacilo": "0,00"
+    "name": "ŽITO LEON ŠTUKELJ MARIBOR",
+    "price": "4,10",
+    "additional_payment": "0,00"
   },
   {
-    "ime": "ŽITO MARIBOR TRG REVOLUCIJE",
-    "cena": "4,10",
-    "doplacilo": "0,00"
+    "name": "ŽITO MARIBOR TRG REVOLUCIJE",
+    "price": "4,10",
+    "additional_payment": "0,00"
   }
 ]
