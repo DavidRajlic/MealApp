@@ -48,26 +48,20 @@ module.exports = {
      */
     create: async function (req, res) {
         try {
-            const restaurant = new RestaurantModel({
-                name: req.body.name,
-                location: req.body.location,
-                reviews: req.body.reviews || [],
-                averageRating: req.body.averageRating || 0
-            });
-
-            const savedRestaurant = await restaurant.save();
-            return res.status(201).json(savedRestaurant);
+            const restaurantsData = req.body;
+            const savedRestaurants = await RestaurantModel.insertMany(restaurantsData);
+            
+            return res.status(201).json(savedRestaurants);
         } catch (err) {
+            console.error('Error when creating restaurants:', err);
             return res.status(500).json({
-                message: 'Error when creating restaurant',
+                message: 'Error when creating restaurants',
                 error: err
             });
         }
     },
+    
 
-    /**
-     * RestaurantController.update()
-     */
     update: async function (req, res) {
         try {
             const id = req.params.id;
@@ -77,8 +71,9 @@ module.exports = {
                     message: 'No such restaurant'
                 });
             }
-
             restaurant.name = req.body.name || restaurant.name;
+            restaurant.price = req.body.price || restaurant.price;  
+            restaurant.additional_payment = req.body.additional_payment || restaurant.additional_payment;  // Posodobi dodatno plačilo
             restaurant.location = req.body.location || restaurant.location;
             restaurant.reviews = req.body.reviews || restaurant.reviews;
             restaurant.averageRating = req.body.averageRating || restaurant.averageRating;
@@ -92,6 +87,8 @@ module.exports = {
             });
         }
     },
+
+
 
     /**
      * RestaurantController.remove()
