@@ -1,4 +1,4 @@
-var UserModel = require('../models/UserModel.js');
+const UserModel = require('../models/UserModel.js');
 
 /**
  * UserController.js
@@ -10,119 +10,102 @@ module.exports = {
     /**
      * UserController.list()
      */
-    list: function (req, res) {
-        UserModel.find(function (err, Users) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting User.',
-                    error: err
-                });
-            }
-
-            return res.json(Users);
-        });
+    list: async function (req, res) {
+        try {
+            const users = await UserModel.find();
+            return res.json(users);
+        } catch (err) {
+            return res.status(500).json({
+                message: 'Error when getting User.',
+                error: err
+            });
+        }
     },
 
     /**
      * UserController.show()
      */
-    show: function (req, res) {
-        var id = req.params.id;
-
-        UserModel.findOne({_id: id}, function (err, User) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting User.',
-                    error: err
-                });
-            }
-
-            if (!User) {
+    show: async function (req, res) {
+        const id = req.params.id;
+        try {
+            const user = await UserModel.findById(id);
+            if (!user) {
                 return res.status(404).json({
                     message: 'No such User'
                 });
             }
-
-            return res.json(User);
-        });
+            return res.json(user);
+        } catch (err) {
+            return res.status(500).json({
+                message: 'Error when getting User.',
+                error: err
+            });
+        }
     },
 
     /**
      * UserController.create()
      */
-    create: function (req, res) {
-        var User = new UserModel({
-			name : req.body.name,
-			email : req.body.email,
-			reviews : req.body.reviews,
-			trusted_status : req.body.trusted_status
+    create: async function (req, res) {
+        const user = new UserModel({
+            name: req.body.name,
+            email: req.body.email,
+            reviews: req.body.reviews,
+            trusted_status: req.body.trusted_status
         });
 
-        User.save(function (err, User) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when creating User',
-                    error: err
-                });
-            }
-
-            return res.status(201).json(User);
-        });
+        try {
+            const savedUser = await user.save();
+            return res.status(201).json(savedUser);
+        } catch (err) {
+            return res.status(500).json({
+                message: 'Error when creating User',
+                error: err
+            });
+        }
     },
 
     /**
      * UserController.update()
      */
-    update: function (req, res) {
-        var id = req.params.id;
-
-        UserModel.findOne({_id: id}, function (err, User) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting User',
-                    error: err
-                });
-            }
-
-            if (!User) {
+    update: async function (req, res) {
+        const id = req.params.id;
+        try {
+            const user = await UserModel.findById(id);
+            if (!user) {
                 return res.status(404).json({
                     message: 'No such User'
                 });
             }
 
-            User.name = req.body.name ? req.body.name : User.name;
-			User.email = req.body.email ? req.body.email : User.email;
-			User.reviews = req.body.reviews ? req.body.reviews : User.reviews;
-			User.trusted_status = req.body.trusted_status ? req.body.trusted_status : User.trusted_status;
-			
-            User.save(function (err, User) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when updating User.',
-                        error: err
-                    });
-                }
+            user.name = req.body.name || user.name;
+            user.email = req.body.email || user.email;
+            user.reviews = req.body.reviews || user.reviews;
+            user.trusted_status = req.body.trusted_status || user.trusted_status;
 
-                return res.json(User);
+            const updatedUser = await user.save();
+            return res.json(updatedUser);
+        } catch (err) {
+            return res.status(500).json({
+                message: 'Error when updating User.',
+                error: err
             });
-        });
+        }
     },
 
     /**
      * UserController.remove()
      */
-    remove: function (req, res) {
-        var id = req.params.id;
-
-        UserModel.findByIdAndRemove(id, function (err, User) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when deleting the User.',
-                    error: err
-                });
-            }
-
+    remove: async function (req, res) {
+        const id = req.params.id;
+        try {
+            await UserModel.findByIdAndRemove(id);
             return res.status(204).json();
-        });
+        } catch (err) {
+            return res.status(500).json({
+                message: 'Error when deleting the User.',
+                error: err
+            });
+        }
     }
 };
