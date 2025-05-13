@@ -72,9 +72,7 @@ router.get('/:id', RestaurantController.show);
  *                 default: 0
  *               reviews:
  *                 type: array
- *                 items:
- *                   type: string
- *                   format: objectId
+ *                 default: [ ]
  *     responses:
  *       201:
  *         description: Restavracija ustvarjena
