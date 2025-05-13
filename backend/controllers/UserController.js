@@ -86,7 +86,7 @@ module.exports = {
                 return res.status(400).json({ message: 'Passwords do not match' });
             }
 
-           
+
             const user = new UserModel({
                 name,
                 email,
@@ -103,18 +103,21 @@ module.exports = {
 
     login: async (req, res) => {
         try {
-            UserModel.authenticate(req.body.email, req.body.password, function (err, user) {
-                if (err || !user) {
-                    return res.status(401).json({ message: 'Wrong username or password' });
-                }
-    
-                const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-                return res.json({ token });
-            });
+            const user = await UserModel.authenticate(req.body.email, req.body.password);
+
+            const token = jwt.sign(
+                { userId: user._id },
+                process.env.JWT_SECRET,
+                { expiresIn: '1h' }
+            );
+            
+
+            return res.json({ token });
         } catch (err) {
-            res.status(500).json({ message: 'Error when logging in', error: err.message || err });
+            return res.status(401).json({ message: err.message || 'Authentication failed.' });
         }
     },
+
 
     logout: async (req, res) => {
         try {

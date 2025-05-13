@@ -23,25 +23,19 @@ UserSchema.pre('save', function(next) {
   });
 });
 
-UserSchema.statics.authenticate = function(email, password, callback) {
-  this.findOne({ email: email })
-    .exec(function(err, user) {
-      if (err) return callback(err);
-      if (!user) {
-        const error = new Error('User not found.');
-        error.status = 401;
-        return callback(error);
-      }
-      
-      bcrypt.compare(password, user.password, function(err, result) {
-        if (err) return callback(err);
-        if (result === true) {
-          return callback(null, user); // Authentication successful
-        } else {
-          return callback(null, false); // Password doesn't match
-        }
-      });
-    });
+UserSchema.statics.authenticate = async function(email, password) {
+  const user = await this.findOne({ email: email });
+  if (!user) {
+    throw new Error('User not found.');
+  }
+
+  const result = await bcrypt.compare(password, user.password);
+  if (!result) {
+    throw new Error('Incorrect password.');
+  }
+
+  return user; // OK!
 };
+
 
 module.exports = mongoose.model('User', UserSchema);
