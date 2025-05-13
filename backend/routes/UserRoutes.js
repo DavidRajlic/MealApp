@@ -60,7 +60,7 @@ router.post('/', UserController.create);
 
 /**
  * @swagger
- * /login:
+ * /users/login:
  *   post:
  *     summary: Prijava uporabnika
  *     tags: [Auth]
