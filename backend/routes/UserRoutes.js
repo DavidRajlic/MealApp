@@ -81,6 +81,8 @@ router.post('/', UserController.create);
  *       201:
  *         description: Uporabnik registriran
  */
+
+router.post('/login', UserController.login);
 router.post('/register', UserController.signup);
 
 /**
