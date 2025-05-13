@@ -10,7 +10,8 @@ export type Resturant = {
   additional_payment: number,
   location: GpsLocation,
   averageRating: number,
-  reviews: Array<{}>
+  reviews: Array<{}>,
+  image?: string
 }
 
 export type User = {
