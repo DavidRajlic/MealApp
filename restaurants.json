@@ -1,0 +1,262 @@
+[
+  {
+    "name": "BAŠČARŠIJA MARIBOR GOSPOSVETSKA",
+    "price": "8,60",
+    "additional_payment": "4,50"
+  },
+  {
+    "name": "CANTANTE CAFE TABOR",
+    "price": "8,50",
+    "additional_payment": "4,40"
+  },
+  {
+    "name": "CANTANTE CAFE TABOR - DOSTAVA",
+    "price": "9,00",
+    "additional_payment": "4,90"
+  },
+  {
+    "name": "CHUTYS EUROPARK MARIBOR",
+    "price": "9,00",
+    "additional_payment": "4,90"
+  },
+  {
+    "name": "CITY GRILL",
+    "price": "8,10",
+    "additional_payment": "4,00"
+  },
+  {
+    "name": "DIJAŠKI DOM LIZIKE JANČAR",
+    "price": "7,00",
+    "additional_payment": "2,90"
+  },
+  {
+    "name": "DOM POD GORCO",
+    "price": "7,00",
+    "additional_payment": "2,90"
+  },
+  {
+    "name": "GOSTILNA ZLATI LEV",
+    "price": "8,00",
+    "additional_payment": "3,90"
+  },
+  {
+    "name": "GOSTILNA ZLATI LEV - DOSTAVA",
+    "price": "8,60",
+    "additional_payment": "4,50"
+  },
+  {
+    "name": "GURMANSKI HRAM",
+    "price": "8,59",
+    "additional_payment": "4,49"
+  },
+  {
+    "name": "GURMANSKI HRAM - DOSTAVA",
+    "price": "8,79",
+    "additional_payment": "4,69"
+  },
+  {
+    "name": "KITAJSKA RESTAVRACIJA ZLATA SRNA",
+    "price": "8,20",
+    "additional_payment": "4,10"
+  },
+  {
+    "name": "KITAJSKA RESTAVRACIJA ZLATA SRNA - DOSTAVA",
+    "price": "9,00",
+    "additional_payment": "4,90"
+  },
+  {
+    "name": "KITAJSKA RESTAVRACIJA ZLATA SRNA 2",
+    "price": "8,20",
+    "additional_payment": "4,10"
+  },
+  {
+    "name": "KOZLOVNA POŠTNA",
+    "price": "9,00",
+    "additional_payment": "4,90"
+  },
+  {
+    "name": "LOVING HUT ",
+    "price": "8,02",
+    "additional_payment": "3,92"
+  },
+  {
+    "name": "LUNCH BOX",
+    "price": "5,10",
+    "additional_payment": "1,00"
+  },
+  {
+    "name": "MANGO SNACKS",
+    "price": "4,10",
+    "additional_payment": "0,00"
+  },
+  {
+    "name": "MC PANDA",
+    "price": "5,10",
+    "additional_payment": "1,00"
+  },
+  {
+    "name": "MCDONALD´S RESTAVRACIJA - SWATY",
+    "price": "7,80",
+    "additional_payment": "3,70"
+  },
+  {
+    "name": "MCDONALD´S RESTAVRACIJA EUROPARK",
+    "price": "7,80",
+    "additional_payment": "3,70"
+  },
+  {
+    "name": "MCDONALD´S RESTAVRACIJA PTUJSKA",
+    "price": "7,80",
+    "additional_payment": "3,70"
+  },
+  {
+    "name": "MCDONALD´S RESTAVRACIJA STUDENCI",
+    "price": "7,80",
+    "additional_payment": "3,70"
+  },
+  {
+    "name": "MCDONALD'S PETROL MARIBOR",
+    "price": "7,80",
+    "additional_payment": "3,70"
+  },
+  {
+    "name": "ME GUSTA",
+    "price": "7,00",
+    "additional_payment": "2,90"
+  },
+  {
+    "name": "MM PANDA",
+    "price": "7,10",
+    "additional_payment": "3,00"
+  },
+  {
+    "name": "OKREPČEVALNICA FERI",
+    "price": "4,10",
+    "additional_payment": "0,00"
+  },
+  {
+    "name": "OKREPČEVALNICA IZUM",
+    "price": "8,00",
+    "additional_payment": "3,90"
+  },
+  {
+    "name": "PAPAGAYO",
+    "price": "9,00",
+    "additional_payment": "4,90"
+  },
+  {
+    "name": "PIZZERIA IN ŠPAGETERIA AL CAPONE",
+    "price": "9,00",
+    "additional_payment": "4,90"
+  },
+  {
+    "name": "PIZZERIA VIVALDI",
+    "price": "9,00",
+    "additional_payment": "4,90"
+  },
+  {
+    "name": "PROMETNA ŠOLA MARIBOR",
+    "price": "7,00",
+    "additional_payment": "2,90"
+  },
+  {
+    "name": "Q SLOVENSKA",
+    "price": "9,00",
+    "additional_payment": "4,90"
+  },
+  {
+    "name": "Q TABOR",
+    "price": "9,00",
+    "additional_payment": "4,90"
+  },
+  {
+    "name": "RESTAVRACIJA ANCORA",
+    "price": "8,72",
+    "additional_payment": "4,62"
+  },
+  {
+    "name": "RESTAVRACIJA EAT SMART 1",
+    "price": "8,10",
+    "additional_payment": "4,00"
+  },
+  {
+    "name": "RESTAVRACIJA EAT SMART 2",
+    "price": "8,10",
+    "additional_payment": "4,00"
+  },
+  {
+    "name": "RESTAVRACIJA INTERSPAR MARIBOR EUROPARK",
+    "price": "8,62",
+    "additional_payment": "4,52"
+  },
+  {
+    "name": "RESTAVRACIJA INTERSPAR MARIBOR2 SUPERNOVA QLANDIA",
+    "price": "8,62",
+    "additional_payment": "4,52"
+  },
+  {
+    "name": "RESTAVRACIJA MANGO",
+    "price": "8,30",
+    "additional_payment": "4,20"
+  },
+  {
+    "name": "RESTAVRACIJA MR.FALAFEL",
+    "price": "9,00",
+    "additional_payment": "4,90"
+  },
+  {
+    "name": "RESTAVRACIJA PIANO",
+    "price": "8,10",
+    "additional_payment": "4,00"
+  },
+  {
+    "name": "RESTAVRACIJA ŠTUDENTSKI DOM 16",
+    "price": "8,40",
+    "additional_payment": "4,30"
+  },
+  {
+    "name": "RESTAVRACIJA ZLATA SREČA",
+    "price": "8,02",
+    "additional_payment": "3,92"
+  },
+  {
+    "name": "STARI GRILL",
+    "price": "8,20",
+    "additional_payment": "4,10"
+  },
+  {
+    "name": "ŠIŠ OKREPČEVALNICA",
+    "price": "8,52",
+    "additional_payment": "4,42"
+  },
+  {
+    "name": "TAVERNA PALERMO",
+    "price": "8,62",
+    "additional_payment": "4,52"
+  },
+  {
+    "name": "TAVERNA PALERMO - DOSTAVA",
+    "price": "8,62",
+    "additional_payment": "4,52"
+  },
+  {
+    "name": "URNEBES URBAN GRILL",
+    "price": "7,10",
+    "additional_payment": "3,00"
+  },
+  {
+    "name": "WOK MIX CENTER",
+    "price": "7,00",
+    "additional_payment": "2,90"
+  },
+  {
+    "name": "ŽITO LEON ŠTUKELJ MARIBOR",
+    "price": "4,10",
+    "additional_payment": "0,00"
+  },
+  {
+    "name": "ŽITO MARIBOR TRG REVOLUCIJE",
+    "price": "4,10",
+    "additional_payment": "0,00"
+  }
+]
