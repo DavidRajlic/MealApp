@@ -60,10 +60,73 @@ router.post('/', UserController.create);
 
 /**
  * @swagger
+ * /login:
+ *   post:
+ *     summary: Prijava uporabnika
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: ajlic.david@gmail.com
+ *               password:
+ *                 type: string
+ *                 example: 1234
+ *     responses:
+ *       200:
+ *         description: Prijava uspešna, vrne JWT token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *       401:
+ *         description: Napačno uporabniško ime ali geslo
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Wrong username or password
+ *       500:
+ *         description: Napaka na strežniku
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Error when logging in
+ */
+
+
+
+router.post('/login', UserController.login);
+
+
+
+
+/**
+ * @swagger
  * /users/register:
  *   post:
  *     summary: Registracija novega uporabnika
- *     tags: [Users]
+ *     tags: [Auth]
  *     requestBody:
  *       required: true
  *       content:
@@ -82,7 +145,6 @@ router.post('/', UserController.create);
  *         description: Uporabnik registriran
  */
 
-router.post('/login', UserController.login);
 router.post('/register', UserController.signup);
 
 /**
