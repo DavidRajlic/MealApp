@@ -16,8 +16,7 @@ var RestaurantController = require('../controllers/RestaurantController.js');
  *           application/json:
  *             schema:
  *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Restaurant'
+ *              
  */
 router.get('/', RestaurantController.list);
 
@@ -40,7 +39,7 @@ router.get('/', RestaurantController.list);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Restaurant'
+ *              
  */
 router.get('/:id', RestaurantController.show);
 
