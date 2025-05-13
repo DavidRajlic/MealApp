@@ -33,30 +33,6 @@ router.get('/', UserController.list);
  */
 router.get('/:id', UserController.show);
 
-/**
- * @swagger
- * /users:
- *   post:
- *     summary: Ustvari novega uporabnika
- *     tags: [Users]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               username:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *     responses:
- *       201:
- *         description: Uporabnik ustvarjen
- */
-router.post('/', UserController.create);
 
 /**
  * @swagger
@@ -134,11 +110,13 @@ router.post('/login', UserController.login);
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               name:
  *                 type: string
  *               email:
  *                 type: string
  *               password:
+ *                 type: string
+ *               confirm:
  *                 type: string
  *     responses:
  *       201:
@@ -167,7 +145,7 @@ router.post('/register', UserController.signup);
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               name:
  *                 type: string
  *               email:
  *                 type: string
