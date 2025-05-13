@@ -6,12 +6,15 @@ const restaurantRoutes = require('./routes/RestaurantRoutes');
 const reviewRoutes = require('./routes/ReviewRoutes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger'); 
+const path = require('path');
+
 
 const app = express();
 const port = 4000;
 
 app.use(express.json());
 
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/users', userRoutes);
 app.use('/restaurants', restaurantRoutes);

@@ -48,20 +48,35 @@ module.exports = {
      */
     create: async function (req, res) {
         try {
-            const restaurantsData = req.body;
-            const savedRestaurants = await RestaurantModel.insertMany(restaurantsData);
+            const restaurantData = req.body;
+            const newRestaurant = new RestaurantModel({
+                name: restaurantData.name,
+                price: restaurantData.price,
+                additional_payment: restaurantData.additional_payment,
+                location: {
+                    latitude: restaurantData.location.latitude,
+                    longitude: restaurantData.location.longitude
+                },
+                image: restaurantData.image,
+                averageRating: restaurantData.averageRating || 0,
+                reviews: restaurantData.reviews || []
+            });
+
             
-            return res.status(201).json(savedRestaurants);
+            const savedRestaurant = await newRestaurant.save();
+            return res.status(201).json(savedRestaurant);
         } catch (err) {
-            console.error('Error when creating restaurants:', err);
+            console.error('Error when creating restaurant:', err);
             return res.status(500).json({
-                message: 'Error when creating restaurants',
+                message: 'Error when creating restaurant',
                 error: err
             });
         }
     },
-    
 
+    /**
+     * RestaurantController.update()
+     */
     update: async function (req, res) {
         try {
             const id = req.params.id;
@@ -71,10 +86,12 @@ module.exports = {
                     message: 'No such restaurant'
                 });
             }
+            
             restaurant.name = req.body.name || restaurant.name;
             restaurant.price = req.body.price || restaurant.price;  
-            restaurant.additional_payment = req.body.additional_payment || restaurant.additional_payment;  // Posodobi dodatno plačilo
+            restaurant.additional_payment = req.body.additional_payment || restaurant.additional_payment;
             restaurant.location = req.body.location || restaurant.location;
+            restaurant.image = req.body.image || restaurant.image;
             restaurant.reviews = req.body.reviews || restaurant.reviews;
             restaurant.averageRating = req.body.averageRating || restaurant.averageRating;
 
@@ -87,8 +104,6 @@ module.exports = {
             });
         }
     },
-
-
 
     /**
      * RestaurantController.remove()
