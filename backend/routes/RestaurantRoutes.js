@@ -2,28 +2,110 @@ var express = require('express');
 var router = express.Router();
 var RestaurantController = require('../controllers/RestaurantController.js');
 
-/*
- * GET all restaurants
+/**
+ * @swagger
+ * /restaurants:
+ *   get:
+ *     summary: Vrne seznam vseh restavracij
+ *     tags: [Restaurants]
+ *     responses:
+ *       200:
+ *         description: Seznam restavracij
  */
 router.get('/', RestaurantController.list);
 
-/*
- * GET a single restaurant by ID
+/**
+ * @swagger
+ * /restaurants/{id}:
+ *   get:
+ *     summary: Vrne podatke ene restavracije
+ *     tags: [Restaurants]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID restavracije
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Podatki restavracije
  */
 router.get('/:id', RestaurantController.show);
 
-/*
- * POST to create a new restaurant
+/**
+ * @swagger
+ * /restaurants:
+ *   post:
+ *     summary: Ustvari novo restavracijo
+ *     tags: [Restaurants]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               location:
+ *                 type: string
+ *               cuisine:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Restavracija ustvarjena
  */
 router.post('/', RestaurantController.create);
 
-/*
- * PUT to update a restaurant by ID
+/**
+ * @swagger
+ * /restaurants/{id}:
+ *   put:
+ *     summary: Posodobi podatke restavracije
+ *     tags: [Restaurants]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID restavracije
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               location:
+ *                 type: string
+ *               cuisine:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Restavracija posodobljena
  */
 router.put('/:id', RestaurantController.update);
 
-/*
- * DELETE a restaurant by ID
+/**
+ * @swagger
+ * /restaurants/{id}:
+ *   delete:
+ *     summary: Izbriši restavracijo
+ *     tags: [Restaurants]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID restavracije
+ *     responses:
+ *       200:
+ *         description: Restavracija izbrisana
  */
 router.delete('/:id', RestaurantController.remove);
 
