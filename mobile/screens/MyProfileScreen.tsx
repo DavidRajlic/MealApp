@@ -4,12 +4,12 @@ import ProfileScreen from './ProfileScreen';
 import { useUser } from '../context/UserContext';
 
 export default function MyProfileScreen() {
-    const {isLoggedIn} = useUser()
+    const {user} = useUser()
 
     return (
         <>
             {
-                isLoggedIn ?
+                user ?
                 <ProfileScreen />
                 :
                 <LoginScreen />

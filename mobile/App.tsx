@@ -14,17 +14,17 @@ const queryClient = new QueryClient()
 
 export default function App() {
   return (
-    <UserProvider>
-      <SafeAreaProvider>
-        <ThemeContextProvider>
-          <QueryClientProvider client={queryClient}>
-            <NavigationContainer>
-              <StatusBar translucent style='auto' />
-              <AppNavigation />
-            </NavigationContainer>
-          </QueryClientProvider>
-        </ThemeContextProvider>
-      </SafeAreaProvider>
-    </UserProvider>
+    <QueryClientProvider client={queryClient}>
+      <UserProvider>
+        <SafeAreaProvider>
+          <ThemeContextProvider>
+              <NavigationContainer>
+                <StatusBar translucent style='auto' />
+                <AppNavigation />
+              </NavigationContainer>
+          </ThemeContextProvider>
+        </SafeAreaProvider>
+      </UserProvider>
+    </QueryClientProvider>
   );
 }
