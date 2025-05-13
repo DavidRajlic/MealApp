@@ -4,12 +4,15 @@ require('dotenv').config();
 const userRoutes = require('./routes/UserRoutes');
 const restaurantRoutes = require('./routes/RestaurantRoutes');
 const reviewRoutes = require('./routes/ReviewRoutes');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./swagger'); 
 
 const app = express();
 const port = 4000;
 
 app.use(express.json());
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/auth', userRoutes);
 app.use('/restaurants', restaurantRoutes);
 app.use('/reviews', reviewRoutes);
