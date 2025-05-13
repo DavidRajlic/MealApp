@@ -1,3 +1,4 @@
+
 var express = require('express');
 var router = express.Router();
 var RestaurantController = require('../controllers/RestaurantController.js');
@@ -11,6 +12,12 @@ var RestaurantController = require('../controllers/RestaurantController.js');
  *     responses:
  *       200:
  *         description: Seznam restavracij
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Restaurant'
  */
 router.get('/', RestaurantController.list);
 
@@ -30,6 +37,10 @@ router.get('/', RestaurantController.list);
  *     responses:
  *       200:
  *         description: Podatki restavracije
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Restaurant'
  */
 router.get('/:id', RestaurantController.show);
 
@@ -48,10 +59,23 @@ router.get('/:id', RestaurantController.show);
  *             properties:
  *               name:
  *                 type: string
+ *               price:
+ *                 type: number
+ *                 format: float
+ *               additional_payment:
+ *                 type: number
+ *                 format: float
  *               location:
  *                 type: string
- *               cuisine:
- *                 type: string
+ *               averageRating:
+ *                 type: number
+ *                 format: float
+ *                 default: 0
+ *               reviews:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: objectId
  *     responses:
  *       201:
  *         description: Restavracija ustvarjena
@@ -80,10 +104,22 @@ router.post('/', RestaurantController.create);
  *             properties:
  *               name:
  *                 type: string
+ *               price:
+ *                 type: number
+ *                 format: float
+ *               additional_payment:
+ *                 type: number
+ *                 format: float
  *               location:
  *                 type: string
- *               cuisine:
- *                 type: string
+ *               averageRating:
+ *                 type: number
+ *                 format: float
+ *               reviews:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: objectId
  *     responses:
  *       200:
  *         description: Restavracija posodobljena
