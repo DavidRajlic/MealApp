@@ -1,12 +1,17 @@
+export type GpsLocation = {
+  latitude: number,
+  longitude: number
+}
 
 export type Resturant = {
   _id: string,
   name: string,
   price: number,
   additional_payment: number,
-  location: string,
+  location: GpsLocation,
   averageRating: number,
-  reviews: Array<{}>
+  reviews: Array<{}>,
+  image?: string
 }
 
 export type User = {
