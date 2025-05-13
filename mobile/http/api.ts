@@ -25,7 +25,7 @@ export type LoginProps = {
 }
 
 export function login(body: LoginProps) {
-  return post<{token: string}>("/users/login", body)
+  return post<{token: string, user: User}>("/users/login", body)
 }
 
 export type RegisterProps = {
