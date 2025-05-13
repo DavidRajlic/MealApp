@@ -112,7 +112,7 @@ module.exports = {
             );
             
 
-            return res.json({ token });
+            return res.json({ token, user: user });
         } catch (err) {
             return res.status(401).json({ message: err.message || 'Authentication failed.' });
         }
