@@ -53,7 +53,7 @@ router.get('/:id', UserController.show);
  *               email:
  *                 type: string
  *                 format: email
- *                 example: ajlic.david@gmail.com
+ *                 example: rajlic.david@gmail.com
  *               password:
  *                 type: string
  *                 example: 1234

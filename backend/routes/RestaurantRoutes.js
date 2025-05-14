@@ -64,15 +64,20 @@ router.get('/:id', RestaurantController.show);
  *               additional_payment:
  *                 type: number
  *                 format: float
- *               location:
- *                 type: string
+ *               location.latitude:
+ *                 type: number
+ *               location.longitude:
+ *                 type: number
  *               averageRating:
  *                 type: number
- *                 format: float
- *                 default: 0
  *               reviews:
  *                 type: array
- *                 default: [ ]
+ *                 items:
+ *                   type: string
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *                 example: "images/photo_name"
  *     responses:
  *       201:
  *         description: Restavracija ustvarjena
@@ -107,16 +112,20 @@ router.post('/', RestaurantController.create);
  *               additional_payment:
  *                 type: number
  *                 format: float
- *               location:
- *                 type: string
+ *               location.latitude:
+ *                 type: number
+ *               location.longitude:
+ *                 type: number
  *               averageRating:
  *                 type: number
- *                 format: float
  *               reviews:
  *                 type: array
  *                 items:
  *                   type: string
- *                   format: objectId
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *                 example: "images/photo_name"
  *     responses:
  *       200:
  *         description: Restavracija posodobljena
