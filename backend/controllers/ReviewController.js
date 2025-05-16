@@ -15,11 +15,11 @@ module.exports = {
             const filter = {};
             if (req.query.restaurant) filter.restaurant = req.query.restaurant;
             if (req.query.user) filter.user = req.query.user;
-
+    
             const reviews = await ReviewModel.find(filter)
-                .populate('user', 'username')
+                .populate('user', 'name')
                 .populate('restaurant', 'name');
-
+    
             return res.json(reviews);
         } catch (err) {
             return res.status(500).json({
@@ -28,24 +28,21 @@ module.exports = {
             });
         }
     },
-
-    /**
-     * ReviewController.show()
-     */
+    
     show: async function (req, res) {
         const id = req.params.id;
-
+    
         try {
             const review = await ReviewModel.findOne({ _id: id })
-                .populate('user', 'username')
+                .populate('user', 'name')
                 .populate('restaurant', 'name');
-
+    
             if (!review) {
                 return res.status(404).json({
                     message: 'No such review'
                 });
             }
-
+    
             return res.json(review);
         } catch (err) {
             return res.status(500).json({
@@ -53,7 +50,7 @@ module.exports = {
                 error: err
             });
         }
-    },
+    },    
 
     /**
      * ReviewController.create()
@@ -83,21 +80,27 @@ module.exports = {
      */
     update: async function (req, res) {
         const id = req.params.id;
-
+    
         try {
-            const review = await ReviewModel.findOne({ _id: id });
-
-            if (!review) {
+            const updatedReview = await ReviewModel.findByIdAndUpdate(
+                id,
+                {
+                    $set: {
+                        rating: req.body.rating,
+                        comment: req.body.comment
+                    }
+                },
+                { new: true, runValidators: true } // returns updated doc + triggers validation
+            )
+            .populate('user', 'username')
+            .populate('restaurant', 'name');
+    
+            if (!updatedReview) {
                 return res.status(404).json({
                     message: 'No such review'
                 });
             }
-
-            review.rating = req.body.rating || review.rating;
-            review.comment = req.body.comment || review.comment;
-
-            const updatedReview = await review.save();
-
+    
             return res.json(updatedReview);
         } catch (err) {
             return res.status(500).json({
@@ -106,28 +109,34 @@ module.exports = {
             });
         }
     },
-
+    
     /**
      * ReviewController.remove()
      */
     remove: async function (req, res) {
         const id = req.params.id;
-
+    
         try {
-            const review = await ReviewModel.findByIdAndRemove(id);
-
+            const review = await ReviewModel.findByIdAndDelete(id);
+    
             if (!review) {
                 return res.status(404).json({
                     message: 'No such review to delete'
                 });
             }
-
-            return res.status(204).json();
+    
+            return res.status(200).json({
+                message: 'Review deleted successfully',
+                deletedReview: review
+            });
         } catch (err) {
+            // Explicitly log the error if you want to debug invalid ObjectId, etc.
+            console.error('Delete error:', err);
             return res.status(500).json({
                 message: 'Error when deleting the review.',
-                error: err
+                error: err.message || err
             });
         }
     }
+    
 };
