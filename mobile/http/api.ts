@@ -1,6 +1,8 @@
 import { Resturant as Restaurant, User } from "../util/types";
 import { get, post } from "./fetch";
 
+// docs: https://mealapp-psnv.onrender.com/api-docs/
+
 // RESTURANT
 export function getResturants() {
   return get<Restaurant[]>("/restaurants")
