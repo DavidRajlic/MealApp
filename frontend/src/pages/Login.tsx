@@ -32,7 +32,9 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="max-w-md mx-auto bg-white p-6 rounded shadow">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <h2 className="text-2xl font-bold mb-4">Prijava</h2>
       <input
         type="email"
         value={email}
@@ -57,6 +59,8 @@ const Login = () => {
         <p className="text-sm text-gray-700 mt-2">{statusMessage}</p>
       )}
     </form>
+    </div>
+    
   );
 };
 
