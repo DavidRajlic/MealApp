@@ -3,6 +3,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Navbar from './components/Navbar'
 import LandingPage from './pages/LandingPage'
+import Restaurants from './pages/Restaurants'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/restaurants" element={<Restaurants />} />
         </Routes>
       </div>
     </div>

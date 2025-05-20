@@ -18,6 +18,12 @@ const Navbar = () => {
         >
           Registracija
         </Link>
+         <Link
+          to="/restaurants"
+          className="text-gray-700 hover:text-blue-500 transition"
+        >
+          Lokali
+        </Link>
       </div>
     </nav>
   )
