@@ -64,7 +64,7 @@ const darkMode: ThemeColorsType = {
   "onError": "rgb(105, 0, 5)",
   "background": "rgb(32, 26, 25)",
   "onBackground": "rgb(237, 224, 222)",
-  "surface": "rgba(237, 224, 222, 0.12)",
+  "surface": "rgba(237, 224, 222, 0.32)",
   "surfaceVariant": "rgba(237, 224, 222, 0.12)",
   "onSurface": "rgb(237, 224, 222)",
   "shadow": "rgb(0, 0, 0)",

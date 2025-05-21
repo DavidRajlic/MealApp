@@ -35,11 +35,11 @@ function ProfileScreen() {
                 </View>
                 <View style={styles.avatarContainer}>
                     <Avatar size={128} />
-                    <Text style={[styles.avatarText, { backgroundColor: colors.surface, color: colors.shadow }]}>
-                        Mr. Milchick
+                    <Text style={[styles.avatarText, { backgroundColor: colors.onBackground, color: colors.shadow }]}>
+                        { userCtx.user?.name}
                     </Text>
                 </View>
-                <View style={[styles.statsContainer, { backgroundColor: colors.surface }]}>
+                <View style={[styles.statsContainer, { backgroundColor: colors.onBackground }]}>
                     <View style={[styles.statItemLeft, { borderRightColor: colors.onBackground }]}>
                         <Ionicons name="analytics-outline" size={58} color="black" style={styles.statIcon} />
                         <View style={styles.statNumbers}>

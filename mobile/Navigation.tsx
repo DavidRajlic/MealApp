@@ -4,6 +4,7 @@ import ComponentsScreen from "./screens/ComponentsScreen";
 import CustomNavbar from "./components/UI/CustomNavbar";
 import MyProfileScreen from "./screens/MyProfileScreen";
 import SearchScreen from "./screens/SearchScreen";
+import RestaurantScreen from "./screens/RestaurantScreen";
 
 export type BottomTabParamList = {
   Home: undefined,

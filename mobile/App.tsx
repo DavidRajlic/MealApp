@@ -9,22 +9,33 @@ import {
   QueryClientProvider,
   useQuery,
 } from '@tanstack/react-query'
+import {StyleSheet } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const queryClient = new QueryClient()
 
 export default function App() {
   return (
+    <GestureHandlerRootView style={styles.container}>
     <QueryClientProvider client={queryClient}>
       <UserProvider>
         <SafeAreaProvider>
           <ThemeContextProvider>
-              <NavigationContainer>
-                <StatusBar translucent style='auto' />
-                <AppNavigation />
-              </NavigationContainer>
+            <NavigationContainer>
+              <StatusBar translucent style='auto' />
+              <AppNavigation />
+            </NavigationContainer>
           </ThemeContextProvider>
         </SafeAreaProvider>
       </UserProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'grey',
+  }
+});
