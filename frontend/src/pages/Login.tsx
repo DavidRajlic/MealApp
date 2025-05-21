@@ -1,53 +1,67 @@
-// src/pages/Login.tsx
-import { type FormEvent, useState } from 'react'
+import { type FormEvent, useState } from "react";
 
-export default function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [statusMessage, setStatusMessage] = useState("");
+  const API_URL = import.meta.env.VITE_API_URL;
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    alert(`Prijava: ${email} / ${password}`)
-    // tukaj pokličeš API...
-  }
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch(`${API_URL}/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setStatusMessage(`✅ Prijava uspešna! Dobrodošel, ${data.username || email}`);
+      } else {
+        const error = await res.json();
+        setStatusMessage(`❌ Napaka: ${error.message || "Napačni podatki"}`);
+      }
+    } catch (err) {
+      setStatusMessage("❌ Prišlo je do napake pri povezavi s strežnikom.");
+    }
+  };
 
   return (
-    <div className="flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded shadow-md w-full max-w-sm"
-      >
-        <h2 className="text-2xl font-bold mb-6 text-center">Prijava</h2>
+    <div className="max-w-md mx-auto bg-white p-6 rounded shadow">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <h2 className="text-2xl font-bold mb-4">Prijava</h2>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        className="border p-2 w-full rounded"
+        required
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Geslo"
+        className="border p-2 w-full rounded"
+        required
+      />
+      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        Prijavi se
+      </button>
 
-        <label className="block mb-4">
-          <span className="text-gray-700">Email</span>
-          <input
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            className="mt-1 block w-full px-3 py-2 border rounded"
-            required
-          />
-        </label>
-
-        <label className="block mb-6">
-          <span className="text-gray-700">Geslo</span>
-          <input
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            className="mt-1 block w-full px-3 py-2 border rounded"
-            required
-          />
-        </label>
-
-        <button
-          type="submit"
-          className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-        >
-          Prijava
-        </button>
-      </form>
+      {statusMessage && (
+        <p className="text-sm text-gray-700 mt-2">{statusMessage}</p>
+      )}
+    </form>
     </div>
-  )
-}
+    
+  );
+};
+
+export default Login
