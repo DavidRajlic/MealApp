@@ -39,14 +39,17 @@ const Restaurants = () => {
                 {restaurants.map((restaurant) => (
                     <li
                         key={restaurant._id}
-                        className="bg-white shadow rounded-lg p-4 border border-gray-200 flex gap-4"
+                        className="bg-white shadow rounded-lg p-4 border border-gray-200 flex gap-4 cursor-pointer 
+                        transition duration-500
+                        transform hover:-translate-y-2
+                        hover:shadow-md hover:bg-indigo-300 "
                     >
-                        {restaurant.image != null &&  ( <img
+                        {restaurant.image != null && (<img
                             src={restaurant.image || '/fallback.jpg'}
                             alt={restaurant.name}
                             className="w-32 h-32 object-cover rounded-md"
                         />)}
-                       
+
 
                         <div className="flex flex-col justify-between">
                             <h3 className="text-xl font-semibold">{restaurant.name}</h3>
