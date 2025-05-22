@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteReview, login, postReview, PostReviewBody, PutReviewBody, register, updateReview } from "./api";
+import { useUser } from "../context/UserContext";
 
 
 export function useRegisterMutation() {
@@ -17,9 +18,11 @@ export function useLoginMutation() {
 // reviews
 export function useCreateReviewMutation() {
   const queryClient = useQueryClient()
+  const {getToken} = useUser()
+  const token = getToken();
   
   return useMutation({
-    mutationFn: postReview,
+    mutationFn: (body: PostReviewBody) => postReview(token!, body),
     onSuccess(data, variables, context) {
       queryClient.invalidateQueries({ queryKey: ['reviews', { user: variables.user }]})
       queryClient.invalidateQueries({ queryKey: ['reviews', { restaurant: variables.restaurant }]})

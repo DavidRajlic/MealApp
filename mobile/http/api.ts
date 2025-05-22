@@ -1,3 +1,4 @@
+import { useUser } from "../context/UserContext";
 import { Resturant as Restaurant, Review, ReviewShortened, User } from "../util/types";
 import { deleteF, get, post, put } from "./fetch";
 
@@ -60,8 +61,8 @@ export type PostReviewBody = {
   "comment": string
 }
 
-export function postReview(body: PostReviewBody) {
-  return post<ReviewShortened>("/reviews", body)
+export function postReview(token: string, body: PostReviewBody) {
+  return post<ReviewShortened>("/reviews", body, token)
 }
 
 export type PutReviewBody = {

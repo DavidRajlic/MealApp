@@ -12,7 +12,7 @@ type UserContextType = {
     login: (data: LoginProps) => void,
     register: (data: RegisterProps) => void,
     logout: () => void,
-    getToken: () => Promise<string | undefined>
+    getToken: () => string | undefined
 }
 
 const UserContext = createContext<UserContextType | null>(null);
@@ -74,7 +74,7 @@ export const UserProvider = ({ children }: any) => {
         AsyncStorage.removeItem(STPORAGE_USER_KEY)
     };
 
-    async function getToken() {
+    function getToken() {
         return token
     }
 

@@ -27,13 +27,17 @@ function ComponentsScreen() {
     userCtx.logout()
   }
 
+  useEffect(() => {
+    console.log(resturantQuery.error)
+  }, [resturantQuery.error])
+
   async function onCreateReview() {
     if(!resturants || !userCtx.user)
       return
 
     console.log("Create review")
     const data = await createReview.mutateAsync({
-      comment: "Test from app",
+      comment: "Auth test from app",
       rating: 5,
       restaurant: resturants[0]._id,
       user: userCtx.user._id
