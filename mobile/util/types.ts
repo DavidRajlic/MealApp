@@ -10,7 +10,6 @@ export type Resturant = {
   additional_payment: number,
   location: GpsLocation,
   averageRating: number,
-  reviews: Array<Review>,
   image?: string
 }
 
@@ -25,14 +24,30 @@ export type User = {
   name: string,
   role: UserRole
   email: string,
-  reviews: Array<Review>,
   trusted_status: number,
   createdAt: string,
   updatedAt: string
 }
 
-export type Review = {
+type BaseReview = {
   _id: string,
+  rating: number,
+  comment: string,
+  created_at: string,
+  __v: number
+}
+
+export interface ResturantReviews extends BaseReview {
+  user: User,
+  restaurant: string
+} 
+
+export interface UserReviews extends BaseReview {
+  user: string,
+  restaurant: Resturant
+} 
+
+export interface UpdateReviewResponse extends BaseReview {
   user: {
     _id: string,
     name: string
@@ -41,10 +56,6 @@ export type Review = {
     _id: string,
     name: string
   },
-  rating: number,
-  comment: string,
-  created_at: string,
-  __v: number
 }
 
 export type ReviewShortened = {

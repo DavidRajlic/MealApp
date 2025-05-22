@@ -5,6 +5,8 @@ import CustomNavbar from "./components/UI/CustomNavbar";
 import MyProfileScreen from "./screens/MyProfileScreen";
 import SearchScreen from "./screens/SearchScreen";
 import RestaurantScreen from "./screens/RestaurantScreen";
+import { useUser } from "./context/UserContext";
+import Text from "./components/UI/Text";
 
 export type BottomTabParamList = {
   Home: undefined,
@@ -34,6 +36,10 @@ export type StackNavParamList = {
 const Stack = createNativeStackNavigator<StackNavParamList>()
 
 function AppNavigation() {
+  const {isLoading} = useUser()
+
+  if (isLoading)
+    return <Text style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>Loading user</Text>
 
   return (
     <Stack.Navigator screenOptions={{
