@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ReviewController = require('../controllers/ReviewController');
+var authenticateUser = require('../middleware/auth.js');
 
 /**
  * @swagger
@@ -75,7 +76,7 @@ router.get('/:id', ReviewController.show);
  *       201:
  *         description: Review created
  */
-router.post('/', ReviewController.create);
+router.post('/', authenticateUser.isAuthorized, ReviewController.create);
 
 /**
  * @swagger
