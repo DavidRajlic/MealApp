@@ -12,7 +12,7 @@ const UserSchema = new Schema({
     enum: ['user', 'admin', 'moderator'],
     default: 'user'
   },
-  'trusted_status': { type: Number, required: false },
+  'trusted_status': { type: Number, default: 0 },
 }, { timestamps: true });
 
 UserSchema.pre('save', function (next) {
