@@ -32,6 +32,7 @@ router.get('/', UserController.list);
  *         description: Podatki uporabnika
  */
 router.get('/:id', UserController.show);
+router.get('/review/:id', UserController.getReviews);
 
 
 /**
@@ -173,5 +174,8 @@ router.put('/:id', UserController.update);
  *         description: Uporabnik izbrisan
  */
 router.delete('/:id', UserController.remove);
+
+
+
 
 module.exports = router;

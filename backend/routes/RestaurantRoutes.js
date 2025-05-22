@@ -42,6 +42,7 @@ router.get('/', RestaurantController.list);
  *              
  */
 router.get('/:id', RestaurantController.show);
+router.get('/review/:id', RestaurantController.getReviews);
 
 /**
  * @swagger
