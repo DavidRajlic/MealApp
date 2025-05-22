@@ -12,7 +12,7 @@ function TextInput({ style, containerStyle, hasIcon = false, ...props }: MyTextI
   const { colors } = useTheme()
 
   return (
-    <View style={[{ backgroundColor: colors.surface }, styles.containerStyle, containerStyle]}>
+    <View style={[{ backgroundColor: colors.surface }, styles.containerStyle, containerStyle, style]}>
       {hasIcon && (
         <Ionicons name="search" size={20} color={colors.onSurface} style={styles.icon} />
       )}

@@ -4,13 +4,16 @@ import { useTheme } from "../../context/ThemeContext";
 import Avatar from "./Avatar";
 import Text from "./Text";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { Resturant } from "../../util/types";
+import { SERVER_URL } from "../../util/constants";
 
 type SearchListCardProps = {
     style?: StyleProp<ViewStyle>;
+    restaurant: Resturant;
     isOpen: boolean;
 };
 
-function SearchListCard({ style, isOpen }: SearchListCardProps) {
+function SearchListCard({ style, restaurant ,isOpen }: SearchListCardProps) {
     const { colors } = useTheme();
 
     const statusColor = isOpen ? "green" : "red";
@@ -18,10 +21,14 @@ function SearchListCard({ style, isOpen }: SearchListCardProps) {
 
     return (
         <View style={[styles.cardContainer, { backgroundColor: colors.surface }, style]}>
-            <Avatar containerStyle={{ borderRadius: 18 }} size={64} />
+            <Avatar
+                containerStyle={{ borderRadius: 18 }}
+                size={64}
+                url={SERVER_URL +"/"+ restaurant?.image}
+            />
             <View style={styles.textContainer}>
                 <View style={styles.header}>
-                    <Text style={styles.restaurantName}>Gostilna Ozmec</Text>
+                    <Text style={styles.restaurantName}>{restaurant?.name}</Text>
                 </View>
                 <View style={styles.infoRow}>
                     <View style={styles.statusContainer}>
@@ -34,7 +41,7 @@ function SearchListCard({ style, isOpen }: SearchListCardProps) {
                     </View>
                     <View style={styles.iconRow}>
                         <Ionicons name="wallet-outline" size={18} style={styles.icon} color={colors.onBackground} />
-                        <Text>3.9 €</Text>
+                        <Text>{restaurant?.additional_payment} €</Text>
                     </View>
                 </View>
             </View>

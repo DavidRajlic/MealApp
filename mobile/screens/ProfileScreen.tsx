@@ -1,4 +1,4 @@
-import { FlatList, View, StyleSheet } from "react-native";
+import { FlatList, View, StyleSheet, Pressable } from "react-native";
 import Avatar from "../components/UI/Avatar";
 import Button from "../components/UI/Button";
 import Container from "../components/UI/Container";
@@ -10,17 +10,42 @@ import RestaurantListCard from "../components/UI/RestaurantListCard";
 import { useTheme } from "../context/ThemeContext";
 import { LinearGradient } from 'expo-linear-gradient';
 import { useUser } from "../context/UserContext";
+import { useUserQuery, useUserReviewsQuery } from "../http/queries";
+import { RouteProp, useNavigation } from "@react-navigation/native";
+import { StackNavParamList } from "../Navigation";
 
-function ProfileScreen() {
+function getTrustDisplay(trustStatus: number): { label: string; color: string } {
+    switch (trustStatus) {
+        case -1:
+            return { label: "Untrusted", color: "red" };
+        case 0:
+            return { label: "Normal", color: "blue" };
+        case 1:
+            return { label: "Trusted", color: "green" };
+        case 2:
+            return { label: "Admin", color: "navy" };
+        default:
+            return { label: "Unknown", color: "gray" };
+    }
+}
+
+type ProfileScreenRouteProp = RouteProp<StackNavParamList, "ProfileScreen">;
+
+type Props = {
+    route: ProfileScreenRouteProp | undefined;
+};
+
+
+function ProfileScreen({ route }: Props) {
     const { colors } = useTheme();
     const userCtx = useUser()
-    const restaurantData = [
-        { id: '1', name: 'Restaurant 1' },
-        { id: '2', name: 'Restaurant 2' },
-        { id: '3', name: 'Restaurant 3' },
-        { id: '4', name: 'Restaurant 4' },
-        { id: '5', name: 'Restaurant 5' },
-    ];
+    const navigation = useNavigation()
+    const id = route?.params?.id;
+    const { data: user2, ...userQuery } = useUserQuery(id ?? "0")
+    const user = id==undefined ? userCtx.user : user2;
+    const { data: reviews, ...restaurantQuery } = useUserReviewsQuery(user?._id ?? "0")
+    const trustStatus = user?.trusted_status ?? 0
+    const { label: trustLabel, color: trustColor } = getTrustDisplay(trustStatus)
 
     return (
         <LinearGradient
@@ -30,13 +55,16 @@ function ProfileScreen() {
             end={{ x: 0, y: 0.2 }}
         >
             <Container style={styles.container}>
-                <View style={styles.logoutContainer}>
-                    <Button mode="TRANSPARENT" onPress={() => userCtx.logout()} style={styles.logoutText}>Logout</Button>
-                </View>
+                {id == undefined ? <>
+                    <View style={styles.logoutContainer}>
+                        <Button mode="TRANSPARENT" onPress={() => userCtx.logout()} style={styles.logoutText}>Logout</Button>
+                    </View>
+                </> : <></>
+                }
                 <View style={styles.avatarContainer}>
                     <Avatar size={128} />
                     <Text style={[styles.avatarText, { backgroundColor: colors.onBackground, color: colors.shadow }]}>
-                        { userCtx.user?.name}
+                        {user?.name}
                     </Text>
                 </View>
                 <View style={[styles.statsContainer, { backgroundColor: colors.onBackground }]}>
@@ -50,26 +78,30 @@ function ProfileScreen() {
                     </View>
                     <View style={[styles.statItemRight, { borderLeftColor: "black" }]}>
                         <Ionicons name="trophy" size={48} color="black" style={styles.statIcon} />
-                        <Text style={styles.statRole}>ADMIN</Text>
+                        <Text style={[styles.statRole, { color: trustColor }]}>{trustLabel}</Text>
                     </View>
-                    <View style={styles.buttonContainer}>
-                        <Button>
-                            <Ionicons name="shield-half" size={32} color="black" style={styles.buttonIcon} />
-                        </Button>
-                        <Text style={[styles.notificationBadge, { backgroundColor: colors.onPrimary, borderColor:colors.onBackground }]}>
-                            9+
-                        </Text>
-                    </View>
+                    {user?.trusted_status === 2 && (
+                        <View style={styles.buttonContainer}>
+                            <Button>
+                                <Ionicons name="shield-half" size={32} color="black" style={styles.buttonIcon} />
+                            </Button>
+                            <Text style={[styles.notificationBadge, { backgroundColor: colors.onPrimary, borderColor: colors.onBackground }]}>
+                                9+
+                            </Text>
+                        </View>
+                    )}
                 </View>
                 <Text>Recent reviews</Text>
                 <FlatList
-                    data={restaurantData}
+                    data={reviews}
                     renderItem={({ item }) => (
-                        <RestaurantListCard key={item.id}>
-                            <Text>{item.name}</Text>
-                        </RestaurantListCard>
+                        <Pressable onPress={() => navigation.navigate("RestaurantScreen", { id: item.restaurant._id })}>
+                            <RestaurantListCard key={item._id} review={item} isProfile={true} secondary={undefined}>
+                                <Text>{item.restaurant.name}</Text>
+                            </RestaurantListCard>
+                        </Pressable>
                     )}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item._id}
                     contentContainerStyle={styles.flatListContent}
                 />
             </Container>
@@ -120,7 +152,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingTop: 12,
         paddingBottom: 12,
-        borderRightWidth:1
+        borderRightWidth: 1
     },
     statItemRight: {
         flex: 1,
@@ -149,7 +181,6 @@ const styles = StyleSheet.create({
         fontSize: 24,
     },
     statRole: {
-        color: "blue",
         fontSize: 24,
     },
     buttonContainer: {
@@ -171,7 +202,7 @@ const styles = StyleSheet.create({
         zIndex: -1,
     },
     flatListContent: {
-        paddingBottom: 16,
+        paddingBottom: 100,
     },
 });
 

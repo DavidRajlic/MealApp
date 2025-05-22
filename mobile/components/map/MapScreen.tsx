@@ -2,12 +2,19 @@ import { MarkerView } from "@maplibre/maplibre-react-native"
 import MyMap from "./Map"
 import MarkerIcon from "./MarkerIcon"
 import { View, Text, StyleSheet, Pressable } from "react-native"
-import { useCallback, useRef, useMemo } from "react"
+import { useCallback, useRef, useMemo, useState } from "react"
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet"
 import { useTheme } from "../../context/ThemeContext"
 import RestaurantCard from "../UI/RestaurantCard"
+import { Resturant } from "../../util/types"
+import { SERVER_URL } from "../../util/constants"
 
-function MapScreen() {
+type MapScreenProps = {
+  restaurants: Resturant[] | undefined;
+};
+
+function MapScreen({ restaurants }: MapScreenProps) {
+  const [selectedRestaurant, setSelectedRestaurant] = useState<Resturant | null>(null)
   const bottomSheetRef = useRef<BottomSheet>(null)
   const { colors } = useTheme()
   const snapPoints = useMemo(() => ['55%'], [])
@@ -16,17 +23,22 @@ function MapScreen() {
     console.log('handleSheetChanges', index)
   }, [])
 
-  const openBottomSheet = () => {
-    console.log("hey")
+  const openBottomSheet = (restaurant: Resturant) => {
+    setSelectedRestaurant(restaurant)
     bottomSheetRef.current?.snapToIndex(0)
   }
 
   return (
     <View style={{ flex: 1 }}>
       <MyMap style={{ flex: 1 }}>
-        <MarkerView coordinate={[15.64667, 46.55472]}>
-            <MarkerIcon onPress={openBottomSheet}/>
-        </MarkerView>
+        {restaurants?.map((restaurant) => (
+          <MarkerView
+            key={restaurant._id}
+            coordinate={[restaurant.location.longitude, restaurant.location.latitude]}
+          >
+            <MarkerIcon onPress={() => openBottomSheet(restaurant)} />
+          </MarkerView>
+        ))}
       </MyMap>
       <BottomSheet
         ref={bottomSheetRef}
@@ -34,16 +46,20 @@ function MapScreen() {
         index={-1}
         onChange={handleSheetChanges}
         enablePanDownToClose={true}
-        backgroundStyle={{ backgroundColor: colors.background }}
+        backgroundStyle={{ backgroundColor: colors.bottomSheetBackground }}
       >
-        <BottomSheetView style={[styles.contentContainer, { backgroundColor: colors.background }]}>
-          <RestaurantCard
-            name="Gostilna marta"
-            distance="133 KM"
-            rating={4.1}
-            price="3.9 €"
-            imageUrl="https://i.redd.it/g9q10ff0nwq81.jpg"
-          />
+        <BottomSheetView style={[styles.contentContainer, { backgroundColor: colors.bottomSheetBackground }]}>
+          {selectedRestaurant && (
+            <RestaurantCard
+              name={selectedRestaurant.name}
+              distance="N/A"
+              rating={selectedRestaurant.averageRating}
+              price={`${selectedRestaurant.price} €`}
+              imageUrl={SERVER_URL+"/"+selectedRestaurant.image}
+              isBottomSheet={true}
+              id={selectedRestaurant._id}
+            />
+          )}
         </BottomSheetView>
       </BottomSheet>
     </View>

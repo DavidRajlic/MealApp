@@ -12,11 +12,13 @@ type Props = {
     rating: number
     price: string
     imageUrl: string
+    isBottomSheet: boolean
+    id: string
 }
 
-export default function RestaurantCard({ name, distance, rating, price, imageUrl }: Props) {
+export default function RestaurantCard({ name, distance, rating, price, imageUrl, isBottomSheet,id }: Props) {
     const { colors } = useTheme()
-    const navigation = useNavigation()
+        const navigation = useNavigation()
     const filledStars = Math.floor(rating)
     const emptyStars = 5 - filledStars
 
@@ -24,12 +26,16 @@ export default function RestaurantCard({ name, distance, rating, price, imageUrl
         <View style={styles.container}>
             <View style={styles.imageContainer}>
                 <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
-                <Pressable
-                    onPress={() => navigation.navigate("RestaurantScreen", { id })}
-                    style={styles.externalIcon}
-                >
-                    <Ionicons name="open-outline" size={20} color="white" />
-                </Pressable>
+                {isBottomSheet ? (
+                    <Pressable
+                        onPress={() => navigation.navigate("RestaurantScreen", { id })}
+                        style={styles.externalIcon}
+                    >
+                        <Ionicons name="open-outline" size={48} color="white" />
+                    </Pressable>
+                ) : (
+                    <Ionicons name="pencil-outline" size={48} color="white" style={styles.externalIcon} />
+                )}
             </View>
 
             <View style={styles.infoSection}>

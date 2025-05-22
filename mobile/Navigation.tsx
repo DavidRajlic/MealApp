@@ -7,6 +7,8 @@ import SearchScreen from "./screens/SearchScreen";
 import RestaurantScreen from "./screens/RestaurantScreen";
 import { useUser } from "./context/UserContext";
 import Text from "./components/UI/Text";
+import ProfileScreen from "./screens/ProfileScreen";
+import HomeScreen from "./screens/HomeScreen";
 
 export type BottomTabParamList = {
   Home: undefined,
@@ -22,7 +24,7 @@ function BottomTabNavigation() {
     <Tab.Navigator screenOptions={{
       headerShown: false
     }} tabBar={props => <CustomNavbar {...props} />}>
-      <Tab.Screen name="Home" component={ComponentsScreen} />
+      <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen name="MyProfile" component={MyProfileScreen} />
     </Tab.Navigator>
@@ -30,22 +32,26 @@ function BottomTabNavigation() {
 }
 
 export type StackNavParamList = {
-  MainStackNavigation: undefined
+  MainStackNavigation: undefined,
+  RestaurantScreen: { id: string };
+  ProfileScreen: { id: string };
 }
 
 const Stack = createNativeStackNavigator<StackNavParamList>()
 
 function AppNavigation() {
-  const {isLoading} = useUser()
+  const { isLoading } = useUser()
 
   if (isLoading)
-    return <Text style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>Loading user</Text>
+    return <Text style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>Loading user</Text>
 
   return (
     <Stack.Navigator screenOptions={{
       headerShown: false
     }}>
       <Stack.Screen name="MainStackNavigation" component={BottomTabNavigation} />
+      <Stack.Screen name="RestaurantScreen" component={RestaurantScreen} />
+      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
     </Stack.Navigator>
   )
 }

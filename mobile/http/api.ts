@@ -9,7 +9,7 @@ export function getResturants() {
 }
 
 export function getResturant(id: string) {
-  return get<Restaurant[]>(`/restaurants/${id}`)
+  return get<Restaurant>(`/restaurants/${id}`)
 }
 
 // USERS
