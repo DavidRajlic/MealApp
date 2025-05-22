@@ -49,7 +49,7 @@ module.exports = {
             const reviews = await ReviewModel.find({ restaurant: req.params.id }).populate('user');
 
             if (reviews.length === 0) {
-                return res.status(404).json({ message: 'Uporabnik nima nobenih mnenj.' });
+                return res.status(200).json([]); 
             }
 
             res.json(reviews);
