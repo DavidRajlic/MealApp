@@ -1,13 +1,12 @@
+import { useUser } from "../context/UserContext";
 import { SERVER_URL } from "../util/constants";
 
-export async function get<T>(url: string, requestInit?: RequestInit) {
-  console.log(SERVER_URL + url)
-  
+export async function get<T>(url: string, token?: string, requestInit?: RequestInit) {
   const response = await fetch(SERVER_URL + url, {
     ...requestInit,
     headers: {
       ...requestInit?.headers,
-      //Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
@@ -19,13 +18,13 @@ export async function get<T>(url: string, requestInit?: RequestInit) {
   return (await response.json()) as T
 }
 
-export async function deleteF<T>(url: string, requestInit?: RequestInit) {
+export async function deleteF<T>(url: string, token?: string, requestInit?: RequestInit) {
   const response = await fetch(SERVER_URL + url, {
     method: 'DELETE',
     ...requestInit,
     headers: {
       ...requestInit?.headers,
-      //Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
@@ -37,7 +36,7 @@ export async function deleteF<T>(url: string, requestInit?: RequestInit) {
   return (await response.json()) as T
 }
 
-export async function post<T>(url: string, body: Object, requestInit?: RequestInit) {
+export async function post<T>(url: string, body: Object, token?: string, requestInit?: RequestInit) {
   console.log('post', url, body)
   const response = await fetch(SERVER_URL + url, {
     method: 'POST',
@@ -46,7 +45,7 @@ export async function post<T>(url: string, body: Object, requestInit?: RequestIn
     headers: {
       "Content-Type": "application/json",
       ...requestInit?.headers,
-      //Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   console.log('post post')
@@ -62,7 +61,7 @@ export async function post<T>(url: string, body: Object, requestInit?: RequestIn
   return (await response.json()) as T
 }
 
-export async function put<T>(url: string, body: Object, requestInit?: RequestInit) {
+export async function put<T>(url: string, body: Object, token?: string, requestInit?: RequestInit) {
   console.log('post', url, body)
   const response = await fetch(SERVER_URL + url, {
     method: 'PUT',
@@ -71,7 +70,7 @@ export async function put<T>(url: string, body: Object, requestInit?: RequestIni
     headers: {
       "Content-Type": "application/json",
       ...requestInit?.headers,
-      //Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   console.log('post post')
