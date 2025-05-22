@@ -1,5 +1,4 @@
-import { useUser } from "../context/UserContext";
-import { Resturant as Restaurant, Review, ReviewShortened, User } from "../util/types";
+import { Resturant as Restaurant, ResturantReviews, ReviewShortened, UpdateReviewResponse, User, UserReviews } from "../util/types";
 import { deleteF, get, post, put } from "./fetch";
 
 // docs: https://mealapp-psnv.onrender.com/api-docs/
@@ -45,13 +44,12 @@ export function register(body: RegisterProps) {
 }
 
 // REVIEWS
-export type ReviewsSearchParams = {
-  user?: string,
-  restaurant?: string
+export function getUserReviews(userId: string) {
+  return get<UserReviews[]>(`/users/review/${userId}`)
 }
 
-export function getReviews(reviewsSearchParams: ReviewsSearchParams) {
-  return get<Review[]>(`/reviews?${new URLSearchParams(reviewsSearchParams)}`)
+export function getResturantReviews(resturantId: string) {
+  return get<ResturantReviews[]>(`/restaurants/review/${resturantId}`)
 }
 
 export type PostReviewBody = {
@@ -71,7 +69,7 @@ export type PutReviewBody = {
 }
 
 export function updateReview(reviewId: string, body: PutReviewBody) {
-  return put<Review>(`/reviews/${reviewId}`, body)
+  return put<UpdateReviewResponse>(`/reviews/${reviewId}`, body)
 }
 
 export type DeleteReviewResponse = {

@@ -12,7 +12,8 @@ type UserContextType = {
     login: (data: LoginProps) => void,
     register: (data: RegisterProps) => void,
     logout: () => void,
-    getToken: () => string | undefined
+    getToken: () => string | undefined,
+    isLoading: boolean
 }
 
 const UserContext = createContext<UserContextType | null>(null);
@@ -30,6 +31,7 @@ export const UserProvider = ({ children }: any) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState<User | undefined>(undefined);
     const [token, setToken] = useState<string | undefined>(undefined)
+    const [isLoading, setIsLoading] = useState<boolean>(true)
 
     const loginMutation = useLoginMutation();
     const registerMutation = useRegisterMutation();
@@ -38,11 +40,12 @@ export const UserProvider = ({ children }: any) => {
         async function loadUser() {
             const data = await AsyncStorage.getItem(STPORAGE_USER_KEY)
             console.log("SAVED DATA: " + data)
-            if(!data)
-                return
-            const json = JSON.parse(data) as any as {token: string, user: User}
-            setToken(json.token)
-            setUser(json.user)
+            if(data) {
+                const json = JSON.parse(data) as any as {token: string, user: User}
+                setToken(json.token)
+                setUser(json.user)
+            }
+            setIsLoading(false)
         }
         loadUser()
     }, [])
@@ -83,7 +86,8 @@ export const UserProvider = ({ children }: any) => {
         login,
         register,
         logout,
-        getToken
+        getToken,
+        isLoading
     };
 
     return (

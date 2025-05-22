@@ -24,8 +24,8 @@ export function useCreateReviewMutation() {
   return useMutation({
     mutationFn: (body: PostReviewBody) => postReview(token!, body),
     onSuccess(data, variables, context) {
-      queryClient.invalidateQueries({ queryKey: ['reviews', { user: variables.user }]})
-      queryClient.invalidateQueries({ queryKey: ['reviews', { restaurant: variables.restaurant }]})
+      queryClient.invalidateQueries({ queryKey: ['userReviews', { userId: variables.user }]})
+      queryClient.invalidateQueries({ queryKey: ['resturantReviews', { resturantId: variables.restaurant }]})
     }
   })
 }
@@ -40,8 +40,8 @@ export function useUpdateReviewMutation() {
   return useMutation({
     mutationFn: (data: UpdateReview) => updateReview(data.reviewId, data),
     onSuccess(data, variables, context) {
-      queryClient.invalidateQueries({ queryKey: ['reviews', { user: data.user._id }]})
-      queryClient.invalidateQueries({ queryKey: ['reviews', { restaurant: data.restaurant._id }]})
+      queryClient.invalidateQueries({ queryKey: ['userReviews', { userId: data.user._id }]})
+      queryClient.invalidateQueries({ queryKey: ['resturantReviews', { resturantId: data.restaurant._id }]})
     }
   })
 }
@@ -52,8 +52,8 @@ export function useDeleteReviewMutation() {
   return useMutation({
     mutationFn: (data: {reviewId: string}) => deleteReview(data.reviewId),
     onSuccess(data, variables, context) {
-      queryClient.invalidateQueries({ queryKey: ['reviews', { user: data.deletedReview.user }]})
-      queryClient.invalidateQueries({ queryKey: ['reviews', { restaurant: data.deletedReview.restaurant }]})
+      queryClient.invalidateQueries({ queryKey: ['userReviews', { userId: data.deletedReview.user }]})
+      queryClient.invalidateQueries({ queryKey: ['resturantReviews', { resturantId: data.deletedReview.restaurant }]})
     }
   })
 }
