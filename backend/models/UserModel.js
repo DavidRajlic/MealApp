@@ -7,23 +7,28 @@ const UserSchema = new Schema({
   'email': { type: String, required: true, unique: true },
   'password': { type: String, required: true },
   'reviews': [{ type: Schema.Types.ObjectId, ref: 'Review' }],
-  'trusted_status': { type: Boolean, default: false },
+  'role': {
+    type: String,
+    enum: ['user', 'admin', 'moderator'],
+    default: 'user'
+  },
+  'trusted_status': { type: Number, required: false },
 }, { timestamps: true });
 
-UserSchema.pre('save', function(next) {
+UserSchema.pre('save', function (next) {
   const user = this;
 
   if (!user.isModified('password')) return next();
 
   // Hash password using bcryptjs
-  bcrypt.hash(user.password, 10, function(err, hash) {
+  bcrypt.hash(user.password, 10, function (err, hash) {
     if (err) return next(err);
     user.password = hash;
     next();
   });
 });
 
-UserSchema.statics.authenticate = async function(email, password) {
+UserSchema.statics.authenticate = async function (email, password) {
   const user = await this.findOne({ email: email });
   if (!user) {
     throw new Error('User not found.');
