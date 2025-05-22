@@ -4,6 +4,7 @@ import Register from './pages/Register'
 import Navbar from './components/Navbar'
 import LandingPage from './pages/LandingPage'
 import Restaurants from './pages/Restaurants'
+import Restaurant from './pages/Restaurant'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/restaurants" element={<Restaurants />} />
+          <Route path="/restaurant/:id" element={<Restaurant />} />
         </Routes>
       </div>
     </div>
