@@ -46,3 +46,13 @@ export type Review = {
   created_at: string,
   __v: number
 }
+
+export type ReviewShortened = {
+  _id: string,
+  user: string,
+  restaurant: string,
+  rating: number,
+  comment: string,
+  created_at: string,
+  __v: number
+}
