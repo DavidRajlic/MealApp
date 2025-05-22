@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type Restaurant = {
     _id: string;
@@ -14,6 +15,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
 const Restaurants = () => {
     const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`${API_URL}/restaurants`)
@@ -43,6 +45,10 @@ const Restaurants = () => {
                         transition duration-500
                         transform hover:-translate-y-2
                         hover:shadow-md hover:bg-indigo-300 "
+                        onClick={() => navigate(`/restaurant/${restaurant._id}`, {
+                            state: { restaurant }
+                        })}
+
                     >
                         {restaurant.image != null && (<img
                             src={restaurant.image || '/fallback.jpg'}
