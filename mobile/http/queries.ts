@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { getResturant, getResturants, getUser, getUsers } from "./api";
+import { getResturant, getResturants, getReviews, getUser, getUsers, ReviewsSearchParams } from "./api";
 
+// user
 export function useUsersQuery() {
   return useQuery({
     queryKey: ["users"],
@@ -15,6 +16,7 @@ export function useUserQuery(id: string) {
   })
 }
 
+// resturant
 export function useResturantsQuery() {
   return useQuery({
     queryKey: ["resturants"],
@@ -26,5 +28,13 @@ export function useResturantQuery(id: string) {
   return useQuery({
     queryKey: ["resturant", {id}],
     queryFn: () => getResturant(id)
+  })
+}
+
+// reviews
+export function useReviewsQuery(reviewsSearchParams: ReviewsSearchParams) {
+  return useQuery({
+    queryKey: ['reviews', reviewsSearchParams],
+    queryFn: () => getReviews(reviewsSearchParams)
   })
 }

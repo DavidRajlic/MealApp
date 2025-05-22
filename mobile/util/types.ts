@@ -14,12 +14,19 @@ export type Resturant = {
   image?: string
 }
 
+export enum UserRole {
+  USER = "user",
+  ADMIN = "admin",
+  MODERATOR = "moderator"
+}
+
 export type User = {
   _id: string,
   name: string,
+  role: UserRole
   email: string,
   reviews: Array<Review>,
-  trusted_status: boolean,
+  trusted_status: number,
   createdAt: string,
   updatedAt: string
 }
@@ -27,12 +34,23 @@ export type User = {
 export type Review = {
   _id: string,
   user: {
-    _id: string
+    _id: string,
+    name: string
   },
   restaurant: {
     _id: string,
     name: string
   },
+  rating: number,
+  comment: string,
+  created_at: string,
+  __v: number
+}
+
+export type ReviewShortened = {
+  _id: string,
+  user: string,
+  restaurant: string,
   rating: number,
   comment: string,
   created_at: string,
