@@ -42,6 +42,28 @@ router.get('/', RestaurantController.list);
  *              
  */
 router.get('/:id', RestaurantController.show);
+
+/**
+ * @swagger
+ * /restaurants/review/{id}:
+ *   get:
+ *     summary: Vrne mnenja o določeni restavraciji
+ *     tags: [Restaurants]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID restavracije
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Podatki restavracije
+ *         content:
+ *           application/json:
+ *             schema:
+ *              
+ */
 router.get('/review/:id', RestaurantController.getReviews);
 
 /**

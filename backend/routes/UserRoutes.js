@@ -32,6 +32,24 @@ router.get('/', UserController.list);
  *         description: Podatki uporabnika
  */
 router.get('/:id', UserController.show);
+
+/**
+ * @swagger
+ * /users/review/{id}:
+ *   get:
+ *     summary: Vrne uporabnikova mnenja
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID uporabnika
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Podatki uporabnika
+ */
 router.get('/review/:id', UserController.getReviews);
 
 
