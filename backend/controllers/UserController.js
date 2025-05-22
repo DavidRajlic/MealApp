@@ -1,5 +1,6 @@
 const UserModel = require('../models/UserModel.js');
 const jwt = require('jsonwebtoken');
+const ReviewModel = require('../models/ReviewModel.js')
 
 /**
  * UserController.js
@@ -28,6 +29,21 @@ module.exports = {
             res.status(500).json({ message: 'Error when getting User.', error: err });
         }
     },
+
+    getReviews: async (req, res) => {
+        try {
+            const reviews = await ReviewModel.find({ user: req.params.id }).populate('restaurant');
+
+            if (reviews.length === 0) {
+                return res.status(404).json({ message: 'Uporabnik nima nobenih mnenj.' });
+            }
+
+            res.json(reviews);
+        } catch (err) {
+            res.status(500).json({ message: 'Napaka pri pridobivanju mnenj uporabnika.', error: err });
+        }
+    },
+
 
     // Create a new user (not for signup)
     create: async (req, res) => {
@@ -109,7 +125,7 @@ module.exports = {
                 { userId: user._id },
                 process.env.JWT_SECRET
             );
-            
+
 
             return res.json({ token, user: user });
         } catch (err) {

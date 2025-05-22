@@ -1,4 +1,5 @@
 const RestaurantModel = require('../models/RestaurantModel.js');
+const ReviewModel = require('../models/ReviewModel.js')
 
 /**
  * RestaurantController.js
@@ -43,6 +44,20 @@ module.exports = {
         }
     },
 
+    getReviews: async (req, res) => {
+        try {
+            const reviews = await ReviewModel.find({ restaurant: req.params.id }).populate('user');
+
+            if (reviews.length === 0) {
+                return res.status(404).json({ message: 'Uporabnik nima nobenih mnenj.' });
+            }
+
+            res.json(reviews);
+        } catch (err) {
+            res.status(500).json({ message: 'Napaka pri pridobivanju mnenj uporabnika.', error: err });
+        }
+    },
+
     /**
      * RestaurantController.create()
      */
@@ -62,7 +77,7 @@ module.exports = {
                 reviews: restaurantData.reviews || []
             });
 
-            
+
             const savedRestaurant = await newRestaurant.save();
             return res.status(201).json(savedRestaurant);
         } catch (err) {
@@ -86,9 +101,9 @@ module.exports = {
                     message: 'No such restaurant'
                 });
             }
-            
+
             restaurant.name = req.body.name || restaurant.name;
-            restaurant.price = req.body.price || restaurant.price;  
+            restaurant.price = req.body.price || restaurant.price;
             restaurant.additional_payment = req.body.additional_payment || restaurant.additional_payment;
             restaurant.location = req.body.location || restaurant.location;
             restaurant.image = req.body.image || restaurant.image;
