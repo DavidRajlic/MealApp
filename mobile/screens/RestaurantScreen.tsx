@@ -7,7 +7,7 @@ import { useResturantQuery, useResturantReviewsQuery } from "../http/queries";
 import { SERVER_URL } from "../util/constants";
 import Text from "../components/UI/Text";
 import RestaurantListCard from "../components/UI/RestaurantListCard";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import Ionicons from '@expo/vector-icons/Ionicons';
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { useCallback, useMemo, useRef, useState } from "react";
 import TextInput from "../components/UI/TextInput";
@@ -17,6 +17,7 @@ import { Resturant } from "../util/types";
 import { postReview } from "../http/api";
 import { useUser } from "../context/UserContext";
 import { useCreateReviewMutation } from "../http/mutations";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type RestaurantScreenRouteProp = RouteProp<StackNavParamList, "RestaurantScreen">;
 
@@ -32,7 +33,7 @@ function RestaurantScreen({ route }: Props) {
     const [dishName, setDishName] = useState("");
     const [isPosting, setIsPosting] = useState(false);
     const { id } = route.params;
-    const navigation = useNavigation();
+    const navigation = useNavigation<NativeStackNavigationProp<StackNavParamList>>();
     const { data: restaurant, isLoading, isError } = useResturantQuery(id);
     const { data: reviews, ...restaurantQuery } = useResturantReviewsQuery(id);
     const bottomSheetRef = useRef<BottomSheet>(null)
@@ -48,7 +49,7 @@ function RestaurantScreen({ route }: Props) {
     }
 
     const handleSubmitReview = async () => {
-        if (userCtx == undefined)
+        if (!userCtx.user)
             return
 
         if (!dishName.trim()) {
@@ -104,9 +105,7 @@ function RestaurantScreen({ route }: Props) {
             <FlatList
                 data={reviews}
                 renderItem={({ item }) => (
-                    <Pressable onPress={() => navigation.navigate("RestaurantScreen", { id: item.restaurant._id })}>
                         <RestaurantListCard key={item._id} review={undefined} isProfile={false} secondary={item} />
-                    </Pressable>
                 )}
                 keyExtractor={item => item._id}
                 contentContainerStyle={{ paddingBottom: 140 }}

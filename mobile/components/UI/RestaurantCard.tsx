@@ -5,6 +5,8 @@ import Text from "../UI/Text"
 import { useTheme } from "../../context/ThemeContext"
 import { FontAwesome, FontAwesome6 } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { StackNavParamList } from '../../Navigation'
 
 type Props = {
     name: string
@@ -18,7 +20,7 @@ type Props = {
 
 export default function RestaurantCard({ name, distance, rating, price, imageUrl, isBottomSheet,id }: Props) {
     const { colors } = useTheme()
-        const navigation = useNavigation()
+    const navigation = useNavigation<NativeStackNavigationProp<StackNavParamList>>()
     const filledStars = Math.floor(rating)
     const emptyStars = 5 - filledStars
 

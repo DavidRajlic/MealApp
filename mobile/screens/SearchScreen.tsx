@@ -8,12 +8,14 @@ import Text from "../components/UI/Text"
 import SearchListCard from "../components/UI/SearchListCard"
 import { useResturantsQuery } from "../http/queries"
 import { useNavigation } from "@react-navigation/native"
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"
+import { StackNavParamList } from "../Navigation"
 
 function SearchScreen() {
   const [showMap, setShowMap] = useState(true)
   const [searchQuery, setSearchQuery] = useState("")
   const { colors } = useTheme()
-  const navigation = useNavigation()
+  const navigation = useNavigation<NativeStackNavigationProp<StackNavParamList>>()
 
   const { data: restaurants, ...restaurantQuery } = useResturantsQuery()
   const filteredRestaurants = restaurants?.filter((restaurant) =>

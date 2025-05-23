@@ -6,6 +6,8 @@ import Text from "./Text";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ResturantReviews, UserReviews } from "../../util/types";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackNavParamList } from "../../Navigation";
 
 type RestaurantListCardProps = {
     style?: StyleProp<ViewStyle>;
@@ -17,7 +19,7 @@ type RestaurantListCardProps = {
 
 function RestaurantListCard({ children, style, review, secondary, isProfile }: RestaurantListCardProps) {
     const { colors } = useTheme();
-    const navigation = useNavigation()
+    const navigation = useNavigation<NativeStackNavigationProp<StackNavParamList>>()
     const review2 = review == undefined ? secondary : review
     const rating = typeof review2?.rating === 'number' ? review2.rating : 0
     const filledStars = Math.floor(rating)
@@ -39,7 +41,7 @@ function RestaurantListCard({ children, style, review, secondary, isProfile }: R
                         </>
                     ) : (
                         <>
-                                <Pressable onPress={() => navigation.navigate("ProfileScreen", { id: secondary?.user._id })}>
+                                <Pressable onPress={() => navigation.navigate("ProfileScreen", { id: secondary?.user._id! })}>
                                     <View style={{ flexDirection: "row", justifyContent: "center", alignItems:"center"}}>
                                 <Avatar containerStyle={{ borderRadius: 18 }} size={40} url={"https://upload.wikimedia.org/wikipedia/commons/9/91/Pizza-3007395.jpg"} />
 

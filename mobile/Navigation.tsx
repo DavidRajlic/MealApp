@@ -34,7 +34,7 @@ function BottomTabNavigation() {
 export type StackNavParamList = {
   MainStackNavigation: undefined,
   RestaurantScreen: { id: string };
-  ProfileScreen: { id: string };
+  ProfileScreen: { id?: string };
 }
 
 const Stack = createNativeStackNavigator<StackNavParamList>()

@@ -13,6 +13,7 @@ import { useUser } from "../context/UserContext";
 import { useUserQuery, useUserReviewsQuery } from "../http/queries";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { StackNavParamList } from "../Navigation";
+import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 
 function getTrustDisplay(trustStatus: number): { label: string; color: string } {
     switch (trustStatus) {
@@ -29,17 +30,12 @@ function getTrustDisplay(trustStatus: number): { label: string; color: string } 
     }
 }
 
-type ProfileScreenRouteProp = RouteProp<StackNavParamList, "ProfileScreen">;
+type ProfileScreenRouteProp = NativeStackScreenProps<StackNavParamList, "ProfileScreen">;
 
-type Props = {
-    route: ProfileScreenRouteProp | undefined;
-};
-
-
-function ProfileScreen({ route }: Props) {
+function ProfileScreen({ route }: ProfileScreenRouteProp) {
     const { colors } = useTheme();
     const userCtx = useUser()
-    const navigation = useNavigation()
+    const navigation = useNavigation<NativeStackNavigationProp<StackNavParamList>>()
     const id = route?.params?.id;
     const { data: user2, ...userQuery } = useUserQuery(id ?? "0")
     const user = id==undefined ? userCtx.user : user2;

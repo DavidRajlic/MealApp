@@ -31,9 +31,9 @@ export function login(body: LoginProps) {
 }
 
 export type RegisterProps = {
-  "name": "string",
-  "email": "string",
-  "password": "string",
+  "name": string,
+  "email": string,
+  "password": string,
 }
 
 export function register(body: RegisterProps) {
