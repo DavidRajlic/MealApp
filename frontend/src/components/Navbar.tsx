@@ -1,31 +1,49 @@
 // src/components/Navbar.tsx
 import { Link } from 'react-router-dom'
+import {useAuth} from '../contexts/AuthContext.ts'
 
 const Navbar = () => {
+    const { isLoggedIn, user, logout } = useAuth();
+
+    
   return (
-    <nav className="bg-white shadow p-4 flex justify-between items-center">
-      <div className="space-x-4">
-        <span className="text-2xl font-bold text-indigo-600" > <Link to="/"> MealApp </Link>  </span> 
-        <Link
-          to="/login"
-          className="text-gray-700 hover:text-blue-500 transition"
-        >
-          Prijava
-        </Link>
-        <Link
-          to="/register"
-          className="text-gray-700 hover:text-blue-500 transition"
-        >
-          Registracija
-        </Link>
-         <Link
-          to="/restaurants"
-          className="text-gray-700 hover:text-blue-500 transition"
-        >
-          Lokali
-        </Link>
-      </div>
-    </nav>
+    <nav className="bg-white p-4 shadow flex items-center">
+  <span className="text-2xl font-bold text-[#c45a39]" > <Link to="/"> MealApp </Link>  </span> 
+
+  <div className="ml-auto flex items-center gap-6">
+    
+      {isLoggedIn ? (
+          <Link
+      to="/"
+      className="text-[#c45a39] hover:text-blue-500 transition"
+    > <span onClick={logout}>  Odjava</span>
+     </Link>
+        
+      ) : (
+       <Link
+      to="/login"
+      className="text-[#c45a39] hover:text-blue-500 transition"
+    > <span> Prijava</span>
+     </Link>
+      )}
+   
+
+    <Link
+      to="/register"
+      className="text-[#c45a39] hover:text-blue-500 transition"
+    >
+      Registracija
+    </Link>
+
+    <Link
+      to="/restaurants"
+      className="text-[#c45a39] hover:text-blue-500 transition"
+    >
+      Lokali
+    </Link>
+  </div>
+</nav>
+
   )
 }
 
