@@ -41,7 +41,7 @@ const Restaurants = () => {
                 {restaurants.map((restaurant) => (
                     <li
                         key={restaurant._id}
-                        className="bg-white shadow rounded-lg p-4 border border-gray-200 flex gap-4 cursor-pointer 
+                        className="bg-[#fffaf0] shadow  rounded-lg p-4 border border-gray-200 flex gap-4 cursor-pointer 
                         transition duration-500
                         transform hover:-translate-y-2
                         hover:shadow-md hover:bg-indigo-300 "
