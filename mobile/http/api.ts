@@ -9,7 +9,7 @@ export function getResturants() {
 }
 
 export function getResturant(id: string) {
-  return get<Restaurant[]>(`/restaurants/${id}`)
+  return get<Restaurant>(`/restaurants/${id}`)
 }
 
 // USERS
@@ -31,9 +31,9 @@ export function login(body: LoginProps) {
 }
 
 export type RegisterProps = {
-  "name": "string",
-  "email": "string",
-  "password": "string",
+  "name": string,
+  "email": string,
+  "password": string,
 }
 
 export function register(body: RegisterProps) {

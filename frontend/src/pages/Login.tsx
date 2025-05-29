@@ -6,6 +6,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
   const API_URL = import.meta.env.VITE_API_URL;
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
@@ -41,6 +42,7 @@ const Login = () => {
     // Outer cream-colored full-screen wrapper
     <div className="min-h-screen flex items-center justify-center bg-[#fffaf0] p-4">
       <div className="max-w-2xl w-full  bg-white p-8 rounded-xl shadow-lg border border-gray-100 mt-12">
+
         {/* Flex wrapper: form on left, image on right */}
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
           
@@ -100,4 +102,5 @@ const Login = () => {
     </div>
   );
 };
+
 export default Login;

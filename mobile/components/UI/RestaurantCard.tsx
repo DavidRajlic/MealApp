@@ -5,6 +5,8 @@ import Text from "../UI/Text"
 import { useTheme } from "../../context/ThemeContext"
 import { FontAwesome, FontAwesome6 } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { StackNavParamList } from '../../Navigation'
 
 type Props = {
     name: string
@@ -12,11 +14,13 @@ type Props = {
     rating: number
     price: string
     imageUrl: string
+    isBottomSheet: boolean
+    id: string
 }
 
-export default function RestaurantCard({ name, distance, rating, price, imageUrl }: Props) {
+export default function RestaurantCard({ name, distance, rating, price, imageUrl, isBottomSheet,id }: Props) {
     const { colors } = useTheme()
-    const navigation = useNavigation()
+    const navigation = useNavigation<NativeStackNavigationProp<StackNavParamList>>()
     const filledStars = Math.floor(rating)
     const emptyStars = 5 - filledStars
 
@@ -24,12 +28,16 @@ export default function RestaurantCard({ name, distance, rating, price, imageUrl
         <View style={styles.container}>
             <View style={styles.imageContainer}>
                 <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
-                <Pressable
-                    onPress={() => navigation.navigate("RestaurantScreen", { id })}
-                    style={styles.externalIcon}
-                >
-                    <Ionicons name="open-outline" size={20} color="white" />
-                </Pressable>
+                {isBottomSheet ? (
+                    <Pressable
+                        onPress={() => navigation.navigate("RestaurantScreen", { id })}
+                        style={styles.externalIcon}
+                    >
+                        <Ionicons name="open-outline" size={48} color="white" />
+                    </Pressable>
+                ) : (
+                    <Ionicons name="pencil-outline" size={48} color="white" style={styles.externalIcon} />
+                )}
             </View>
 
             <View style={styles.infoSection}>

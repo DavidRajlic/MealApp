@@ -61,8 +61,6 @@ function ComponentsScreen() {
         <TextInput value="Test value" />
         <TextInput placeholder="Placeholder text" />
         <Avatar />
-        <RestaurantListCard></RestaurantListCard>
-        <SearchListCard isOpen={false}></SearchListCard>
       </ScrollView>
     </Container>
   )
