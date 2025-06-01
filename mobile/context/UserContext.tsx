@@ -1,9 +1,9 @@
 // context/AuthContext.tsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User } from '../util/types';
-import { LoginProps, RegisterProps } from '../http/api';
-import { useLoginMutation, useRegisterMutation } from '../http/mutations';
+import { LoginProps, Login, RegisterProps, Register } from '../http/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useMutation } from '@tanstack/react-query';
 
 const STPORAGE_USER_KEY = 'UserData'
 
@@ -33,8 +33,12 @@ export const UserProvider = ({ children }: any) => {
     const [token, setToken] = useState<string | undefined>(undefined)
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
-    const loginMutation = useLoginMutation();
-    const registerMutation = useRegisterMutation();
+    const loginMutation = useMutation({
+        mutationFn: Login
+    });
+    const registerMutation = useMutation({
+        mutationFn: Register
+    });
 
     useEffect(() => {
         async function loadUser() {

@@ -1,19 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteReview, login, postReview, PostReviewBody, PutReviewBody, register, updateReview } from "./api";
+import { deleteReview, Login, postReview, PostReviewBody, PutReviewBody, Register, updateReview } from "./api";
 import { useUser } from "../context/UserContext";
 
-
-export function useRegisterMutation() {
-  return useMutation({
-    mutationFn: register
-  })
-}
-
-export function useLoginMutation() {
-  return useMutation({
-    mutationFn: login
-  })
-}
 
 // reviews
 export function useCreateReviewMutation() {
