@@ -105,7 +105,7 @@ function RestaurantScreen({ route }: Props) {
             <FlatList
                 data={reviews}
                 renderItem={({ item }) => (
-                        <RestaurantListCard key={item._id} review={undefined} isProfile={false} secondary={item} />
+                        <RestaurantListCard key={item._id} />
                 )}
                 keyExtractor={item => item._id}
                 contentContainerStyle={{ paddingBottom: 140 }}

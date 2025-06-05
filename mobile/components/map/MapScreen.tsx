@@ -17,34 +17,33 @@ function MapScreen({ restaurants }: MapScreenProps) {
   const [selectedRestaurant, setSelectedRestaurant] = useState<Resturant | null>(null)
   const bottomSheetRef = useRef<BottomSheet>(null)
   const { colors } = useTheme()
-  const snapPoints = useMemo(() => ['55%'], [])
-
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index)
-  }, [])
+  const snapPoints = ['55%']
 
   const openBottomSheet = (restaurant: Resturant) => {
     setSelectedRestaurant(restaurant)
     bottomSheetRef.current?.snapToIndex(0)
   }
 
-  return (
-    <View style={{ flex: 1 }}>
-      <MyMap style={{ flex: 1 }}>
+  const MapMemo = useMemo(() => (<MyMap key={"map"} style={{ flex: 1 }}>
         {restaurants?.map((restaurant) => (
           <MarkerView
+            allowOverlap
             key={restaurant._id}
             coordinate={[restaurant.location.longitude, restaurant.location.latitude]}
           >
             <MarkerIcon onPress={() => openBottomSheet(restaurant)} />
           </MarkerView>
         ))}
-      </MyMap>
+      </MyMap>)
+    , [restaurants])
+
+  return (
+    <View style={{ flex: 1 }}>
+      {MapMemo}
       <BottomSheet
         ref={bottomSheetRef}
         snapPoints={snapPoints}
         index={-1}
-        onChange={handleSheetChanges}
         enablePanDownToClose={true}
         backgroundStyle={{ backgroundColor: colors.bottomSheetBackground }}
       >

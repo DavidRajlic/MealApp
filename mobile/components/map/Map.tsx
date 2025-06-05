@@ -12,9 +12,6 @@ type MapProps = {
   style?: StyleProp<ViewStyle>,
   onPress?: (feature: GeoJSON.Feature) => void,
   children?: ReactNode,
-  defaultToUserLocation?: boolean,
-  mapCenterCoordinates?: number[],
-  mapZoom?: number,
   customButtons?: ReactNode,
   showButtons?: boolean,
   disableInteraction?: boolean
@@ -50,10 +47,8 @@ Logger.setLogCallback(log => {
   return false;
 });
 
-function MyMap({style, onPress, children, defaultToUserLocation = true, mapCenterCoordinates, customButtons, showButtons = true, mapZoom = 6, disableInteraction = false}: MapProps) {
+function MyMap({style, onPress, children, customButtons, showButtons = true, disableInteraction = false}: MapProps) {
   const cameraRef = useRef<CameraRef>(null);
-  const [centerCoordinates, setCenterCoordinates] = useState<number[]>(mapCenterCoordinates ? mapCenterCoordinates : [14.505751, 46.056946])
-  const [zoomLevel, setZoomLevel] = useState<number>(mapZoom)
   const {colors, theme} = useTheme()
 
   async function goToMyLocation() {
@@ -61,8 +56,8 @@ function MyMap({style, onPress, children, defaultToUserLocation = true, mapCente
     if (!loc)
       return
     console.log("pinging to location: " + JSON.stringify(loc))
-    setCenterCoordinates(loc)
-    setZoomLevel(17)
+    cameraRef.current?.moveTo(loc)
+    cameraRef.current?.zoomTo(15)
   }
   
   return (
@@ -90,7 +85,7 @@ function MyMap({style, onPress, children, defaultToUserLocation = true, mapCente
             visibility: theme !== 'dark' ? 'visible' : 'none',
           }}/>
         </RasterSource>
-        <Camera zoomLevel={zoomLevel} animationDuration={1000} ref={cameraRef} centerCoordinate={centerCoordinates} maxZoomLevel={18} />
+        <Camera zoomLevel={6} animationDuration={1000} ref={cameraRef} centerCoordinate={[14.505751, 46.056946]} maxZoomLevel={18} />
         <UserLocation showsUserHeadingIndicator={true} />
         {children}
       </MapView>
