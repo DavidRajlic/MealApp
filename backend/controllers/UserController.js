@@ -74,6 +74,7 @@ module.exports = {
             user.email = req.body.email || user.email;
             user.reviews = req.body.reviews || user.reviews;
             user.trusted_status = req.body.trusted_status || user.trusted_status;
+            user.anonymous = req.body.anonymous || user.anonymous;
 
             const updatedUser = await user.save();
             res.json(updatedUser);
