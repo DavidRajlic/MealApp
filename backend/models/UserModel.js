@@ -13,7 +13,7 @@ const UserSchema = new Schema({
     default: 'user'
   },
   'trusted_status': { type: Number, default: 0 },
-  'anonymous': { type: Boolean, default: False },
+  'anonymous': { type: Boolean, default: false },
 }, { timestamps: true });
 
 UserSchema.pre('save', function (next) {
