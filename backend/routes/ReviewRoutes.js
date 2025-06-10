@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const ReviewController = require('../controllers/ReviewController');
 var authenticateUser = require('../middleware/auth.js');
+var multer = require('multer');
+var upload = multer({dest: 'public/images/'});
 
 /**
  * @swagger
@@ -51,12 +53,14 @@ router.get('/:id', ReviewController.show);
  * @swagger
  * /reviews:
  *   post:
- *     summary: Create a new review
+ *     summary: Create a new review with images
  *     tags: [Reviews]
+ *     consumes:
+ *       - multipart/form-data
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             required:
@@ -72,11 +76,17 @@ router.get('/:id', ReviewController.show);
  *                 type: integer
  *               comment:
  *                 type: string
+ *               images:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *                 description: Upload one or more images
  *     responses:
  *       201:
  *         description: Review created
  */
-router.post('/', authenticateUser.isAuthorized, ReviewController.create);
+router.post('/', authenticateUser.isAuthorized, upload.array('images', 5), ReviewController.create);
 
 /**
  * @swagger

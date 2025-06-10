@@ -7,6 +7,7 @@ const ReviewSchema = new Schema({
   rating: { type: Number, required: true },
   dishName: {type: String, required: false},
   comment: String,
+  images: [{ type: String }],
   created_at: { type: Date, default: Date.now }
 });
 

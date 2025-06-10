@@ -56,17 +56,24 @@ module.exports = {
      * ReviewController.create()
      */
     create: async function (req, res) {
-        const review = new ReviewModel({
-            user: req.body.user,
-            restaurant: req.body.restaurant,
-            rating: req.body.rating,
-            comment: req.body.comment
-        });
-
         try {
-            const savedReview = await review.save();
+            if (req.files && req.files.length > 5) {
+                return res.status(400).json({ message: "Največ 5 slik!" });
+            }
 
+            const imagePaths = req.files ? req.files.map(file => "/uploads/" + file.filename) : [];
+
+            const review = new ReviewModel({
+                user: req.body.user,
+                restaurant: req.body.restaurant,
+                rating: req.body.rating,
+                comment: req.body.comment,
+                images: imagePaths
+            });
+
+            const savedReview = await review.save();
             return res.status(201).json(savedReview);
+
         } catch (err) {
             return res.status(500).json({
                 message: 'Error when creating review',
