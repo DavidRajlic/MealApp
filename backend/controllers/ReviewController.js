@@ -61,7 +61,7 @@ module.exports = {
                 return res.status(400).json({ message: "Največ 5 slik!" });
             }
 
-            const imagePaths = req.files ? req.files.map(file => "/uploads/" + file.filename) : [];
+            const imagePaths = req.files ? req.files.map(file => "/images/" + file.filename) : [];
 
             const review = new ReviewModel({
                 user: req.body.user,

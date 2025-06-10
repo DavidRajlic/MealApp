@@ -3,7 +3,7 @@ const router = express.Router();
 const ReviewController = require('../controllers/ReviewController');
 var authenticateUser = require('../middleware/auth.js');
 var multer = require('multer');
-var upload = multer({dest: 'public/images/'});
+var upload = multer({dest: 'uploads/images/'});
 
 /**
  * @swagger
@@ -53,7 +53,7 @@ router.get('/:id', ReviewController.show);
  * @swagger
  * /reviews:
  *   post:
- *     summary: Create a new review with images
+ *     summary: Create a new review
  *     tags: [Reviews]
  *     consumes:
  *       - multipart/form-data

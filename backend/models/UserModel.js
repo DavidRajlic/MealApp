@@ -14,6 +14,7 @@ const UserSchema = new Schema({
   },
   'trusted_status': { type: Number, default: 0 },
   'anonymous': { type: Boolean, default: false },
+  'profile_image': { type: String, default: null }
 }, { timestamps: true });
 
 UserSchema.pre('save', function (next) {
