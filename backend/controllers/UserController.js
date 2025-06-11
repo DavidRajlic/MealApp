@@ -178,5 +178,40 @@ module.exports = {
         } catch (err) {
             res.status(500).json({ message: 'Error when getting profile', error: err });
         }
+    },
+
+
+     updateTrustStatus: async function (req, res) {
+        const userId = req.params.id;
+        const newStatus = parseInt(req.body.trusted_status);
+
+        if (!Number.isInteger(newStatus) || newStatus < 1 || newStatus > 5) {
+            return res.status(400).json({ message: 'trustStatus must be an integer between 1 and 5.' });
+        }
+
+        try {
+            const updatedUser = await UserModel.findByIdAndUpdate(
+                userId,
+                { trusted_status: newStatus },
+                { new: true, runValidators: true }
+            );
+
+            if (!updatedUser) {
+                return res.status(404).json({ message: 'User not found.' });
+            }
+
+            return res.json({
+                message: 'Trust status updated successfully.',
+                user: {
+                    id: updatedUser._id,
+                    trusted_status: updatedUser.trusted_status
+                }
+            });
+        } catch (error) {
+            return res.status(500).json({
+                message: 'Error updating trust status.',
+                error: error.message || error
+            });
+        }
     }
 };

@@ -181,6 +181,51 @@ router.post('/register', upload.single('profile_image'), UserController.signup);
  *         description: Uporabnik posodobljen
  */
 router.put('/:id', upload.single('profile_image'), UserController.update);
+/**
+ * @swagger
+ * /users/{id}/trust-status:
+ *   put:
+ *     summary: Update user's trust status
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the user
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - trustStatus
+ *             properties:
+ *               trustStatus:
+ *                 type: integer
+ *                 description: New trust status (1–5)
+ *                 example: 3
+ *     responses:
+ *       200:
+ *         description: Trust status updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Invalid input or user not found
+ *       500:
+ *         description: Internal server error
+ */
+
+router.put('/:id/trust-status', UserController.updateTrustStatus);
 
 /**
  * @swagger
