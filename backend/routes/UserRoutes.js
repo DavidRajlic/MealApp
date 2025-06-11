@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var UserController = require('../controllers/UserController.js');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/profile_images' });
 
 /**
  * @swagger
@@ -137,12 +139,15 @@ router.post('/login', UserController.login);
  *                 type: string
  *               confirm:
  *                 type: string
+ *               profile_image:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       201:
  *         description: Uporabnik registriran
  */
 
-router.post('/register', UserController.signup);
+router.post('/register', upload.single('profile_image'), UserController.signup);
 
 /**
  * @swagger
@@ -168,11 +173,14 @@ router.post('/register', UserController.signup);
  *                 type: string
  *               email:
  *                 type: string
+ *               profile_image:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       200:
  *         description: Uporabnik posodobljen
  */
-router.put('/:id', UserController.update);
+router.put('/:id', upload.single('profile_image'), UserController.update);
 
 /**
  * @swagger

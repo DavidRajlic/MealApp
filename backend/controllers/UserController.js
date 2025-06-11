@@ -48,11 +48,17 @@ module.exports = {
     // Create a new user (not for signup)
     create: async (req, res) => {
         try {
+            let profileImagePath = null;
+            if (req.file) {
+              profileImagePath = "/uploads/profile_images/" + req.file.filename;
+            }
+
             const user = new UserModel({
                 name: req.body.name,
                 email: req.body.email,
                 reviews: req.body.reviews,
-                trusted_status: req.body.trusted_status
+                trusted_status: req.body.trusted_status,
+                profile_image: profileImagePath
             });
 
             const savedUser = await user.save();
@@ -75,6 +81,10 @@ module.exports = {
             user.reviews = req.body.reviews || user.reviews;
             user.trusted_status = req.body.trusted_status || user.trusted_status;
             user.anonymous = req.body.anonymous || user.anonymous;
+
+            if (req.file) {
+              user.profile_image = "/uploads/profile_images/" + req.file.filename;
+            }
 
             const updatedUser = await user.save();
             res.json(updatedUser);
@@ -103,11 +113,17 @@ module.exports = {
                 return res.status(400).json({ message: 'Passwords do not match' });
             }
 
+            let profileImagePath = null;
+            if (req.file) {
+              profileImagePath = "/uploads//profile_images/" + req.file.filename;
+            }
+
 
             const user = new UserModel({
                 name,
                 email,
-                password
+                password,
+                profile_image: profileImagePath
             });
 
             const savedUser = await user.save();
