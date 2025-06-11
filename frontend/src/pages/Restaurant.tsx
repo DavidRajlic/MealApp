@@ -7,7 +7,7 @@ const Restaurant = () => {
   const location = useLocation();
   const restaurant = location.state?.restaurant;
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
-  const { isLoggedIn, user, logout } = useAuth();
+  const { isLoggedIn, user} = useAuth();
   const navigate = useNavigate();
 
   const [reviews, setReviews] = useState<any[]>([]);

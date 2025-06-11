@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext.ts'
 
 const Navbar = () => {
-    const { isLoggedIn, user, logout } = useAuth();
+    const { isLoggedIn, logout } = useAuth();
 
 
     return (
