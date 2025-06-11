@@ -59,9 +59,10 @@ const Restaurant = () => {
     setSubmitting(true);
 
     try {
-      const res = await fetch(`http://localhost:4000/reviews`, {
+      const res = await fetch(`${API_URL}/reviews`, {
         method: 'POST',
         headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
