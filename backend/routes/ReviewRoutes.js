@@ -142,4 +142,43 @@ router.put('/:id', ReviewController.update);
  */
 router.delete('/:id', ReviewController.remove);
 
+/**
+ * @swagger
+ * /reviews/{id}/vote:
+ *   patch:
+ *     summary: Vote (upvote or downvote) a review
+ *     tags: [Reviews]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Review ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - value
+ *             properties:
+ *               value:
+ *                 type: integer
+ *                 enum: [1, -1]
+ *                 description: 1 for upvote, -1 for downvote
+ *     responses:
+ *       200:
+ *         description: Vote updated
+ *       400:
+ *         description: Invalid input
+ *       401:
+ *         description: Not authenticated
+ *       404:
+ *         description: Review not found
+ */
+router.patch('/:id/vote', authenticateUser.isAuthorized, ReviewController.vote);
+
+
 module.exports = router;

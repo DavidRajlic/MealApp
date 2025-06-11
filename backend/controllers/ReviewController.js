@@ -144,6 +144,62 @@ module.exports = {
                 error: err.message || err
             });
         }
+    },
+
+    /**
+     * ReviewController.vote()
+     */
+    vote: async function (req, res) {
+        const userId = req.user?.userId;
+        const reviewId = req.params.id;
+        const value = parseInt(req.body.value);
+    
+        if (!userId) {
+            return res.status(401).json({ message: "User must be logged in to vote." });
+        }
+    
+        if (![1, -1].includes(value)) {
+            return res.status(400).json({ message: "Vote must be 1 or -1." });
+        }
+    
+        try {
+            const review = await ReviewModel.findById(reviewId);
+            if (!review) return res.status(404).json({ message: "Review not found." });
+    
+            const existingVoteIndex = review.votes.findIndex(v => v.user.toString() === userId);
+    
+            if (existingVoteIndex !== -1) {
+                const existingVote = review.votes[existingVoteIndex];
+    
+                if (existingVote.value === value) {
+                    review.votes.splice(existingVoteIndex, 1);
+                } else {
+                    review.votes[existingVoteIndex].value = value;
+                }
+            } else {
+                review.votes.push({ user: userId, value: value });
+            }
+    
+            await review.save();
+    
+            const upvotes = review.votes.filter(v => v.value === 1).length;
+            const downvotes = review.votes.filter(v => v.value === -1).length;
+    
+            return res.json({
+                message: "Vote updated.",
+                upvotes,
+                downvotes,
+                userVote: review.votes.find(v => v.user.toString() === userId)?.value || 0
+            });
+    
+        } catch (err) {
+            return res.status(500).json({
+                message: "Error while voting.",
+                error: err.message || err
+            });
+        }
     }
+    
+    
     
 };
