@@ -201,9 +201,9 @@ router.put('/:id', upload.single('profile_image'), UserController.update);
  *           schema:
  *             type: object
  *             required:
- *               - trustStatus
+ *               - trusted_status
  *             properties:
- *               trustStatus:
+ *               trusted_status:
  *                 type: integer
  *                 description: New trust status (1–5)
  *                 example: 3
