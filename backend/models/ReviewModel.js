@@ -8,6 +8,10 @@ const ReviewSchema = new Schema({
   dishName: {type: String, required: false},
   comment: String,
   images: [{ type: String }],
+  votes: [{
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    value: { type: Number, enum: [1, -1] } // 1 = upvote, -1 = downvote
+  }],
   created_at: { type: Date, default: Date.now }
 });
 
