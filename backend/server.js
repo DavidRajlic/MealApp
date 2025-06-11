@@ -15,7 +15,9 @@ const port = 4000;
 app.use(cors());
 
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
+app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/users', userRoutes);
