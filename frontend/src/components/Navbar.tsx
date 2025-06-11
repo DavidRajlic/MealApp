@@ -12,14 +12,14 @@ const Navbar = () => {
 
             <div className="ml-auto flex items-center gap-6">
 
-                 {
-                    isLoggedIn && (<Link
+                 
+                   <Link
                         to="/restaurants"
                         className="text-[#c45a39] hover:text-blue-500 transition"
                     >
                         Lokali
-                    </Link>)
-                }
+                    </Link>
+                
 
                 {
                     isLoggedIn && (<Link
