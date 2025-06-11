@@ -62,6 +62,7 @@ const Restaurant = () => {
       const res = await fetch(`http://localhost:4000/reviews`, {
         method: 'POST',
         headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -147,8 +148,10 @@ const Restaurant = () => {
                   Ocena: <span className="font-bold">{review.rating}/5</span>
                 </div>
                 <div className="text-xs text-gray-400">
-                  Uporabnik: {review.user?.name || 'neznano'}
+                    <img src={`${API_URL}/${review.images}`} alt="review image" />
+                    Uporabnik: {review.user?.name || 'neznano'}
                 </div>
+                
               </div>
             ))}
           </div>
