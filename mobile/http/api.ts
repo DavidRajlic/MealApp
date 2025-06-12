@@ -1,5 +1,5 @@
 import { BaseReview, Resturant as Restaurant, ResturantReviews, ReviewShortened, UpdateReviewResponse, User, UserReviews } from "../util/types";
-import { deleteF, get, post, put } from "./fetch";
+import { deleteF, get, post, postFormData, put } from "./fetch";
 
 // docs: https://mealapp-psnv.onrender.com/api-docs/
 
@@ -43,6 +43,29 @@ export function Register(body: RegisterProps) {
   })
 }
 
+export type UpdateUser = {
+  name?: string,
+  email?: string,
+  profile_image?: UploadMedia,
+}
+
+export function updateUser(token: string, userId: string, body: UpdateUser) {
+  const formData = new FormData();
+  if(body.name)
+    formData.append("name", body.name);
+  if(body.email)
+    formData.append("email", body.email);
+  if(body.profile_image)
+    formData.append("profile_image", {
+        uri: body.profile_image.uri,
+        name: body.profile_image.name,
+        type: body.profile_image.type,
+      } as any);
+
+  return postFormData<User>(`/users/${userId}`, formData, token, { method: 'PUT' })
+}
+
+
 function setUpvoteDownvotes(reviews: BaseReview[]) {
   for(const review of reviews) {
     let upvotes = 0;
@@ -71,15 +94,39 @@ export async function getResturantReviews(resturantId: string) {
   return reviews
 }
 
+export type UploadMedia = {
+  uri: string,
+  name: string,
+  type: string
+}
+
 export type PostReviewBody = {
-  "user": string,
-  "restaurant": string,
-  "rating": number,
-  "comment": string
+  user: string,
+  restaurant: string,
+  rating: number,
+  comment: string,
+  images: UploadMedia[],
+  anonymous: boolean
 }
 
 export function postReview(token: string, body: PostReviewBody) {
-  return post<ReviewShortened>("/reviews", body, token)
+  const formData = new FormData();
+  
+  formData.append("user", body.user);
+  formData.append("restaurant", body.restaurant);
+  formData.append("rating", body.rating.toString());
+  formData.append("comment", body.comment);
+  formData.append("anonymous", body.anonymous as any);
+
+  body.images.forEach((image, index) => {
+    formData.append("images", {
+      uri: image.uri,
+      name: image.name,
+      type: image.type,
+    } as any);
+  });
+
+  return postFormData<ReviewShortened>("/reviews", formData, token)
 }
 
 export type PutReviewBody = {

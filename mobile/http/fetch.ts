@@ -1,4 +1,3 @@
-import { useUser } from "../context/UserContext";
 import { SERVER_URL } from "../util/constants";
 
 export async function get<T>(url: string, token?: string, requestInit?: RequestInit) {
@@ -48,15 +47,33 @@ export async function post<T>(url: string, body: Object, token?: string, request
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log('post post')
 
   if(!response.ok) {
-    console.log(JSON.stringify(response))
-    console.log('not ok')
+    console.error(JSON.stringify(response))
     throw new Error('Failed to fetch data')
   }
 
   console.log('ok')
+
+  return (await response.json()) as T
+}
+
+export async function postFormData<T>(url: string, body: FormData, token?: string, requestInit?: RequestInit) {
+  console.log('post', url, body)
+  const response = await fetch(SERVER_URL + url, {
+    method: 'POST',
+    body: body,
+    ...requestInit,
+    headers: {
+      ...requestInit?.headers,
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if(!response.ok) {
+    console.error(JSON.stringify(response))
+    throw new Error('Failed to fetch data')
+  }
 
   return (await response.json()) as T
 }
