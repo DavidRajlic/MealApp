@@ -1,4 +1,9 @@
 var ReviewModel = require('../models/ReviewModel.js');
+const badWords = require('../utils/bad_words.json')
+function containsBadWords(text) {
+    const lower = text.toLowerCase();
+    return badWords.some(word => lower.includes(word));
+}
 
 /**
  * ReviewController.js
@@ -15,11 +20,11 @@ module.exports = {
             const filter = {};
             if (req.query.restaurant) filter.restaurant = req.query.restaurant;
             if (req.query.user) filter.user = req.query.user;
-    
+
             const reviews = await ReviewModel.find(filter)
                 .populate('user', 'name')
                 .populate('restaurant', 'name');
-    
+
             return res.json(reviews);
         } catch (err) {
             return res.status(500).json({
@@ -28,21 +33,21 @@ module.exports = {
             });
         }
     },
-    
+
     show: async function (req, res) {
         const id = req.params.id;
-    
+
         try {
             const review = await ReviewModel.findOne({ _id: id })
                 .populate('user', 'name')
                 .populate('restaurant', 'name');
-    
+
             if (!review) {
                 return res.status(404).json({
                     message: 'No such review'
                 });
             }
-    
+
             return res.json(review);
         } catch (err) {
             return res.status(500).json({
@@ -50,7 +55,7 @@ module.exports = {
                 error: err
             });
         }
-    },    
+    },
 
     /**
      * ReviewController.create()
@@ -60,7 +65,9 @@ module.exports = {
             if (req.files && req.files.length > 5) {
                 return res.status(400).json({ message: "Največ 5 slik!" });
             }
-            console.log(req.body.anonymous);
+            if (containsBadWords(req.body.comment)) {
+                return res.status(400).json({ message: "Komentar vsebuje neprimerno vsebino." });
+            }
             const imagePaths = req.files ? req.files.map(file => "/images/" + file.filename) : [];
 
             const review = new ReviewModel({
@@ -88,7 +95,7 @@ module.exports = {
      */
     update: async function (req, res) {
         const id = req.params.id;
-    
+
         try {
             const updatedReview = await ReviewModel.findByIdAndUpdate(
                 id,
@@ -101,15 +108,15 @@ module.exports = {
                 },
                 { new: true, runValidators: true } // returns updated doc + triggers validation
             )
-            .populate('user', 'username')
-            .populate('restaurant', 'name');
-    
+                .populate('user', 'username')
+                .populate('restaurant', 'name');
+
             if (!updatedReview) {
                 return res.status(404).json({
                     message: 'No such review'
                 });
             }
-    
+
             return res.json(updatedReview);
         } catch (err) {
             return res.status(500).json({
@@ -118,22 +125,22 @@ module.exports = {
             });
         }
     },
-    
+
     /**
      * ReviewController.remove()
      */
     remove: async function (req, res) {
         const id = req.params.id;
-    
+
         try {
             const review = await ReviewModel.findByIdAndDelete(id);
-    
+
             if (!review) {
                 return res.status(404).json({
                     message: 'No such review to delete'
                 });
             }
-    
+
             return res.status(200).json({
                 message: 'Review deleted successfully',
                 deletedReview: review
@@ -155,24 +162,24 @@ module.exports = {
         const userId = req.user?.userId;
         const reviewId = req.params.id;
         const value = parseInt(req.body.value);
-    
+
         if (!userId) {
             return res.status(401).json({ message: "User must be logged in to vote." });
         }
-    
+
         if (![1, -1].includes(value)) {
             return res.status(400).json({ message: "Vote must be 1 or -1." });
         }
-    
+
         try {
             const review = await ReviewModel.findById(reviewId);
             if (!review) return res.status(404).json({ message: "Review not found." });
-    
+
             const existingVoteIndex = review.votes.findIndex(v => v.user.toString() === userId);
-    
+
             if (existingVoteIndex !== -1) {
                 const existingVote = review.votes[existingVoteIndex];
-    
+
                 if (existingVote.value === value) {
                     review.votes.splice(existingVoteIndex, 1);
                 } else {
@@ -181,19 +188,19 @@ module.exports = {
             } else {
                 review.votes.push({ user: userId, value: value });
             }
-    
+
             await review.save();
-    
+
             const upvotes = review.votes.filter(v => v.value === 1).length;
             const downvotes = review.votes.filter(v => v.value === -1).length;
-    
+
             return res.json({
                 message: "Vote updated.",
                 upvotes,
                 downvotes,
                 userVote: review.votes.find(v => v.user.toString() === userId)?.value || 0
             });
-    
+
         } catch (err) {
             return res.status(500).json({
                 message: "Error while voting.",
@@ -201,7 +208,7 @@ module.exports = {
             });
         }
     }
-    
-    
-    
+
+
+
 };
