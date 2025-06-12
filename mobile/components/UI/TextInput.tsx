@@ -2,8 +2,7 @@ import { View, TextInput as TextInputRN, ViewStyle, StyleProp, TextInputProps, S
 import { useTheme } from "../../context/ThemeContext"
 import Ionicons from "@expo/vector-icons/Ionicons"
 
-interface MyTextInputProps extends Omit<TextInputProps, "style"> {
-  style?: StyleProp<ViewStyle>,
+interface MyTextInputProps extends TextInputProps {
   containerStyle?: StyleProp<ViewStyle>,
   hasIcon?: boolean
 }
