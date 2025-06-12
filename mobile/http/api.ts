@@ -1,4 +1,4 @@
-import { Resturant as Restaurant, ResturantReviews, ReviewShortened, UpdateReviewResponse, User, UserReviews } from "../util/types";
+import { BaseReview, Resturant as Restaurant, ResturantReviews, ReviewShortened, UpdateReviewResponse, User, UserReviews } from "../util/types";
 import { deleteF, get, post, put } from "./fetch";
 
 // docs: https://mealapp-psnv.onrender.com/api-docs/
@@ -43,13 +43,32 @@ export function Register(body: RegisterProps) {
   })
 }
 
-// REVIEWS
-export function getUserReviews(userId: string) {
-  return get<UserReviews[]>(`/users/review/${userId}`)
+function setUpvoteDownvotes(reviews: BaseReview[]) {
+  for(const review of reviews) {
+    let upvotes = 0;
+    let downvotes = 0;
+
+    for (const vote of review.votes) {
+      if (vote.value === 1) upvotes++;
+      else if (vote.value === -1) downvotes++;
+    }
+
+    review.upvotes = upvotes
+    review.downvotes = downvotes
+  }
 }
 
-export function getResturantReviews(resturantId: string) {
-  return get<ResturantReviews[]>(`/restaurants/review/${resturantId}`)
+// REVIEWS
+export async function getUserReviews(userId: string) {
+  const reviews = await get<UserReviews[]>(`/users/review/${userId}`)
+  setUpvoteDownvotes(reviews)
+  return reviews
+}
+
+export async function getResturantReviews(resturantId: string) {
+  const reviews = await get<ResturantReviews[]>(`/restaurants/review/${resturantId}`)
+  setUpvoteDownvotes(reviews)
+  return reviews
 }
 
 export type PostReviewBody = {
@@ -70,6 +89,21 @@ export type PutReviewBody = {
 
 export function updateReview(reviewId: string, body: PutReviewBody) {
   return put<UpdateReviewResponse>(`/reviews/${reviewId}`, body)
+}
+
+export type VoteReviewBody = {
+  value: number
+}
+
+export type VoteReviewResponse = {
+  message: string,
+  upovtes: number,
+  downvotes: number,
+  userVote: number
+}
+
+export function voteReview(token: string, reviewId: string, body: VoteReviewBody) {
+  return post<ReviewShortened>(`/reviews/${reviewId}/vote`, body, token, { method: 'PATCH' })
 }
 
 export type DeleteReviewResponse = {

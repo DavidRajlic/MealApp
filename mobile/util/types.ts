@@ -26,21 +26,33 @@ export type User = {
   email: string,
   trusted_status: number,
   createdAt: string,
-  updatedAt: string
+  updatedAt: string,
+  profile_image: string | null
 }
 
-type BaseReview = {
+export type Vote = {
+  user: string,
+  value: number,
+  _id: string
+}
+
+export type BaseReview = {
   _id: string,
   rating: number,
   comment: string,
   created_at: string,
-  __v: number
+  __v: number,
+  anonymous: boolean,
+  images: string[],
+  votes: Vote[],
+  upvotes: number,
+  downvotes: number
 }
 
 export interface ResturantReviews extends BaseReview {
   user: User,
   restaurant: string
-} 
+}
 
 export interface UserReviews extends BaseReview {
   user: string,
