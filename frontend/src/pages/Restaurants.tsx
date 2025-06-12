@@ -29,11 +29,7 @@ const Restaurants = () => {
 
     return (
         <div className="bg-[#fff5e1] min-h-screen">
-            {/* Top banner */}
-            <img
-                src="/images/table.jpg" 
-                className="w-full h-[280px] object-cover object-center rounded-none"
-            />
+
             <div className="max-w-5xl mx-auto p-6">
                 <h2 className="text-3xl font-bold mb-6 text-[#b85c38]">Seznam lokalov</h2>
 
@@ -48,7 +44,7 @@ const Restaurants = () => {
                         <li
                             key={restaurant._id}
                             className="bg-white shadow-md rounded-xl p-4 border border-gray-100 flex flex-col gap-3 cursor-pointer 
-                                       transition duration-300 transform hover:-translate-y-2 hover:scale-105 hover:shadow-xl animate-fadeIn"
+                                       transition duration-300 transform hover:-translate-y-2 hover:scale-105 hover:shadow-xl animate-fadeIn transition duration-500 hover:bg-indigo-200"
                             style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}
                             onClick={() => navigate(`/restaurant/${restaurant._id}`, {
                                 state: { restaurant }
