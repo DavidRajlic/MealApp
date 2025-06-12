@@ -16,7 +16,7 @@ const team = [
     name: "Florijan Tušak",
     role: "Mobilni razvijalec",
     description:
-      "Florijan se ukvarja z razvojem mobilne aplikacije in implementacijo funkcij za Android naprave.",
+      "Florijan se ukvarja z razvojem mobilne aplikacije, predvsem z zalednim delom ter implementacijo osnovnih uporabniških komponent.",
   },
   {
     name: "Matjaž Vaupotič",

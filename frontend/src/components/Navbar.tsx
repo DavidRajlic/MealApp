@@ -19,6 +19,12 @@ const Navbar = () => {
                     >
                         Lokali
                     </Link>
+                     <Link
+                        to="/aboutUs"
+                        className="text-[#c45a39] hover:text-blue-500 transition"
+                    >
+                        O nas
+                    </Link>
                 
 
                 {
