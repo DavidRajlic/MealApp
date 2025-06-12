@@ -84,7 +84,7 @@ const Restaurant = () => {
                     restaurant: restaurant._id,
                     comment,
                     rating,
-                    anonymous: true,
+                    anonymous: isAnonymous,
                     user: user._id,
                 }),
             });
@@ -116,6 +116,8 @@ const Restaurant = () => {
 
         return { upvotes, downvotes };
     };
+
+  
 
     const voteReview = async (reviewId: string, type: 'upvote' | 'downvote') => {
         if (!isLoggedIn) {
