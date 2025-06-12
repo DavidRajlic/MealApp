@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage'
 import Restaurants from './pages/Restaurants'
 import Restaurant from './pages/Restaurant'
 import Profile from './pages/Profile'
+import AboutUs from './pages/AboutUs'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/restaurants" element={<Restaurants />} />
           <Route path="/restaurant/:id" element={<Restaurant />} />
+          <Route path="/aboutUs" element={<AboutUs />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
