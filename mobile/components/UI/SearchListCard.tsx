@@ -4,21 +4,13 @@ import Avatar from "./Avatar";
 import Text from "./Text";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { SERVER_URL } from "../../util/constants";
+import { Resturant } from "../../util/types";
 
 export type GpsLocation = {
     latitude: number;
     longitude: number;
 };
 
-export type Resturant = {
-    _id: string;
-    name: string;
-    price: number;
-    additional_payment: number;
-    location: GpsLocation;
-    averageRating: number;
-    image?: string;
-};
 
 type SearchListCardProps = {
     style?: StyleProp<ViewStyle>;

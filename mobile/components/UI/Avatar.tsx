@@ -2,6 +2,7 @@ import { Image } from 'expo-image';
 import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import Text from './Text';
 import { useTheme } from '../../context/ThemeContext';
+import { SERVER_URL } from '../../util/constants';
 
 type AvatarProps = {
   size?: number,
@@ -14,7 +15,11 @@ function Avatar({ size = 64, onPress, url, containerStyle }: AvatarProps) {
   const { colors } = useTheme()
 
 
-  const imageUrl = url || 'https://i.redd.it/g9q10ff0nwq81.jpg';
+  const imageUrl = url
+    ? `${SERVER_URL}/uploads${url}`
+    : 'https://upload.wikimedia.org/wikipedia/commons/9/91/Pizza-3007395.jpg';
+
+  console.log(imageUrl)
   return (
     <View style={[{ width: size, height: size, backgroundColor: colors.secondary, borderRadius: size/2 }, styles.container, containerStyle]}>
       <Pressable style={styles.pressable} onPress={onPress} android_ripple={{ color: colors.onSurfaceDisabled }}>

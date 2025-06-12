@@ -40,6 +40,7 @@ function RestaurantScreen({ route }: Props) {
     const createReview = useCreateReviewMutation();
     const voteReview = useVoteReviewMutation();
     const [images, setImages] = useState<{ uri: string; name: string; type: string }[]>([]);
+    const [userVote, setUserVote] = useState(0);
 
     const addReviewSheetRef = useRef<BottomSheet>(null);
     const viewReviewSheetRef = useRef<BottomSheet>(null);
@@ -47,6 +48,8 @@ function RestaurantScreen({ route }: Props) {
 
     const openAddReviewSheet = () => addReviewSheetRef.current?.snapToIndex(0);
     const openViewReviewSheet = (review: ResturantReviews) => {
+        const currentVote = review.votes.find(v => v.user === userCtx.user?._id);
+        setUserVote(currentVote?.value ?? 0);
         setSelectedReview(review);
         viewReviewSheetRef.current?.snapToIndex(0);
     };
@@ -69,26 +72,29 @@ function RestaurantScreen({ route }: Props) {
     };
 
     const handleVote = async (vote: 1 | -1) => {
-        if (!selectedReview?._id) return;
+        if (!selectedReview?._id || !userCtx.user) return;
 
         try {
             const updated = await voteReview.mutateAsync({
                 reviewId: selectedReview._id,
-                value: vote
+                value: vote,
             });
+            const userId = userCtx?.user?._id;
+            if (!selectedReview?._id || !userId) return;
 
-            setSelectedReview(prev => {
-                if (!prev) return prev;
+            const updatedVotes = selectedReview.votes.filter(v => v.user !== userCtx.user._id);
+            updatedVotes.push({ user: userCtx.user._id, value: vote, _id: "temp" });
 
-                const up = vote === 1 ? prev.upvotes + 1 : prev.upvotes;
-                const down = vote === -1 ? prev.downvotes + 1 : prev.downvotes;
+            const up = updatedVotes.filter(v => v.value === 1).length;
+            const down = updatedVotes.filter(v => v.value === -1).length;
 
-                return {
-                    ...prev,
-                    upvotes: up,
-                    downvotes: down
-                };
-            });
+            setSelectedReview(prev => prev ? {
+                ...prev,
+                upvotes: up,
+                downvotes: down,
+                votes: updatedVotes,
+            } : null);
+            setUserVote(vote);
         } catch (err) {
             Alert.alert("Error", "Failed to vote on review.");
             console.error(err);
@@ -234,15 +240,15 @@ function RestaurantScreen({ route }: Props) {
                                 <Text style={{ color: colors.onBackground, fontWeight: 'bold' }}>{selectedReview.user.name}</Text>
                                 <Text style={{ color: colors.onBackground }}>{selectedReview.comment}</Text>
                             </View>
-                            <View style={{ alignItems: 'center' }}>
+                            <View style={[styles.starsContainer, { backgroundColor: colors.surface, alignItems: 'center' }]}>
                                 <Pressable onPress={() => handleVote(1)}>
-                                    <Ionicons name="arrow-up" size={32} color={colors.onSurface} />
+                                    <Ionicons name={userVote === 1 ? "arrow-up-circle" : "arrow-up-circle-outline"} size={32} color={colors.onSurface} />
                                 </Pressable>
-                                <Text style={{ color: colors.onBackground }}>
+                                <Text style={{ color: colors.onBackground, marginHorizontal: 8 }}>
                                     {selectedReview.upvotes - selectedReview.downvotes}
                                 </Text>
                                 <Pressable onPress={() => handleVote(-1)}>
-                                    <Ionicons name="arrow-down" size={32} color={colors.onSurface} />
+                                    <Ionicons name={userVote === -1 ? "arrow-down-circle" : "arrow-down-circle-outline"} size={32} color={colors.onSurface} />
                                 </Pressable>
                             </View>
                         </View>
@@ -291,8 +297,8 @@ const styles = StyleSheet.create({
         marginTop: 8,
     },
     previewImage: {
-        width: 64,
-        height: 64,
+        width:120,
+        height: 120,
         borderRadius: 12,
     },
 });
