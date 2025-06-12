@@ -78,6 +78,8 @@ router.get('/:id', ReviewController.show);
  *                 type: string
  *               images:
  *                 type: array
+ *               anonymous:
+ *                 type: boolean
  *                 items:
  *                   type: string
  *                   format: binary
