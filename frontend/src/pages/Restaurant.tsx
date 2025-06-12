@@ -1,27 +1,38 @@
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import {useAuth} from '../contexts/AuthContext.ts'
+import { useAuth } from '../contexts/AuthContext.ts';
 import { useNavigate } from 'react-router-dom';
+
+interface Vote {
+  user: string; 
+  value: number; 
+}
+
+interface Review {
+  _id: string;
+  comment: string;
+  rating: number;
+  user?: { name?: string };
+  images?: string;
+  votes?: Vote[];
+}
 
 const Restaurant = () => {
   const location = useLocation();
   const restaurant = location.state?.restaurant;
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
-  const { isLoggedIn, user} = useAuth();
+  const { isLoggedIn, user } = useAuth();
   const navigate = useNavigate();
 
-  const [reviews, setReviews] = useState<any[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Novo: za obrazec
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(5);
   const [submitting, setSubmitting] = useState(false);
 
- 
-
-
+  
   const fetchReviews = () => {
     setLoading(true);
     fetch(`${API_URL}/restaurants/review/${restaurant._id}`)
@@ -47,29 +58,31 @@ const Restaurant = () => {
     }
   }, [restaurant]);
 
+
   const handleSubmit = async (e: React.FormEvent) => {
-    if (!isLoggedIn) {
-        navigate(`/login`);
-        return 0;
-    }
     e.preventDefault();
+
+    if (!isLoggedIn) {
+      navigate(`/login`);
+      return;
+    }
 
     if (!comment || !rating) return;
 
     setSubmitting(true);
 
     try {
-      const res = await fetch(`http://localhost:4000/reviews`, {
+      const res = await fetch(`${API_URL}/reviews`, {
         method: 'POST',
         headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           restaurant: restaurant._id,
           comment,
           rating,
-          user: user._id, 
+          user: user._id,
         }),
       });
 
@@ -77,7 +90,7 @@ const Restaurant = () => {
 
       setComment('');
       setRating(5);
-      fetchReviews(); 
+      fetchReviews();
     } catch (err) {
       console.error(err);
       setError('Napaka pri dodajanju mnenja.');
@@ -86,36 +99,85 @@ const Restaurant = () => {
     }
   };
 
+ 
+  const countVotes = (votes?: Vote[]) => {
+    let upvotes = 0;
+    let downvotes = 0;
+
+    if (!votes) return { upvotes, downvotes };
+
+    for (const vote of votes) {
+      if (vote.value === 1) upvotes++;
+      else if (vote.value === -1) downvotes++;
+    }
+
+    return { upvotes, downvotes };
+  };
+
+  const voteReview = async (reviewId: string, type: 'upvote' | 'downvote') => {
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
+    }
+
+    const voteValue = type === 'upvote' ? 1 : -1;
+
+    try {
+      const res = await fetch(`${API_URL}/reviews/${reviewId}/vote`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ value: voteValue }),
+      });
+
+      if (!res.ok) throw new Error('Napaka pri glasovanju.');
+
+      fetchReviews();
+    } catch (err) {
+      console.error(err);
+      setError('Napaka pri glasovanju.');
+    }
+  };
+
   if (!restaurant) {
     return <p className="text-red-500 p-4">Ni podatkov o restavraciji. (Poskusil si reloadati?)</p>;
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-4 space-y-6">
-      <h1 className="text-3xl font-bold">{restaurant.name}</h1>
+    <div className="max-w-3xl mx-auto p-4 space-y-8">
+      <h1 className="text-4xl font-extrabold text-gray-900">{restaurant.name}</h1>
 
       <section>
-        <h2 className="text-2xl font-semibold mb-2">Dodaj mnenje</h2>
+        <h2 className="text-2xl font-semibold mb-4">Dodaj mnenje</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block font-medium">Komentar</label>
+            <label htmlFor="comment" className="block mb-1 font-medium text-gray-700">
+              Komentar
+            </label>
             <textarea
-              className="w-full border rounded p-2"
+              id="comment"
+              className="w-full border border-gray-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               required
+              rows={4}
             />
           </div>
 
           <div>
-            <label className="block font-medium">Ocena (1–5)</label>
+            <label htmlFor="rating" className="block mb-1 font-medium text-gray-700">
+              Ocena (1–5)
+            </label>
             <input
+              id="rating"
               type="number"
               min={1}
               max={5}
               value={rating}
               onChange={(e) => setRating(parseInt(e.target.value))}
-              className="border rounded p-2 w-20"
+              className="border border-gray-300 rounded p-2 w-20 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -123,7 +185,7 @@ const Restaurant = () => {
           <button
             type="submit"
             disabled={submitting}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-5 py-2 rounded font-semibold transition"
           >
             {submitting ? 'Pošiljanje...' : 'Dodaj mnenje'}
           </button>
@@ -131,29 +193,66 @@ const Restaurant = () => {
       </section>
 
       <section>
-        <h2 className="text-2xl font-semibold mt-6 mb-2">Mnenja</h2>
+        <h2 className="text-2xl font-semibold mb-4">Mnenja</h2>
 
         {loading ? (
-          <p>Nalaganje mnenj...</p>
+          <p>...nalaganje mnenj</p>
         ) : error ? (
-          <p className="text-red-500">{error}</p>
+          <p className="text-red-600">{error}</p>
         ) : reviews.length === 0 ? (
-          <p className="text-gray-500">Ta restavracija še nima mnenj.</p>
+          <p className="text-gray-600">Ta restavracija še nima mnenj.</p>
         ) : (
-          <div className="space-y-4">
-            {reviews.map((review) => (
-              <div key={review._id} className="border p-4 rounded shadow-sm bg-white">
-                <p className="font-medium text-gray-800">{review.comment}</p>
-                <div className="text-sm text-gray-600 mt-2">
-                  Ocena: <span className="font-bold">{review.rating}/5</span>
-                </div>
-                <div className="text-xs text-gray-400">
-                    <img src={`${API_URL}/${review.images}`} alt="review image" />
-                    Uporabnik: {review.user?.name || 'neznano'}
-                </div>
-                
-              </div>
-            ))}
+          <div className="space-y-6">
+            {reviews.map((review) => {
+              const { upvotes, downvotes } = countVotes(review.votes);
+
+              return (
+                <article
+                  key={review._id}
+                  className="border border-gray-200 rounded shadow p-4 bg-white"
+                >
+                  <p className="text-gray-900 font-medium mb-2">{review.comment}</p>
+
+                  <div className="flex items-center space-x-2 mb-3">
+                    <span className="font-semibold text-yellow-500">
+                      {'★'.repeat(review.rating)}{' '}
+                      <span className="text-gray-400">{'☆'.repeat(5 - review.rating)}</span>
+                    </span>
+                    <span className="text-sm text-gray-600 ml-auto">
+                      Uporabnik: <span className="font-semibold">{review.user?.name || 'neznano'}</span>
+                    </span>
+                  </div>
+
+                  {review.images != "" && (
+                    <img
+                      src={`${API_URL}/${review.images}`}
+                      alt="slika mnenja"
+                      className="max-w-full max-h-64 object-cover rounded mb-3"
+                    />
+                  )}
+
+                  <div className="flex items-center space-x-4">
+                    <button
+                      onClick={() => voteReview(review._id, 'upvote')}
+                      className="flex items-center space-x-1 text-green-600 hover:text-green-800 font-semibold"
+                      title="Všeč mi je"
+                      type="button"
+                    >
+                      👍 <span>{upvotes}</span>
+                    </button>
+
+                    <button
+                      onClick={() => voteReview(review._id, 'downvote')}
+                      className="flex items-center space-x-1 text-red-600 hover:text-red-800 font-semibold"
+                      title="Ni mi všeč"
+                      type="button"
+                    >
+                      👎 <span>{downvotes}</span>
+                    </button>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         )}
       </section>
