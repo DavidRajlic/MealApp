@@ -28,6 +28,13 @@ const team = [
     gender: "male",
   },
   {
+    name: "Klemen Poglajen",
+    role: "Backend razvijalec",
+    description:
+      "Klemen pomaga pri strežniških opravilih, piše poročila in dokumentacijo.",
+    gender: "male",
+  },
+  {
     name: "Tatjana Panova, Rebeka Nikolova in Ana Klincharova",
     role: "UI oblikovalke",
     description:
