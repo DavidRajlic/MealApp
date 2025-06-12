@@ -4,39 +4,82 @@ import { useTheme } from "../../context/ThemeContext";
 import Avatar from "./Avatar";
 import Text from "./Text";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import type { UserReviews, ResturantReviews } from "../../util/types";
 
 type RestaurantListCardProps = {
     style?: StyleProp<ViewStyle>;
-    children?: ReactNode;
+    review: UserReviews | ResturantReviews;
+    isProfile?: boolean;
+    secondary?: unknown;
 };
 
-function RestaurantListCard({ children, style }: RestaurantListCardProps) {
+function RestaurantListCard({ style, review, isProfile, secondary }: RestaurantListCardProps) {
     const { colors } = useTheme();
 
+    const filledStars = Array(review.rating).fill(true);
+    const emptyStars = Array(5 - review.rating).fill(false);
+
+    const restaurantName =
+        typeof review.restaurant === "string"
+            ? "Restaurant"
+            : review.restaurant.name;
+
+    const userName =
+        typeof review.user === "string"
+            ? "User"
+            : review.user.name.trim();
+
     return (
-        <View style={[styles.cardContainer, { backgroundColor: colors.surface }]}>
-            <Avatar containerStyle={{borderRadius: 18 }} size={128} />
+        <View style={[styles.cardContainer, { backgroundColor: colors.surface }, style]}>
+            <Avatar containerStyle={{ borderRadius: 18 }} size={128} />
+
             <View style={styles.textContainer}>
                 <View style={styles.header}>
-                    <Text style={styles.restaurantName}>Gostilna Ozmec</Text>
+                    <Text style={styles.restaurantName}>
+                        {isProfile ? restaurantName : userName}
+                    </Text>
+
                     <View style={[styles.ratingContainer, { backgroundColor: colors.onSurface }]}>
                         <Ionicons name="star" size={16} color="#B0803D" style={styles.starIcon} />
-                        <Text style={[styles.ratingText, { color: colors.shadow }]}>4.1</Text>
+                        <Text style={[styles.ratingText, { color: colors.shadow }]}>
+                            {review.rating.toFixed(1)}
+                        </Text>
                     </View>
                 </View>
+
                 <View style={[styles.line, { backgroundColor: colors.onBackground }]} />
-                <Text style={styles.dishName}>Pizza Margarita</Text>
+
+                <Text style={styles.dishName}>Review</Text>
+
                 <View style={[styles.reviewContainer, { backgroundColor: colors.onSurface }]}>
                     <View>
                         <View style={styles.stars}>
-                            <Ionicons name="star" size={18} color="#B0803D" style={styles.starIcon} />
-                            <Ionicons name="star" size={18} color="#B0803D" style={styles.starIcon} />
-                            <Ionicons name="star" size={18} color="#B0803D" style={styles.starIcon} />
-                            <Ionicons name="star" size={18} color="#B0803D" style={styles.starIcon} />
-                            <Ionicons name="star" size={18} color={colors.surface} style={styles.starIcon} />
-                            <Text style={[styles.reviewCount, { color: colors.shadow }]}>4</Text>
+                            {filledStars.map((_, i) => (
+                                <Ionicons
+                                    key={`filled-${i}`}
+                                    name="star"
+                                    size={18}
+                                    color="#B0803D"
+                                    style={styles.starIcon}
+                                />
+                            ))}
+                            {emptyStars.map((_, i) => (
+                                <Ionicons
+                                    key={`empty-${i}`}
+                                    name="star"
+                                    size={18}
+                                    color={colors.surface}
+                                    style={styles.starIcon}
+                                />
+                            ))}
+                            <Text style={[styles.reviewCount, { color: colors.shadow }]}>
+                                {review.rating}
+                            </Text>
                         </View>
-                        <Text style={[styles.reviewText, { color: colors.shadow }]}>Super Pica!</Text>
+
+                        <Text style={[styles.reviewText, { color: colors.shadow }]}>
+                            {review.comment}
+                        </Text>
                     </View>
                 </View>
             </View>
@@ -93,7 +136,7 @@ const styles = StyleSheet.create({
     },
     stars: {
         flexDirection: "row",
-        alignItems: 'center'
+        alignItems: "center",
     },
     reviewCount: {
         fontSize: 18,

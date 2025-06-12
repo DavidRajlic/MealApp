@@ -11,11 +11,11 @@ import { useTheme } from "../context/ThemeContext";
 import { LinearGradient } from 'expo-linear-gradient';
 import { useUser } from "../context/UserContext";
 import { useUserQuery, useUserReviewsQuery } from "../http/queries";
-import { RouteProp, useNavigation } from "@react-navigation/native";
-import { StackNavParamList } from "../Navigation";
 import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavParamList } from "../Navigation";
 
-function getTrustDisplay(trustStatus: number): { label: string; color: string } {
+function getTrustDisplay(trustStatus: number) {
     switch (trustStatus) {
         case -1:
             return { label: "Untrusted", color: "red" };
@@ -30,18 +30,32 @@ function getTrustDisplay(trustStatus: number): { label: string; color: string } 
     }
 }
 
+function calculateTrustStatus(reviews: any[]) {
+    if (reviews.length === 0) return -1;
+    const minReviews = 30;
+    if (reviews.length < minReviews) return 0;
+    const goodReviewsCount = reviews.filter(
+        (r) => (r.upvotes ?? 0) >= 2 * (r.downvotes ?? 0)
+    ).length;
+    const ratio = goodReviewsCount / reviews.length;
+    if (ratio >= 0.9) return 1;
+    return 0;
+}
+
 type ProfileScreenRouteProp = NativeStackScreenProps<StackNavParamList, "ProfileScreen">;
 
 function ProfileScreen({ route }: ProfileScreenRouteProp) {
     const { colors } = useTheme();
-    const userCtx = useUser()
-    const navigation = useNavigation<NativeStackNavigationProp<StackNavParamList>>()
+    const userCtx = useUser();
+    const navigation = useNavigation<NativeStackNavigationProp<StackNavParamList>>();
     const id = route?.params?.id;
-    const { data: user2, ...userQuery } = useUserQuery(id ?? "0")
-    const user = id==undefined ? userCtx.user : user2;
-    const { data: reviews, ...restaurantQuery } = useUserReviewsQuery(user?._id ?? "0")
-    const trustStatus = user?.trusted_status ?? 0
-    const { label: trustLabel, color: trustColor } = getTrustDisplay(trustStatus)
+    const { data: user2 } = useUserQuery(id ?? "0");
+    const user = id === undefined ? userCtx.user : user2;
+    const { data: reviews = [] } = useUserReviewsQuery(user?._id ?? "0");
+    const trustStatus = user?.trusted_status === 2 ? 2 : calculateTrustStatus(reviews);
+    const { label: trustLabel, color: trustColor } = getTrustDisplay(trustStatus);
+    const totalUpvotes = reviews.reduce((acc, review) => acc + (review.upvotes ?? 0), 0);
+    const totalDownvotes = reviews.reduce((acc, review) => acc + (review.downvotes ?? 0), 0);
 
     return (
         <LinearGradient
@@ -51,25 +65,24 @@ function ProfileScreen({ route }: ProfileScreenRouteProp) {
             end={{ x: 0, y: 0.2 }}
         >
             <Container style={styles.container}>
-                {id == undefined ? <>
+                {id === undefined && (
                     <View style={styles.logoutContainer}>
                         <Button mode="TRANSPARENT" onPress={() => userCtx.logout()} style={styles.logoutText}>Logout</Button>
                     </View>
-                </> : <></>
-                }
+                )}
                 <View style={styles.avatarContainer}>
                     <Avatar size={128} />
-                    <Text style={[styles.avatarText, { backgroundColor: colors.onBackground, color: colors.shadow }]}>
+                    <Text style={[styles.avatarText, { backgroundColor: colors.surface, color: colors.shadow }]}>
                         {user?.name}
                     </Text>
                 </View>
-                <View style={[styles.statsContainer, { backgroundColor: colors.onBackground }]}>
-                    <View style={[styles.statItemLeft, { borderRightColor: colors.onBackground }]}>
+                <View style={[styles.statsContainer, { backgroundColor: colors.surface }]}>
+                    <View style={[styles.statItemLeft, { borderRightColor: colors.surface }]}>
                         <Ionicons name="analytics-outline" size={58} color="black" style={styles.statIcon} />
                         <View style={styles.statNumbers}>
-                            <Text style={styles.statPositive}>688</Text>
+                            <Text style={styles.statPositive}>{totalUpvotes}</Text>
                             <Text style={styles.statDivider}> : </Text>
-                            <Text style={styles.statNegative}>76</Text>
+                            <Text style={styles.statNegative}>{totalDownvotes}</Text>
                         </View>
                     </View>
                     <View style={[styles.statItemRight, { borderLeftColor: "black" }]}>

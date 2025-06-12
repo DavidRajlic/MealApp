@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, Pressable, View, StyleSheet, Alert } from "react-native";
+import { ActivityIndicator, FlatList, Pressable, View, StyleSheet, Alert, Image } from "react-native";
 import RestaurantCard from "../components/UI/RestaurantCard";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { StackNavParamList } from "../Navigation";
@@ -11,13 +11,13 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { useCallback, useMemo, useRef, useState } from "react";
 import TextInput from "../components/UI/TextInput";
-import MultilineInput from "../components/UI/MultilineTextInput";
 import MultilineTextInput from "../components/UI/MultilineTextInput";
-import { Resturant } from "../util/types";
-import { postReview } from "../http/api";
 import { useUser } from "../context/UserContext";
 import { useCreateReviewMutation } from "../http/mutations";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import * as ImagePicker from 'expo-image-picker';
+import { useVoteReviewMutation } from "../http/mutations";
+import type { ResturantReviews } from "../util/types";
 
 type RestaurantScreenRouteProp = RouteProp<StackNavParamList, "RestaurantScreen">;
 
@@ -27,54 +27,78 @@ type Props = {
 
 function RestaurantScreen({ route }: Props) {
     const { colors } = useTheme();
-    const userCtx = useUser()
+    const userCtx = useUser();
     const [selectedStars, setSelectedStars] = useState(0);
     const [description, setDescription] = useState("");
     const [dishName, setDishName] = useState("");
     const [isPosting, setIsPosting] = useState(false);
+    const [selectedReview, setSelectedReview] = useState<ResturantReviews | null>(null);
     const { id } = route.params;
     const navigation = useNavigation<NativeStackNavigationProp<StackNavParamList>>();
     const { data: restaurant, isLoading, isError } = useResturantQuery(id);
-    const { data: reviews, ...restaurantQuery } = useResturantReviewsQuery(id);
-    const bottomSheetRef = useRef<BottomSheet>(null)
-    const snapPoints = useMemo(() => ['45%'], [])
-      const createReview = useCreateReviewMutation()
+    const { data: reviews } = useResturantReviewsQuery(id);
+    const createReview = useCreateReviewMutation();
+    const voteReview = useVoteReviewMutation();
+    const [images, setImages] = useState<{ uri: string; name: string; type: string }[]>([]);
 
-    const handleSheetChanges = useCallback((index: number) => {
-        console.log('handleSheetChanges', index)
-    }, [])
+    const addReviewSheetRef = useRef<BottomSheet>(null);
+    const viewReviewSheetRef = useRef<BottomSheet>(null);
+    const snapPoints = useMemo(() => ['45%'], []);
 
-    const openBottomSheet = () => {
-        bottomSheetRef.current?.snapToIndex(0)
-    }
+    const openAddReviewSheet = () => addReviewSheetRef.current?.snapToIndex(0);
+    const openViewReviewSheet = (review: ResturantReviews) => {
+        setSelectedReview(review);
+        viewReviewSheetRef.current?.snapToIndex(0);
+    };
+
+    const handleTakePicture = async () => {
+        const { status } = await ImagePicker.requestCameraPermissionsAsync();
+        if (status !== 'granted') {
+            Alert.alert('Permission Denied', 'Camera access is required to take a photo.');
+            return;
+        }
+
+        const result = await ImagePicker.launchCameraAsync({ allowsEditing: true, aspect: [4, 3], quality: 0.7 });
+        if (!result.canceled && result.assets.length > 0) {
+            const asset = result.assets[0];
+            const filename = asset.uri.split('/').pop() || 'photo.jpg';
+            const match = /\.(\w+)$/.exec(filename);
+            const type = match ? `image/${match[1]}` : 'image';
+            setImages([{ uri: asset.uri, name: filename, type }]);
+        }
+    };
+
+    const handleVote = async (vote: 1 | -1) => {
+        if (!selectedReview?._id) return;
+
+        await voteReview.mutateAsync({
+            reviewId: selectedReview._id,
+            vote,
+        });
+    };
+
+
 
     const handleSubmitReview = async () => {
-        if (!userCtx.user)
-            return
+        if (!userCtx.user) return;
+        if (!dishName.trim()) return Alert.alert("Validation", "Please enter the dish name.");
+        if (selectedStars === 0) return Alert.alert("Validation", "Please select a rating.");
 
-        if (!dishName.trim()) {
-            Alert.alert("Validation", "Please enter the dish name.");
-            return;
-        }
-        if (selectedStars === 0) {
-            Alert.alert("Validation", "Please select a rating.");
-            return;
-        }
         setIsPosting(true);
         try {
             await createReview.mutateAsync({
                 comment: description,
                 rating: selectedStars,
                 restaurant: id,
-                user: userCtx.user._id
-              })
-
-
+                user: userCtx.user._id,
+                anonymous: false,
+                images,
+            });
             setDishName("");
             setDescription("");
             setSelectedStars(0);
-
-            bottomSheetRef.current?.close();
+            setImages([]);
+            addReviewSheetRef.current?.close();
         } catch (error) {
             Alert.alert("Error", "Failed to post review.");
             console.error(error);
@@ -82,7 +106,6 @@ function RestaurantScreen({ route }: Props) {
             setIsPosting(false);
         }
     };
-
 
     return (
         <View style={{ flex: 1, paddingTop: 42, backgroundColor: colors.background }}>
@@ -101,83 +124,114 @@ function RestaurantScreen({ route }: Props) {
             ) : !isLoading && !isError ? (
                 <Text style={{ color: colors.onBackground }}>Restaurant not found.</Text>
             ) : null}
+
             <Text style={{ paddingLeft: 12, color: colors.onBackground, marginTop: 8 }}>Recent reviews</Text>
             <FlatList
                 data={reviews}
                 renderItem={({ item }) => (
-                        <RestaurantListCard key={item._id} />
+                    <Pressable onPress={() => openViewReviewSheet(item)}>
+                        <RestaurantListCard key={item._id} review={item} isProfile={false} secondary={undefined} />
+                    </Pressable>
                 )}
                 keyExtractor={item => item._id}
                 contentContainerStyle={{ paddingBottom: 140 }}
             />
-            {(userCtx != undefined) ? <>
+
+            {userCtx && (
                 <Pressable
-                    style={[styles.floatingButton, { backgroundColor: colors.primary }]}
-                    onPress={() => {
-                        openBottomSheet();
-                    }}
+                    style={[styles.floatingButton, { backgroundColor: colors.onBackground }]}
+                    onPress={openAddReviewSheet}
                 >
                     <Ionicons name="star" size={48} color="#a8562c" />
                 </Pressable>
-            </> : <></>
-            }
+            )}
+
             <BottomSheet
-                ref={bottomSheetRef}
+                ref={addReviewSheetRef}
                 snapPoints={snapPoints}
                 index={-1}
-                onChange={handleSheetChanges}
-                enablePanDownToClose={true}
+                enablePanDownToClose
                 backgroundStyle={{ backgroundColor: colors.bottomSheetBackground }}
             >
                 <BottomSheetView style={[styles.contentContainer, { backgroundColor: colors.bottomSheetBackground }]}>
-                    <View style={{ flexDirection: "row", justifyContent: "space-evenly", alignItems: "center", padding: 8 }}>
-                        <View style={{ backgroundColor: colors.surface, borderRadius: 20, padding: 8 }}>
-                            <Ionicons name="camera-outline" size={64} color={colors.onSurface} />
-                        </View>
+                    <View style={styles.reviewInputContainer}>
+                        <Pressable onPress={handleTakePicture} style={[styles.imagePicker, { backgroundColor: colors.surface }]}>
+                            {images.length > 0 ? (
+                                <Image source={{ uri: images[0].uri }} style={styles.previewImage} />
+                            ) : (
+                                <Ionicons name="camera-outline" size={64} color={colors.onSurface} />
+                            )}
+                        </Pressable>
 
                         <View style={{ flex: 1, padding: 6 }}>
-                            <View>
-                                <TextInput placeholder="Dish Name" value={dishName} onChangeText={setDishName}></TextInput>
-                            </View>
-
-                            <View style={{ flexDirection: "row", justifyContent: "center", backgroundColor: colors.surface, padding: 8, borderRadius: 20, marginTop: 8 }}>
-                                {[...Array(5)].map((_, i) => {
-                                    const filled = i < selectedStars;
-                                    return (
-                                        <Pressable key={i} onPress={() => setSelectedStars(i + 1)} hitSlop={8}>
-                                            <Ionicons
-                                                name={filled ? "star" : "star-outline"}
-                                                size={28}
-                                                color="#a8562c"
-                                                style={{ marginHorizontal: 2 }}
-                                            />
-                                        </Pressable>
-                                    );
-                                })}
+                            <TextInput placeholder="Dish Name" value={dishName} onChangeText={setDishName} />
+                            <View style={[styles.starsContainer, { backgroundColor: colors.surface }]}>
+                                {[...Array(5)].map((_, i) => (
+                                    <Pressable key={i} onPress={() => setSelectedStars(i + 1)}>
+                                        <Ionicons
+                                            name={i < selectedStars ? "star" : "star-outline"}
+                                            size={28}
+                                            color="#a8562c"
+                                            style={{ marginHorizontal: 2 }}
+                                        />
+                                    </Pressable>
+                                ))}
                             </View>
                         </View>
+
                         <Pressable
-                            style={{ backgroundColor: colors.surface, borderRadius: 20, padding: 8 }}
+                            style={[styles.imagePicker, { backgroundColor: colors.surface }]}
                             onPress={handleSubmitReview}
                             disabled={isPosting}
                         >
                             {isPosting ? (
                                 <ActivityIndicator size="large" color={colors.onSurface} />
                             ) : (
-                                <Ionicons
-                                    name="paper-plane-outline"
-                                    size={64}
-                                    color={colors.onSurface}
-                                />
+                                <Ionicons name="paper-plane-outline" size={64} color={colors.onSurface} />
                             )}
                         </Pressable>
                     </View>
-                    <MultilineTextInput style={{ width: "90%", backgroundColor: colors.surface, color: colors.onBackground }} placeholder="Description..." value={description}
-                        onChangeText={setDescription}></MultilineTextInput>
+                    <MultilineTextInput
+                        style={{ width: "90%", backgroundColor: colors.surface, color: colors.onBackground }}
+                        placeholder="Description..."
+                        value={description}
+                        onChangeText={setDescription}
+                    />
+                </BottomSheetView>
+            </BottomSheet>
+
+
+            <BottomSheet
+                ref={viewReviewSheetRef}
+                snapPoints={snapPoints}
+                index={-1}
+                enablePanDownToClose
+                backgroundStyle={{ backgroundColor: colors.bottomSheetBackground }}
+            >
+                <BottomSheetView style={[styles.contentContainer, { backgroundColor: colors.bottomSheetBackground }]}>
+                    {selectedReview && (
+                        <View style={styles.reviewInputContainer}>
+                            <Image source={{ uri: `${SERVER_URL}/${selectedReview.images[0]}` }} style={styles.previewImage} />
+                            <View style={{ flex: 1, padding: 6 }}>
+                                <Text style={{ color: colors.onBackground, fontWeight: 'bold' }}>{selectedReview.user.name}</Text>
+                                <Text style={{ color: colors.onBackground }}>{selectedReview.comment}</Text>
+                            </View>
+                            <View style={{ alignItems: 'center' }}>
+                                <Pressable onPress={() => handleVote(1)}>
+                                    <Ionicons name="arrow-up" size={32} color={colors.onSurface} />
+                                </Pressable>
+                                <Text style={{ color: colors.onBackground }}>
+                                    {selectedReview.upvotes - selectedReview.downvotes}
+                                </Text>
+                                <Pressable onPress={() => handleVote(-1)}>
+                                    <Ionicons name="arrow-down" size={32} color={colors.onSurface} />
+                                </Pressable>
+                            </View>
+                        </View>
+                    )}
                 </BottomSheetView>
             </BottomSheet>
         </View>
-
     );
 }
 
@@ -200,6 +254,28 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.3,
         shadowRadius: 4,
+    },
+    reviewInputContainer: {
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        padding: 8,
+    },
+    imagePicker: {
+        borderRadius: 20,
+        padding: 8,
+    },
+    starsContainer: {
+        flexDirection: "row",
+        justifyContent: "center",
+        padding: 8,
+        borderRadius: 20,
+        marginTop: 8,
+    },
+    previewImage: {
+        width: 64,
+        height: 64,
+        borderRadius: 12,
     },
 });
 

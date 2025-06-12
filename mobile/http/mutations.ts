@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteReview, Login, postReview, PostReviewBody, PutReviewBody, Register, updateReview, UpdateUser, updateUser, voteReview, VoteReviewBody } from "./api";
 import { useUser } from "../context/UserContext";
+import { Vote } from "../util/types";
 
 
 // users
@@ -53,17 +54,17 @@ export function useUpdateReviewMutation() {
   })
 }
 
-interface UpdateReview extends VoteReviewBody {
+interface VoteReview extends VoteReviewBody {
   reviewId: string
 }
 
 export function useVoteReviewMutation() {
   const queryClient = useQueryClient()
-  const {getToken} = useUser()
+  const { getToken } = useUser()
   const token = getToken();
 
   return useMutation({
-    mutationFn: (data: UpdateReview) => voteReview(token!, data.reviewId, data),
+    mutationFn: (data: VoteReview) => voteReview(token!, data.reviewId, data),
     onSuccess(data, variables, context) {
       //queryClient.invalidateQueries({ queryKey: ['userReviews', { userId: data.user._id }]})
       //queryClient.invalidateQueries({ queryKey: ['resturantReviews', { resturantId: data.restaurant._id }]})
