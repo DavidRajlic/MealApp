@@ -12,7 +12,7 @@ interface Review {
     _id: string;
     comment: string;
     rating: number;
-    user?: { name?: string };
+    user?: { name?: string, _id: string };
     images?: string;
     anonymous: boolean;
     votes?: Vote[];
@@ -123,6 +123,28 @@ const Restaurant = () => {
 
         return { upvotes, downvotes };
     };
+
+    const handleDelete = async (reviewId: string) => {
+        if (!window.confirm("Ali res želite izbrisati to mnenje?")) return;
+
+        try {
+            const res = await fetch(`${API_URL}/reviews/${reviewId}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token"),
+                },
+            });
+
+            if (!res.ok) throw new Error("Napaka pri brisanju mnenja.");
+
+            // Po uspešnem brisanju osvežimo mnenja
+            fetchReviews();
+        } catch (err) {
+            console.error(err);
+            alert("Napaka pri brisanju mnenja.");
+        }
+    };
+
 
 
 
@@ -248,13 +270,26 @@ const Restaurant = () => {
                                         key={review._id}
                                         className="border border-gray-200 rounded shadow p-4 bg-white"
                                     >
-                                        <p className="text-gray-900 font-medium mb-2">{review.comment}</p>
+                                        <div className="flex justify-between items-start">
+                                            <span className="text-gray-900 font-medium">{review.comment}</span>
 
+                                            {user._id === review.user?._id && (
+                                                <button
+                                                    onClick={() => handleDelete(review._id)}
+                                                    className="text-red-500 hover:text-red-700 text-2xl font-bold cursor-pointer"
+                                                    title="Izbriši mnenje"
+                                                    type="button"
+                                                >
+                                                    ×
+                                                </button>
+                                            )}
+                                        </div>
                                         <div className="flex items-center space-x-2 mb-3">
                                             <span className="font-semibold text-yellow-500">
                                                 {'★'.repeat(review.rating)}{' '}
                                                 <span className="text-gray-400">{'☆'.repeat(5 - review.rating)}</span>
                                             </span>
+
                                             <span className="text-sm text-gray-600 ml-auto">
                                                 Uporabnik: <span className="font-semibold">{review.anonymous ? 'Anonimno' : review.user?.name}</span>
                                             </span>
@@ -271,7 +306,7 @@ const Restaurant = () => {
                                         <div className="flex items-center space-x-4">
                                             <button
                                                 onClick={() => voteReview(review._id, 'upvote')}
-                                                className="flex items-center space-x-1 text-green-600 hover:text-green-800 font-semibold"
+                                                className="flex items-center space-x-1 text-green-600 hover:text-green-800 font-semibold cursor-pointer"
                                                 title="Všeč mi je"
                                                 type="button"
                                             >
@@ -280,7 +315,7 @@ const Restaurant = () => {
 
                                             <button
                                                 onClick={() => voteReview(review._id, 'downvote')}
-                                                className="flex items-center space-x-1 text-red-600 hover:text-red-800 font-semibold"
+                                                className="flex items-center space-x-1 text-red-600 hover:text-red-800 font-semibold cursor-pointer"
                                                 title="Ni mi všeč"
                                                 type="button"
                                             >
