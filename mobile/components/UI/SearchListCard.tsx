@@ -1,27 +1,53 @@
-import { type ReactNode } from "react";
-import { View, type StyleProp, type ViewStyle, StyleSheet } from "react-native";
+import { type StyleProp, type ViewStyle, StyleSheet, View } from "react-native";
 import { useTheme } from "../../context/ThemeContext";
 import Avatar from "./Avatar";
 import Text from "./Text";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { SERVER_URL } from "../../util/constants";
+
+export type GpsLocation = {
+    latitude: number;
+    longitude: number;
+};
+
+export type Resturant = {
+    _id: string;
+    name: string;
+    price: number;
+    additional_payment: number;
+    location: GpsLocation;
+    averageRating: number;
+    image?: string;
+};
 
 type SearchListCardProps = {
     style?: StyleProp<ViewStyle>;
-    isOpen: boolean;
+    restaurant: Resturant;
 };
 
-function SearchListCard({ style, isOpen }: SearchListCardProps) {
+function SearchListCard({ style, restaurant }: SearchListCardProps) {
     const { colors } = useTheme();
 
+    const isOpen = restaurant.additional_payment > 0;
     const statusColor = isOpen ? "green" : "red";
     const statusText = isOpen ? "Odprto" : "Zaprto";
 
+    const priceText = `${restaurant.price} €`;
+
+    const distanceText = "N/A";
+
     return (
         <View style={[styles.cardContainer, { backgroundColor: colors.surface }, style]}>
-            <Avatar containerStyle={{ borderRadius: 18 }} size={64} />
+            <Avatar
+                containerStyle={{ borderRadius: 18 }}
+                url={`${SERVER_URL}/${restaurant.image}`}
+            />
             <View style={styles.textContainer}>
                 <View style={styles.header}>
-                    <Text style={styles.restaurantName}>Gostilna Ozmec</Text>
+                    <Text style={styles.restaurantName}>{restaurant.name}</Text>
+                    <Text style={{  fontWeight: "bold" }}>
+                        ⭐ {restaurant.averageRating.toFixed(1)}
+                    </Text>
                 </View>
                 <View style={styles.infoRow}>
                     <View style={styles.statusContainer}>
@@ -30,11 +56,11 @@ function SearchListCard({ style, isOpen }: SearchListCardProps) {
                     </View>
                     <View style={styles.iconRow}>
                         <Ionicons name="walk-outline" size={18} style={styles.icon} color={colors.onBackground} />
-                        <Text>100m</Text>
+                        <Text>{distanceText}</Text>
                     </View>
                     <View style={styles.iconRow}>
                         <Ionicons name="wallet-outline" size={18} style={styles.icon} color={colors.onBackground} />
-                        <Text>3.9 €</Text>
+                        <Text>{priceText}</Text>
                     </View>
                 </View>
             </View>
@@ -64,6 +90,7 @@ const styles = StyleSheet.create({
     restaurantName: {
         fontWeight: "bold",
         fontSize: 18,
+        maxWidth:180
     },
     infoRow: {
         flexDirection: "row",
