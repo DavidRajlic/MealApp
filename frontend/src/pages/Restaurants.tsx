@@ -28,51 +28,49 @@ const Restaurants = () => {
     }, []);
 
     return (
-        <div className="max-w-3xl mx-auto p-4">
-            <h2 className="text-2xl font-bold mb-4">Seznam lokalov</h2>
+        <div className="bg-[#fff5e1] min-h-screen">
+            {/* Top banner */}
+            <img
+                src="/images/table.jpg" 
+                className="w-full h-[280px] object-cover object-center rounded-none"
+            />
+            <div className="max-w-5xl mx-auto p-6">
+                <h2 className="text-3xl font-bold mb-6 text-[#b85c38]">Seznam lokalov</h2>
 
-            {error && <p className="text-red-500">{error}</p>}
+                {error && <p className="text-red-500">{error}</p>}
 
-            {restaurants.length === 0 && !error && (
-                <p className="text-gray-500">Ni najdenih lokalov.</p>
-            )}
+                {restaurants.length === 0 && !error && (
+                    <p className="text-gray-600">Ni najdenih lokalov.</p>
+                )}
 
-            <ul className="space-y-4">
-                {restaurants.map((restaurant) => (
-                    <li
-                        key={restaurant._id}
-                        className="bg-[#fffaf0] shadow  rounded-lg p-4 border border-gray-200 flex gap-4 cursor-pointer 
-                        transition duration-500
-                        transform hover:-translate-y-2
-                        hover:shadow-md hover:bg-indigo-300 "
-                        onClick={() => navigate(`/restaurant/${restaurant._id}`, {
-                            state: { restaurant }
-                        })}
-
-                    >
-                        {restaurant.image != null && (<img
-                            src={restaurant.image || '/fallback.jpg'}
-                            alt={restaurant.name}
-                            className="w-32 h-32 object-cover rounded-md"
-                        />)}
-
-
-                        <div className="flex flex-col justify-between">
-                            <h3 className="text-xl font-semibold">{restaurant.name}</h3>
-                            <p className="text-gray-700">
-                                Cena: <span className="font-medium">{restaurant.price} €</span>
-                            </p>
-                            <p className="text-gray-700">
-                                Doplačilo: <span className="font-medium">{restaurant.additional_payment} €</span>
-                            </p>
-                            <p className="text-gray-700">
-                                Ocena: <span className="font-medium">{restaurant.averageRating} ⭐</span>
-                            </p>
-                        </div>
-                    </li>
-                ))}
-
-            </ul>
+                <ul className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {restaurants.map((restaurant, index) => (
+                        <li
+                            key={restaurant._id}
+                            className="bg-white shadow-md rounded-xl p-4 border border-gray-100 flex flex-col gap-3 cursor-pointer 
+                                       transition duration-300 transform hover:-translate-y-2 hover:scale-105 hover:shadow-xl animate-fadeIn"
+                            style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}
+                            onClick={() => navigate(`/restaurant/${restaurant._id}`, {
+                                state: { restaurant }
+                            })}
+                        >
+                            {restaurant.image && (
+                                <img
+                                    src={restaurant.image || '/fallback.jpg'}
+                                    alt={restaurant.name}
+                                    className="w-full h-40 object-cover rounded-lg"
+                                />
+                            )}
+                            <div className="flex flex-col gap-1">
+                                <h3 className="text-xl font-bold text-[#b85c38]">{restaurant.name}</h3>
+                                <p className="text-gray-700">Cena: <span className="font-semibold">{restaurant.price} €</span></p>
+                                <p className="text-gray-700">Doplačilo: <span className="font-semibold">{restaurant.additional_payment} €</span></p>
+                                <p className="text-gray-700">Ocena: <span className="font-semibold">{restaurant.averageRating} ⭐</span></p>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };
