@@ -61,6 +61,8 @@ const Restaurant = () => {
     }, [restaurant]);
 
 
+
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -70,6 +72,8 @@ const Restaurant = () => {
         }
 
         if (!comment || !rating) return;
+
+
 
         setSubmitting(true);
 
@@ -89,14 +93,17 @@ const Restaurant = () => {
                 }),
             });
 
-            if (!res.ok) throw new Error('Napaka pri pošiljanju mnenja.');
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.message || 'Napaka pri pošiljanju mnenja.');
+            }
 
             setComment('');
             setRating(5);
             fetchReviews();
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
-            setError('Napaka pri dodajanju mnenja.');
+            setError(err.message);
         } finally {
             setSubmitting(false);
         }
@@ -117,7 +124,7 @@ const Restaurant = () => {
         return { upvotes, downvotes };
     };
 
-  
+
 
     const voteReview = async (reviewId: string, type: 'upvote' | 'downvote') => {
         if (!isLoggedIn) {
@@ -150,143 +157,143 @@ const Restaurant = () => {
         return <p className="text-red-500 p-4">Ni podatkov o restavraciji. (Poskusil si reloadati?)</p>;
     }
 
-   return (
-  <div className="min-h-screen bg-[#fef4e6]">
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="bg-white shadow rounded-xl p-6 mb-8 border border-orange-100">
-        <h1 className="text-4xl font-bold text-[#b3542d] mb-2">{restaurant.name}</h1>
-      </div>
+    return (
+        <div className="min-h-screen bg-[#fef4e6]">
+            <div className="max-w-4xl mx-auto p-6">
+                <div className="bg-white shadow rounded-xl p-6 mb-8 border border-orange-100">
+                    <h1 className="text-4xl font-bold text-[#b3542d] mb-2">{restaurant.name}</h1>
+                </div>
 
-      <section className="bg-white border border-orange-100 rounded-2xl shadow-xl p-8 mb-10">
-        <h2 className="text-3xl font-bold text-[#b3542d] mb-6">Dodaj mnenje</h2>
+                <section className="bg-white border border-orange-100 rounded-2xl shadow-xl p-8 mb-10">
+                    <h2 className="text-3xl font-bold text-[#b3542d] mb-6">Dodaj mnenje</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-{/* Komentar */}
-<div className="mb-8">
-  <label htmlFor="comment" className="block text-xl font-bold text-[#b3542d] mb-3">
-    💬 Komentar
-  </label>
-  <textarea
-    id="comment"
-    value={comment}
-    onChange={(e) => setComment(e.target.value)}
-    required
-    rows={6}
-    placeholder="Napišite svoje mnenje..."
-    className="w-full text-base px-5 py-4 border-2 border-orange-200 rounded-2xl shadow-md focus:ring-2 focus:ring-orange-300 focus:outline-none placeholder:text-gray-400 transition-all"
-  />
-</div>
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        {/* Komentar */}
+                        <div className="mb-8">
+                            <label htmlFor="comment" className="block text-xl font-bold text-[#b3542d] mb-3">
+                                💬 Komentar
+                            </label>
+                            <textarea
+                                id="comment"
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                                required
+                                rows={6}
+                                placeholder="Napišite svoje mnenje..."
+                                className="w-full text-base px-5 py-4 border-2 border-orange-200 rounded-2xl shadow-md focus:ring-2 focus:ring-orange-300 focus:outline-none placeholder:text-gray-400 transition-all"
+                            />
+                        </div>
 
-{/* Ocena (1–5) */}
-<div className="mb-8">
-  <label htmlFor="rating" className="block text-xl font-bold text-[#b3542d] mb-3">
-    ⭐ Ocena
-  </label>
-  <div className="flex items-center gap-4">
-    <input
-      id="rating"
-      type="number"
-      min={1}
-      max={5}
-      value={rating}
-      onChange={(e) => setRating(parseInt(e.target.value))}
-      required
-      className="w-24 text-lg text-center px-5 py-3 border-2 border-orange-200 rounded-2xl shadow-md focus:ring-2 focus:ring-orange-300 focus:outline-none font-semibold text-gray-800"
-    />
-    <span className="text-base text-gray-500">(1 - 5)</span>
-  </div>
-</div>
+                        {/* Ocena (1–5) */}
+                        <div className="mb-8">
+                            <label htmlFor="rating" className="block text-xl font-bold text-[#b3542d] mb-3">
+                                ⭐ Ocena
+                            </label>
+                            <div className="flex items-center gap-4">
+                                <input
+                                    id="rating"
+                                    type="number"
+                                    min={1}
+                                    max={5}
+                                    value={rating}
+                                    onChange={(e) => setRating(parseInt(e.target.value))}
+                                    required
+                                    className="w-24 text-lg text-center px-5 py-3 border-2 border-orange-200 rounded-2xl shadow-md focus:ring-2 focus:ring-orange-300 focus:outline-none font-semibold text-gray-800"
+                                />
+                                <span className="text-base text-gray-500">(1 - 5)</span>
+                            </div>
+                        </div>
 
-{/* Anonimno */}
-<div className="mb-8">
-  <label className="inline-flex items-center text-lg text-gray-800 font-medium cursor-pointer">
-   
-    Objavi anonimno
-     <input
-      type="checkbox"
-      checked={isAnonymous}
-      onChange={(e) => setIsAnonymous(e.target.checked)}
-      className="form-checkbox h-5 w-5 text-[#b3542d] border-gray-300 rounded focus:ring-2 focus:ring-orange-300 ml-2"
-    />
-  </label>
-</div>
-          {/* Gumb */}
-          <div>
-            <button
-              type="submit"
-              disabled={submitting}
-              className="bg-[#b3542d] hover:bg-[#993f23] text-white font-semibold px-6 py-3 rounded-xl transition disabled:bg-orange-300"
-            >
-              {submitting ? 'Pošiljanje...' : 'Dodaj mnenje'}
-            </button>
-          </div>
-        </form>
-      </section>
-            <section>
-                <h2 className="text-2xl font-semibold mb-4">Mnenja</h2>
+                        {/* Anonimno */}
+                        <div className="mb-8">
+                            <label className="inline-flex items-center text-lg text-gray-800 font-medium cursor-pointer">
 
-                {loading ? (
-                    <p>...nalaganje mnenj</p>
-                ) : error ? (
-                    <p className="text-red-600">{error}</p>
-                ) : reviews.length === 0 ? (
-                    <p className="text-gray-600">Ta restavracija še nima mnenj.</p>
-                ) : (
-                    <div className="space-y-6">
-                        {reviews.map((review) => {
-                            const { upvotes, downvotes } = countVotes(review.votes);
+                                Objavi anonimno
+                                <input
+                                    type="checkbox"
+                                    checked={isAnonymous}
+                                    onChange={(e) => setIsAnonymous(e.target.checked)}
+                                    className="form-checkbox h-5 w-5 text-[#b3542d] border-gray-300 rounded focus:ring-2 focus:ring-orange-300 ml-2"
+                                />
+                            </label>
+                        </div>
+                        {/* Gumb */}
+                        <div>
+                            <button
+                                type="submit"
+                                disabled={submitting}
+                                className="bg-[#b3542d] hover:bg-[#993f23] text-white font-semibold px-6 py-3 rounded-xl transition disabled:bg-orange-300"
+                            >
+                                {submitting ? 'Pošiljanje...' : 'Dodaj mnenje'}
+                            </button>
+                        </div>
+                    </form>
+                </section>
+                <section>
+                    <h2 className="text-2xl font-semibold mb-4">Mnenja</h2>
 
-                            return (
-                                <article
-                                    key={review._id}
-                                    className="border border-gray-200 rounded shadow p-4 bg-white"
-                                >
-                                    <p className="text-gray-900 font-medium mb-2">{review.comment}</p>
+                    {loading ? (
+                        <p>...nalaganje mnenj</p>
+                    ) : error ? (
+                        <p className="text-red-600">{error}</p>
+                    ) : reviews.length === 0 ? (
+                        <p className="text-gray-600">Ta restavracija še nima mnenj.</p>
+                    ) : (
+                        <div className="space-y-6">
+                            {reviews.map((review) => {
+                                const { upvotes, downvotes } = countVotes(review.votes);
 
-                                    <div className="flex items-center space-x-2 mb-3">
-                                        <span className="font-semibold text-yellow-500">
-                                            {'★'.repeat(review.rating)}{' '}
-                                            <span className="text-gray-400">{'☆'.repeat(5 - review.rating)}</span>
-                                        </span>
-                                        <span className="text-sm text-gray-600 ml-auto">
-                                            Uporabnik: <span className="font-semibold">{review.anonymous ? 'Anonimno' : review.user?.name}</span>
-                                        </span>
-                                    </div>
+                                return (
+                                    <article
+                                        key={review._id}
+                                        className="border border-gray-200 rounded shadow p-4 bg-white"
+                                    >
+                                        <p className="text-gray-900 font-medium mb-2">{review.comment}</p>
 
-                                    {review.images != "" && (
-                                        <img
-                                            src={`${API_URL}/${review.images}`}
-                                            alt="slika mnenja"
-                                            className="max-w-full max-h-64 object-cover rounded mb-3"
-                                        />
-                                    )}
+                                        <div className="flex items-center space-x-2 mb-3">
+                                            <span className="font-semibold text-yellow-500">
+                                                {'★'.repeat(review.rating)}{' '}
+                                                <span className="text-gray-400">{'☆'.repeat(5 - review.rating)}</span>
+                                            </span>
+                                            <span className="text-sm text-gray-600 ml-auto">
+                                                Uporabnik: <span className="font-semibold">{review.anonymous ? 'Anonimno' : review.user?.name}</span>
+                                            </span>
+                                        </div>
 
-                                    <div className="flex items-center space-x-4">
-                                        <button
-                                            onClick={() => voteReview(review._id, 'upvote')}
-                                            className="flex items-center space-x-1 text-green-600 hover:text-green-800 font-semibold"
-                                            title="Všeč mi je"
-                                            type="button"
-                                        >
-                                            👍 <span>{upvotes}</span>
-                                        </button>
+                                        {review.images != "" && (
+                                            <img
+                                                src={`${API_URL}/${review.images}`}
+                                                alt="slika mnenja"
+                                                className="max-w-full max-h-64 object-cover rounded mb-3"
+                                            />
+                                        )}
 
-                                        <button
-                                            onClick={() => voteReview(review._id, 'downvote')}
-                                            className="flex items-center space-x-1 text-red-600 hover:text-red-800 font-semibold"
-                                            title="Ni mi všeč"
-                                            type="button"
-                                        >
-                                            👎 <span>{downvotes}</span>
-                                        </button>
-                                    </div>
-                                </article>
-                            );
-                        })}
-                    </div>
-                )}
-            </section>
-        </div>
+                                        <div className="flex items-center space-x-4">
+                                            <button
+                                                onClick={() => voteReview(review._id, 'upvote')}
+                                                className="flex items-center space-x-1 text-green-600 hover:text-green-800 font-semibold"
+                                                title="Všeč mi je"
+                                                type="button"
+                                            >
+                                                👍 <span>{upvotes}</span>
+                                            </button>
+
+                                            <button
+                                                onClick={() => voteReview(review._id, 'downvote')}
+                                                className="flex items-center space-x-1 text-red-600 hover:text-red-800 font-semibold"
+                                                title="Ni mi všeč"
+                                                type="button"
+                                            >
+                                                👎 <span>{downvotes}</span>
+                                            </button>
+                                        </div>
+                                    </article>
+                                );
+                            })}
+                        </div>
+                    )}
+                </section>
+            </div>
         </div>
     );
 };
