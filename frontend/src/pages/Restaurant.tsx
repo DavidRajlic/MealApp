@@ -200,13 +200,14 @@ const Restaurant = () => {
 {/* Anonimno */}
 <div className="mb-8">
   <label className="inline-flex items-center text-lg text-gray-800 font-medium cursor-pointer">
-    <input
+   
+    Objavi anonimno
+     <input
       type="checkbox"
       checked={isAnonymous}
       onChange={(e) => setIsAnonymous(e.target.checked)}
-      className="form-checkbox h-5 w-5 text-[#b3542d] border-gray-300 rounded focus:ring-2 focus:ring-orange-300 mr-3"
+      className="form-checkbox h-5 w-5 text-[#b3542d] border-gray-300 rounded focus:ring-2 focus:ring-orange-300 ml-2"
     />
-    Objavi anonimno
   </label>
 </div>
           {/* Gumb */}
