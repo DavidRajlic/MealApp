@@ -18,6 +18,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import * as ImagePicker from 'expo-image-picker';
 import { useVoteReviewMutation } from "../http/mutations";
 import type { ResturantReviews } from "../util/types";
+import Animated, { useAnimatedKeyboard, useAnimatedStyle } from "react-native-reanimated";
 
 type RestaurantScreenRouteProp = RouteProp<StackNavParamList, "RestaurantScreen">;
 
@@ -41,7 +42,7 @@ function RestaurantScreen({ route }: Props) {
     const voteReview = useVoteReviewMutation();
     const [images, setImages] = useState<{ uri: string; name: string; type: string }[]>([]);
     const [userVote, setUserVote] = useState(0);
-
+    const keyboard = useAnimatedKeyboard();
     const addReviewSheetRef = useRef<BottomSheet>(null);
     const viewReviewSheetRef = useRef<BottomSheet>(null);
     const snapPoints = useMemo(() => ['45%'], []);
@@ -54,6 +55,12 @@ function RestaurantScreen({ route }: Props) {
         viewReviewSheetRef.current?.snapToIndex(0);
     };
 
+    const translateStyle = useAnimatedStyle(() => {
+        return {
+            transform: [{ translateY: -keyboard.height.value }],
+        };
+    });
+    
     const handleTakePicture = async () => {
         const { status } = await ImagePicker.requestCameraPermissionsAsync();
         if (status !== 'granted') {
@@ -132,7 +139,12 @@ function RestaurantScreen({ route }: Props) {
     };
 
     return (
-        <View style={{ flex: 1, paddingTop: 42, backgroundColor: colors.background }}>
+        <Animated.View
+            style={[
+                { flex: 1, paddingTop: 8, backgroundColor: colors.background },
+                translateStyle,
+            ]}
+      >
             {isLoading && <ActivityIndicator size="large" color={colors.primary} />}
             {isError && <Text style={{ color: colors.onBackground }}>Failed to load restaurant data.</Text>}
             {restaurant ? (
@@ -235,7 +247,7 @@ function RestaurantScreen({ route }: Props) {
                 <BottomSheetView style={[styles.contentContainer, { backgroundColor: colors.bottomSheetBackground }]}>
                     {selectedReview && (
                         <View style={styles.reviewInputContainer}>
-                            <Image source={{ uri: `${SERVER_URL}/uploads/${selectedReview.images[0]}` }} style={styles.previewImage} />
+                            <Image source={{ uri: `${SERVER_URL}/uploads/${selectedReview.images[0]}` }} style={styles.viewImage} />
                             <View style={{ flex: 1, padding: 6 }}>
                                 <Text style={{ color: colors.onBackground, fontWeight: 'bold' }}>{selectedReview.user.name}</Text>
                                 <Text style={{ color: colors.onBackground }}>{selectedReview.comment}</Text>
@@ -255,7 +267,7 @@ function RestaurantScreen({ route }: Props) {
                     )}
                 </BottomSheetView>
             </BottomSheet>
-        </View>
+        </Animated.View>
     );
 }
 
@@ -297,8 +309,13 @@ const styles = StyleSheet.create({
         marginTop: 8,
     },
     previewImage: {
-        width:120,
-        height: 120,
+        width:64,
+        height: 64,
+        borderRadius: 12,
+    },
+    viewImage: {
+        width: 128,
+        height: 128,
         borderRadius: 12,
     },
 });
