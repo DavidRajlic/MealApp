@@ -71,10 +71,28 @@ function RestaurantScreen({ route }: Props) {
     const handleVote = async (vote: 1 | -1) => {
         if (!selectedReview?._id) return;
 
-        await voteReview.mutateAsync({
-            reviewId: selectedReview._id,
-            vote,
-        });
+        try {
+            const updated = await voteReview.mutateAsync({
+                reviewId: selectedReview._id,
+                value: vote
+            });
+
+            setSelectedReview(prev => {
+                if (!prev) return prev;
+
+                const up = vote === 1 ? prev.upvotes + 1 : prev.upvotes;
+                const down = vote === -1 ? prev.downvotes + 1 : prev.downvotes;
+
+                return {
+                    ...prev,
+                    upvotes: up,
+                    downvotes: down
+                };
+            });
+        } catch (err) {
+            Alert.alert("Error", "Failed to vote on review.");
+            console.error(err);
+        }
     };
 
 
@@ -211,7 +229,7 @@ function RestaurantScreen({ route }: Props) {
                 <BottomSheetView style={[styles.contentContainer, { backgroundColor: colors.bottomSheetBackground }]}>
                     {selectedReview && (
                         <View style={styles.reviewInputContainer}>
-                            <Image source={{ uri: `${SERVER_URL}/${selectedReview.images[0]}` }} style={styles.previewImage} />
+                            <Image source={{ uri: `${SERVER_URL}/uploads/${selectedReview.images[0]}` }} style={styles.previewImage} />
                             <View style={{ flex: 1, padding: 6 }}>
                                 <Text style={{ color: colors.onBackground, fontWeight: 'bold' }}>{selectedReview.user.name}</Text>
                                 <Text style={{ color: colors.onBackground }}>{selectedReview.comment}</Text>
