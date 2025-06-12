@@ -33,6 +33,7 @@ const team = [
     description:
       "Tatjana, Rebeka in Ana so poskrbele za oblikovanje uporabniškega vmesnika, izbiro barv, estetiko ter vizualno usklajenost aplikacije.",
     gender: "female",
+    customImage: "/images/youth.png",
   },
 ];
 
@@ -51,7 +52,9 @@ export default function AboutUs() {
           >
             <img
               src={
-                member.gender === "female"
+                member.customImage
+                  ? member.customImage
+                  : member.gender === "female"
                   ? "/images/customer-service.png"
                   : "/images/operator.png"
               }
