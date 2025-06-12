@@ -12,7 +12,7 @@ interface Review {
     _id: string;
     comment: string;
     rating: number;
-    user?: { name?: string, _id: string };
+    user?: { name?: string, _id?: string };
     images?: string;
     anonymous: boolean;
     votes?: Vote[];
