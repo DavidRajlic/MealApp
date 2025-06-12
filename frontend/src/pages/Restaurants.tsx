@@ -43,8 +43,8 @@ const Restaurants = () => {
                     {restaurants.map((restaurant, index) => (
                         <li
                             key={restaurant._id}
-                            className="bg-white shadow-md rounded-xl p-4 border border-gray-100 flex flex-col gap-3 cursor-pointer 
-                                       transition duration-300 transform hover:-translate-y-2 hover:scale-105 hover:shadow-xl animate-fadeIn transition duration-500 hover:bg-indigo-200"
+                            className="bg-[#fffaf0] shadow-md rounded-xl p-4 border border-gray-100 flex flex-col gap-3 cursor-pointer 
+           transition duration-300 transform hover:-translate-y-2 hover:scale-105 hover:shadow-xl hover:bg-[#ffe4b5]"
                             style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}
                             onClick={() => navigate(`/restaurant/${restaurant._id}`, {
                                 state: { restaurant }

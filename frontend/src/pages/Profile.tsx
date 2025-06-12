@@ -40,7 +40,7 @@ const Profile = () => {
   if (!user) return <p>Ni podatkov o uporabniku.</p>;
 
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-8 py-12 bg-[#fffaf5]">
+    <div className="w-full px-4 sm:px-6 lg:px-8 py-12 bg-[#fff1dc]">
   <div className="max-w-4xl mx-auto">
     <h1 className="text-4xl font-bold mb-2 text-[#b85c38]">{user.name}</h1>
     <h2 className="text-2xl font-semibold text-[#b85c38]/70 mb-4">
