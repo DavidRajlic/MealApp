@@ -5,6 +5,7 @@ import Avatar from "./Avatar";
 import Text from "./Text";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import type { UserReviews, ResturantReviews } from "../../util/types";
+import { SERVER_URL } from "../../util/constants";
 
 type RestaurantListCardProps = {
     style?: StyleProp<ViewStyle>;
@@ -31,7 +32,7 @@ function RestaurantListCard({ style, review, isProfile, secondary }: RestaurantL
 
     return (
         <View style={[styles.cardContainer, { backgroundColor: colors.surface }, style]}>
-            <Avatar containerStyle={{ borderRadius: 18 }} size={128} />
+            <Avatar containerStyle={{ borderRadius: 18 }} size={128} url={review.images[0]} />
 
             <View style={styles.textContainer}>
                 <View style={styles.header}>
