@@ -151,63 +151,65 @@ const Restaurant = () => {
     }
 
     return (
-        <div className="max-w-3xl mx-auto p-4 space-y-8">
-            <h1 className="text-4xl font-extrabold text-gray-900">{restaurant.name}</h1>
+        <div className="max-w-4xl mx-auto p-6 bg-[#fef4e6] min-h-screen">
+  <div className="bg-white shadow rounded-xl p-6 mb-8 border border-orange-100">
+    <h1 className="text-4xl font-bold text-[#b3542d] mb-2">{restaurant.name}</h1>
+  </div>
 
-            <section>
-                <h2 className="text-2xl font-semibold mb-4">Dodaj mnenje</h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <label htmlFor="comment" className="block mb-1 font-medium text-gray-700">
-                            Komentar
-                        </label>
-                        <textarea
-                            id="comment"
-                            className="w-full border border-gray-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                            required
-                            rows={4}
-                        />
-                    </div>
+  <section className="bg-white border border-gray-200 rounded-lg shadow p-6 mb-8">
+    <h2 className="text-2xl font-semibold text-[#b3542d] mb-4">Dodaj mnenje</h2>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label htmlFor="comment" className="block font-medium text-gray-700 mb-1">
+          Komentar
+        </label>
+        <textarea
+          id="comment"
+          className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-orange-300"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          required
+          rows={4}
+        />
+      </div>
 
-                    <div>
-                        <label htmlFor="rating" className="block mb-1 font-medium text-gray-700">
-                            Ocena (1–5)
-                        </label>
-                        <input
-                            id="rating"
-                            type="number"
-                            min={1}
-                            max={5}
-                            value={rating}
-                            onChange={(e) => setRating(parseInt(e.target.value))}
-                            className="border border-gray-300 rounded p-2 w-20 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>
+      <div>
+        <label htmlFor="rating" className="block font-medium text-gray-700 mb-1">
+          Ocena (1–5)
+        </label>
+        <input
+          id="rating"
+          type="number"
+          min={1}
+          max={5}
+          value={rating}
+          onChange={(e) => setRating(parseInt(e.target.value))}
+          className="w-24 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-orange-300"
+          required
+        />
+      </div>
 
-                            Objavi anonimno
-                            <input
-                                type="checkbox"
-                                checked={isAnonymous}
-                                onChange={(e) => setIsAnonymous(e.target.checked)}
-                            />
-                        </label>
-                    </div>
+      <div className="flex items-center space-x-2">
+        <input
+          type="checkbox"
+          id="anon"
+          checked={isAnonymous}
+          onChange={(e) => setIsAnonymous(e.target.checked)}
+        />
+        <label htmlFor="anon" className="text-sm text-gray-700">
+          Objavi anonimno
+        </label>
+      </div>
 
-                    <button
-                        type="submit"
-                        disabled={submitting}
-                        className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-5 py-2 rounded font-semibold transition"
-                    >
-                        {submitting ? 'Pošiljanje...' : 'Dodaj mnenje'}
-                    </button>
-                </form>
-            </section>
-
+      <button
+        type="submit"
+        disabled={submitting}
+        className="bg-[#b3542d] text-white px-6 py-2 rounded hover:bg-[#993f23] transition disabled:bg-orange-300"
+      >
+        {submitting ? 'Pošiljanje...' : 'Dodaj mnenje'}
+      </button>
+    </form>
+  </section>
             <section>
                 <h2 className="text-2xl font-semibold mb-4">Mnenja</h2>
 
