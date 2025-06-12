@@ -150,66 +150,77 @@ const Restaurant = () => {
         return <p className="text-red-500 p-4">Ni podatkov o restavraciji. (Poskusil si reloadati?)</p>;
     }
 
-    return (
-        <div className="max-w-4xl mx-auto p-6 bg-[#fef4e6] min-h-screen">
-  <div className="bg-white shadow rounded-xl p-6 mb-8 border border-orange-100">
-    <h1 className="text-4xl font-bold text-[#b3542d] mb-2">{restaurant.name}</h1>
+   return (
+  <div className="min-h-screen bg-[#fef4e6]">
+    <div className="max-w-4xl mx-auto p-6">
+      <div className="bg-white shadow rounded-xl p-6 mb-8 border border-orange-100">
+        <h1 className="text-4xl font-bold text-[#b3542d] mb-2">{restaurant.name}</h1>
+      </div>
+
+      <section className="bg-white border border-orange-100 rounded-2xl shadow-xl p-8 mb-10">
+        <h2 className="text-3xl font-bold text-[#b3542d] mb-6">Dodaj mnenje</h2>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+{/* Komentar */}
+<div className="mb-8">
+  <label htmlFor="comment" className="block text-xl font-bold text-[#b3542d] mb-3">
+    💬 Komentar
+  </label>
+  <textarea
+    id="comment"
+    value={comment}
+    onChange={(e) => setComment(e.target.value)}
+    required
+    rows={6}
+    placeholder="Napišite svoje mnenje..."
+    className="w-full text-base px-5 py-4 border-2 border-orange-200 rounded-2xl shadow-md focus:ring-2 focus:ring-orange-300 focus:outline-none placeholder:text-gray-400 transition-all"
+  />
+</div>
+
+{/* Ocena (1–5) */}
+<div className="mb-8">
+  <label htmlFor="rating" className="block text-xl font-bold text-[#b3542d] mb-3">
+    ⭐ Ocena
+  </label>
+  <div className="flex items-center gap-4">
+    <input
+      id="rating"
+      type="number"
+      min={1}
+      max={5}
+      value={rating}
+      onChange={(e) => setRating(parseInt(e.target.value))}
+      required
+      className="w-24 text-lg text-center px-5 py-3 border-2 border-orange-200 rounded-2xl shadow-md focus:ring-2 focus:ring-orange-300 focus:outline-none font-semibold text-gray-800"
+    />
+    <span className="text-base text-gray-500">(1 - 5)</span>
   </div>
+</div>
 
-  <section className="bg-white border border-gray-200 rounded-lg shadow p-6 mb-8">
-    <h2 className="text-2xl font-semibold text-[#b3542d] mb-4">Dodaj mnenje</h2>
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label htmlFor="comment" className="block font-medium text-gray-700 mb-1">
-          Komentar
-        </label>
-        <textarea
-          id="comment"
-          className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-orange-300"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          required
-          rows={4}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="rating" className="block font-medium text-gray-700 mb-1">
-          Ocena (1–5)
-        </label>
-        <input
-          id="rating"
-          type="number"
-          min={1}
-          max={5}
-          value={rating}
-          onChange={(e) => setRating(parseInt(e.target.value))}
-          className="w-24 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-orange-300"
-          required
-        />
-      </div>
-
-      <div className="flex items-center space-x-2">
-        <input
-          type="checkbox"
-          id="anon"
-          checked={isAnonymous}
-          onChange={(e) => setIsAnonymous(e.target.checked)}
-        />
-        <label htmlFor="anon" className="text-sm text-gray-700">
-          Objavi anonimno
-        </label>
-      </div>
-
-      <button
-        type="submit"
-        disabled={submitting}
-        className="bg-[#b3542d] text-white px-6 py-2 rounded hover:bg-[#993f23] transition disabled:bg-orange-300"
-      >
-        {submitting ? 'Pošiljanje...' : 'Dodaj mnenje'}
-      </button>
-    </form>
-  </section>
+{/* Anonimno */}
+<div className="mb-8">
+  <label className="inline-flex items-center text-lg text-gray-800 font-medium cursor-pointer">
+    <input
+      type="checkbox"
+      checked={isAnonymous}
+      onChange={(e) => setIsAnonymous(e.target.checked)}
+      className="form-checkbox h-5 w-5 text-[#b3542d] border-gray-300 rounded focus:ring-2 focus:ring-orange-300 mr-3"
+    />
+    Objavi anonimno
+  </label>
+</div>
+          {/* Gumb */}
+          <div>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="bg-[#b3542d] hover:bg-[#993f23] text-white font-semibold px-6 py-3 rounded-xl transition disabled:bg-orange-300"
+            >
+              {submitting ? 'Pošiljanje...' : 'Dodaj mnenje'}
+            </button>
+          </div>
+        </form>
+      </section>
             <section>
                 <h2 className="text-2xl font-semibold mb-4">Mnenja</h2>
 
@@ -274,6 +285,7 @@ const Restaurant = () => {
                     </div>
                 )}
             </section>
+        </div>
         </div>
     );
 };
