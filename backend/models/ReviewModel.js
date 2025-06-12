@@ -6,6 +6,7 @@ const ReviewSchema = new Schema({
   restaurant: { type: Schema.Types.ObjectId, ref: 'Restaurant' },
   rating: { type: Number, required: true },
   dishName: {type: String, required: false},
+  anonymous: { type: Boolean, default: false },
   comment: String,
   images: [{ type: String }],
   votes: [{

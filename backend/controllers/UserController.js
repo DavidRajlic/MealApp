@@ -80,7 +80,7 @@ module.exports = {
             user.email = req.body.email || user.email;
             user.reviews = req.body.reviews || user.reviews;
             user.trusted_status = req.body.trusted_status || user.trusted_status;
-            user.anonymous = req.body.anonymous || user.anonymous;
+            
 
             if (req.file) {
               user.profile_image = "/uploads/profile_images/" + req.file.filename;

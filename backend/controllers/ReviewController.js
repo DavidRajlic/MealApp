@@ -60,7 +60,7 @@ module.exports = {
             if (req.files && req.files.length > 5) {
                 return res.status(400).json({ message: "Največ 5 slik!" });
             }
-
+            console.log(req.body.anonymous);
             const imagePaths = req.files ? req.files.map(file => "/images/" + file.filename) : [];
 
             const review = new ReviewModel({
@@ -68,6 +68,7 @@ module.exports = {
                 restaurant: req.body.restaurant,
                 rating: req.body.rating,
                 comment: req.body.comment,
+                anonymous: req.body.anonymous,
                 images: imagePaths
             });
 
@@ -94,7 +95,8 @@ module.exports = {
                 {
                     $set: {
                         rating: req.body.rating,
-                        comment: req.body.comment
+                        comment: req.body.comment,
+                        anonymous: req.body.anonymous
                     }
                 },
                 { new: true, runValidators: true } // returns updated doc + triggers validation

@@ -13,7 +13,6 @@ const UserSchema = new Schema({
     default: 'user'
   },
   'trusted_status': { type: Number, default: 0 },
-  'anonymous': { type: Boolean, default: false },
   'profile_image': { type: String, default: null }
 }, { timestamps: true });
 
