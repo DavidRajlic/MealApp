@@ -2,7 +2,7 @@ import React from 'react';
 
 const LandingPage: React.FC = () => {
   return (
-    <div className="bg-[#fffaf0] text-gray-800 font-sans min-h-screen flex flex-col">
+    <div className="bg-[#fff5e1] text-gray-800 font-sans min-h-screen flex flex-col">
     
       <section className="container mx-auto px-6 py-20 text-center flex-grow">
         <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
