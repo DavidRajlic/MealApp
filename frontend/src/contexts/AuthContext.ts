@@ -5,7 +5,13 @@ export const useAuth = () => {
   const token = localStorage.getItem("token");
 
   const isLoggedIn = !!token && !!userStr;
-  const user = userStr ? JSON.parse(userStr) : null;
+  let user = null;
+  try {
+    user = userStr ? JSON.parse(userStr) : null;
+  } catch (e) {
+    console.error("Invalid JSON in localStorage 'user':", e);
+    localStorage.removeItem("user");
+  }
 
   const navigate = useNavigate();
 
