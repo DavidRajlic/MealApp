@@ -1,6 +1,25 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteReview, Login, postReview, PostReviewBody, PutReviewBody, Register, updateReview, voteReview, VoteReviewBody } from "./api";
+import { deleteReview, Login, postReview, PostReviewBody, PutReviewBody, Register, updateReview, UpdateUser, updateUser, voteReview, VoteReviewBody } from "./api";
 import { useUser } from "../context/UserContext";
+
+
+// users
+interface UpdateUserMutationParam extends UpdateUser {
+  userId: string
+}
+
+export function useUpdateUserMutation() {
+  const queryClient = useQueryClient()
+  const {getToken} = useUser()
+  const token = getToken();
+  
+  return useMutation({
+    mutationFn: (body: UpdateUserMutationParam) => updateUser(token!, body.userId, body),
+    onSuccess(data, variables, context) {
+      
+    }
+  })
+}
 
 
 // reviews
