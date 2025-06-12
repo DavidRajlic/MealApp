@@ -40,33 +40,57 @@ const Profile = () => {
   if (!user) return <p>Ni podatkov o uporabniku.</p>;
 
   return (
-    <div className="max-w-3xl mx-auto p-4">
-      <h1 className="text-4xl font-bold mb-4">{user.name}</h1>
-      
+    <div className="w-full px-4 sm:px-6 lg:px-8 py-12 bg-[#fffaf5]">
+  <div className="max-w-4xl mx-auto">
+    <h1 className="text-4xl font-bold mb-2 text-[#b85c38]">{user.name}</h1>
+    <h2 className="text-2xl font-semibold text-[#b85c38]/70 mb-4">
+      Tvoja mnenja
+    </h2>
+    <hr className="mb-6 border-[#b85c38]/30" />
 
-      <h2 className="text-2xl font-semibold mb-2">Tvoja mnenja</h2>
-
-      {loading ? (
-        <p>Nalaganje ...</p>
-      ) : reviews.length === 0 ? (
-        <p className="text-gray-500">Nisi še oddal nobenega mnenja.</p>
-      ) : (
-        <div className="space-y-4">
-          {reviews.map((review) => (
-            <div key={review._id} className="border p-4 rounded bg-[#fffaf0] shadow-sm">
-                {review.restaurant.image  != null && (<img
-                            src={review.restaurant.image || '/fallback.jpg'}
-                            alt={review.restaurant.name}
-                            className="w-10 h-10 object-cover rounded-md"
-                        />)}
-              <p className="font-medium">{review.comment}</p>
-              <p className="text-sm text-gray-600">Ocena⭐: {review.rating}/5</p>
-              <p className="text-xs text-gray-500">Restavracija: {review.restaurant?.name || 'Neznano'}</p>
+    {loading ? (
+      <p className="text-[#b85c38] italic">Nalaganje ...</p>
+    ) : reviews.length === 0 ? (
+      <p className="text-sm text-[#b85c38]/70 italic">
+        Nisi še oddal nobenega mnenja.
+      </p>
+    ) : (
+      <div className="space-y-4">
+        {reviews.map((review) => (
+          <div
+            key={review._id}
+            className="flex items-start gap-4 border border-gray-200 p-4 rounded-lg bg-[#fffaf0] shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:scale-[1.01] cursor-pointer"
+          >
+            {review.restaurant.image && (
+              <img
+                src={review.restaurant.image || "/fallback.jpg"}
+                alt={review.restaurant.name}
+                className="w-12 h-12 object-cover rounded-full border border-gray-300 shadow-sm"
+              />
+            )}
+            <div className="flex flex-col justify-center gap-1">
+              <p className="text-sm font-medium text-gray-800 italic">
+                {review.comment}
+              </p>
+              <p className="text-sm text-[#b85c38]">
+                Ocena <span className="text-yellow-600">⭐</span>: {review.rating}/5
+              </p>
+              <p className="text-xs text-gray-500">
+                Restavracija: {review.restaurant?.name || "Neznano"}
+              </p>
+              {review.createdAt && (
+                <p className="text-xs text-gray-400">
+                  Objavljeno:{" "}
+                  {new Date(review.createdAt).toLocaleDateString("sl-SI")}
+                </p>
+              )}
             </div>
-          ))}
-        </div>
-      )}
-    </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</div>
   );
 };
 
