@@ -273,7 +273,7 @@ const Restaurant = () => {
                                         <div className="flex justify-between items-start">
                                             <span className="text-gray-900 font-medium">{review.comment}</span>
 
-                                            {user?._id === review.user?._id ||user.role == "admin"  && (
+                                            {(user?._id === review.user?._id || user.role == "admin")  && (
                                                 <button
                                                     onClick={() => handleDelete(review._id)}
                                                     className="text-red-500 hover:text-red-700 text-2xl font-bold cursor-pointer"
